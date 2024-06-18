@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: admin_page
+server:
+  servlet:
+    context-path: /app/admin
+logging:
+  level:
+    root: info
+    com.playground.admin_page: debug
