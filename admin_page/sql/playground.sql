@@ -8,9 +8,10 @@ DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS product;
 DROP TABLE IF EXISTS admin_account;
 
+
 -- 테이블 생성
 CREATE TABLE IF NOT EXISTS user (
-    user_no BIGINT NOT NULL,
+    user_id BIGINT auto_increment NOT NULL,
     user_name VARCHAR(30) NULL,
     user_email VARCHAR(30) NULL,
     user_email_able BOOLEAN NULL,
@@ -18,21 +19,22 @@ CREATE TABLE IF NOT EXISTS user (
     join_date DATE NULL,
     last_connect DATE NULL,
     user_pet VARCHAR(20) NULL,
-    PRIMARY KEY (user_no)
+    `dormant_user`	BOOLEAN	NULL,
+    PRIMARY KEY (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-    order_id BIGINT NOT NULL,
-    user_no BIGINT NOT NULL,
+    order_id BIGINT auto_increment NOT NULL,
+    user_id BIGINT NOT NULL,
     order_date TIMESTAMP NOT NULL,
     order_status VARCHAR(20) NOT NULL,
     total_price INTEGER NULL,
     PRIMARY KEY (order_id),
-    FOREIGN KEY (user_no) REFERENCES user (user_no)
+    FOREIGN KEY (user_id) REFERENCES user (user_id)
 );
 
 CREATE TABLE IF NOT EXISTS product (
-    product_id BIGINT NOT NULL,
+    product_id BIGINT auto_increment NOT NULL,
     product_name VARCHAR(30) NULL,
     category VARCHAR(10) NULL,
     product_image BLOB NULL,
@@ -46,17 +48,17 @@ CREATE TABLE IF NOT EXISTS product (
 );
 
 CREATE TABLE IF NOT EXISTS order_product (
-    order_product_no INTEGER NOT NULL,
+    order_product_id INTEGER auto_increment NOT NULL,
     order_id BIGINT NOT NULL,
     product_id BIGINT NOT NULL,
     quantity INTEGER NOT NULL,
-    PRIMARY KEY (order_product_no),
+    PRIMARY KEY (order_product_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id),
     FOREIGN KEY (product_id) REFERENCES product (product_id)
 );
 
 CREATE TABLE IF NOT EXISTS admin_account (
-    admin_account_no BIGINT NOT NULL,
+    admin_account_no BIGINT auto_increment NOT NULL,
     admin_id VARCHAR(16) NULL,
     password VARCHAR(16) NULL,
     permission VARCHAR(10) NULL,
@@ -64,27 +66,27 @@ CREATE TABLE IF NOT EXISTS admin_account (
 );
 
 CREATE TABLE IF NOT EXISTS refund (
-    er_id BIGINT NOT NULL,
-    order_id BIGINT NOT NULL,
-    application_date DATE NULL,
-    process_status VARCHAR(10) NULL,
-    er_reason_type VARCHAR(20) NULL,
-    er_reason_detail VARCHAR(300) NULL,
-    PRIMARY KEY (er_id),
-    FOREIGN KEY (order_id) REFERENCES orders (order_id)
+     refund_id BIGINT auto_increment NOT NULL,
+     order_id BIGINT NOT NULL,
+     application_date DATE NULL,
+     process_status VARCHAR(10) NULL,
+     refund_reason_type VARCHAR(20) NULL,
+     refund_reason_detail VARCHAR(300) NULL,
+     PRIMARY KEY (refund_id),
+     FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
 
 CREATE TABLE IF NOT EXISTS refund_product (
-    refund_product_no INTEGER NOT NULL,
-    order_product_no INTEGER NOT NULL,
-    er_id BIGINT NOT NULL,
-    PRIMARY KEY (refund_product_no),
-    FOREIGN KEY (order_product_no) REFERENCES order_product (order_product_no),
-    FOREIGN KEY (er_id) REFERENCES refund (er_id)
+     refund_product_no INTEGER auto_increment NOT NULL,
+     order_product_no INTEGER NOT NULL,
+     refund_id BIGINT NOT NULL,
+     PRIMARY KEY (refund_product_no),
+     FOREIGN KEY (order_product_no) REFERENCES order_product (order_product_id),
+     FOREIGN KEY (refund_id) REFERENCES refund (refund_id)
 );
 
 CREATE TABLE IF NOT EXISTS order_cancel (
-    cancel_id VARCHAR(255) NOT NULL,
+    cancel_id INTEGER auto_increment NOT NULL,
     cancel_reason VARCHAR(30) NULL,
     order_id BIGINT NOT NULL,
     process_status VARCHAR(20) NULL,
@@ -92,3 +94,85 @@ CREATE TABLE IF NOT EXISTS order_cancel (
     PRIMARY KEY (cancel_id),
     FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
+
+# user 정보 추가
+select * from user;
+INSERT INTO user (user_id, user_name, user_email, user_email_able, address, join_date, last_connect, user_pet,dormant_user) VALUES
+       (1, '홍길동', 'john.doe@example.com', TRUE, '서울특별시 광진구', '2022-01-01', '2023-06-20', 'Dog',false),
+       (2, '신사임당', 'jane.smith@example.com', TRUE, '서울특별시 종로구', '2022-02-15', '2023-06-18', 'Dog',false),
+       (3, '이순신', 'alice.johnson@example.com', FALSE, '서울특별시 노원구', '2022-03-20', '2023-06-19', 'Dog',false),
+       (4, '김연찬', 'robert.brown@example.com', TRUE, '서울특별시 강남구', '2022-04-10', '2023-06-21', 'Dog',false),
+       (5, '오형동', 'michael.davis@example.com', FALSE, '경기도 성남', '2022-05-25', '2023-06-17', 'Cat',false),
+       (6, '신윤정', 'emily.white@example.com', TRUE, '서울특별시 도봉구', '2022-06-30', '2023-06-22', 'Cat',false),
+       (7, '박수빈', 'david.harris@example.com', FALSE, '서울특별시 강남구', '2022-07-15', '2023-06-15', 'Cat',false),
+       (8, '박민혁', 'sophia.wilson@example.com', TRUE, '경기도 용인 ', '2022-08-25', '2023-06-16', 'Cat',false);
+# 주문 정보 추가
+select * from orders;
+INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
+      (1, 1, '2023-06-01 10:00:00', '입금전', 360000),
+      (2, 1, '2023-06-02 11:00:00', '입금후', 30000),
+      (3, 2, '2023-06-03 12:00:00', '배송중', 75000),
+      (4, 3, '2023-06-04 13:00:00', '배송완료', 70000),
+      (5, 3, '2023-06-05 14:00:00', '배송완료', 130000),
+      (6, 4, '2023-06-06 15:00:00', '배송완료', 15000),
+      (7, 5, '2023-06-07 16:00:00', '입금후', 60000),
+      (8, 6, '2023-06-08 17:00:00', '배송완료', 30000),
+      (9, 6, '2023-06-09 18:00:00', '배송완료', 75000),
+      (10, 7, '2023-06-10 19:00:00', '입금전', 62000),
+      (11, 7, '2023-06-11 10:00:00', '배송완료', 40000),
+      (12, 8, '2023-06-12 11:00:00', '입금후', 120000),
+      (13, 8, '2023-06-13 12:00:00', '배송중', 60000);
+
+# 상품 정보 추가
+select * from product;
+INSERT INTO product (product_id, product_name, category, product_image, product_desc, price, amount, is_display, product_status, created_at)
+VALUES
+    (1, '강아지 사료', '사료', NULL, '프리미엄 건식 사료', 50000, 100, TRUE, '판매중', '2024-06-01'),
+    (2, '강아지 침대', '가구', NULL, '편안한 쿠션 침대', 70000, 50, TRUE, '판매중', '2024-06-03'),
+    (3, '강아지 목줄', '액세서리', NULL, '조절 가능한 가죽 목줄', 30000, 150, TRUE, '판매중', '2024-06-04'),
+    (4, '강아지 샴푸', '미용용품', NULL, '저자극성 천연 샴푸', 25000, 80, TRUE, '판매중', '2024-06-06'),
+    (5, '강아지 간식', '사료', NULL, '덴탈케어 껌', 20000, 120, TRUE, '판매중', '2024-06-08'),
+    (6, '강아지 장난감', '장난감', NULL, '소리나는 공', 18000, 50, TRUE, '판매중', '2024-06-11'),
+    (7, '강아지 영양제', '사료', NULL, '관절 건강 케어', 35000, 100, TRUE, '판매중', '2024-06-13'),
+    (8, '강아지 간식바', '사료', NULL, '닭가슴살 간식바', 25000, 150, TRUE, '판매중', '2024-06-15'),
+    (9, '강아지 물병', '액세서리', NULL, '외출 시 편리한 물병', 18000, 100, TRUE, '판매중', '2024-06-17'),
+    (10, '고양이 장난감', '장난감', NULL, '깃털 낚시대', 15000, 200, TRUE, '판매중', '2024-06-02'),
+    (11, '고양이 화장실', '위생용품', NULL, '대형 자동 화장실', 120000, 30, TRUE, '판매중', '2024-06-05'),
+    (12, '고양이 사료', '사료', NULL, '연어 기반 건식 사료', 60000, 40, TRUE, '판매중', '2024-06-07'),
+    (13, '고양이 긁는 패드', '가구', NULL, '대형 긁는 패드', 30000, 80, TRUE, '판매중', '2024-06-12'),
+    (14, '고양이 캣타워', '가구', NULL, '다채로운 캣타워', 75000, 30, TRUE, '판매중', '2024-06-14'),
+    (15, '고양이 산책 가방', '액세서리', NULL, '편안한 산책을 위한 가방', 40000, 60, TRUE, '판매중', '2024-06-16'),
+    (16, '고양이 활동 장난감', '장난감', NULL, '활동적인 고양이를 위한 장난감', 22000, 80, TRUE, '판매중', '2024-06-18');
+
+# 주문상품 정보 추가
+select * from order_product;
+INSERT into order_product (order_product_id, order_id,product_id,quantity)
+values
+    # 강아지
+    (1,1,1,3), # 50000 * 3 15 + 21
+    (2,1,2,3), # 70000 * 3
+    (3,2,3,1), # 30000
+    (4,3,4,1), # 25000
+    (5,3,1,1), # 50000
+    (6,4,2,1),  # 70000
+    # 고양이
+    (7,5,10,1), # 10000 * 3
+    (8,5,11,1), # 120000 * 3
+    (9,6,10,1), # 15000 * 3
+    (10,7,12,3), # 60000 * 3
+    (11,8,13,1), # 30000 * 1
+    (12,9,14,1), # 750000
+    (13,10,15,1), # 40000
+    (14,10,16,1), # 22000
+    (15,11,10,1), # 40000
+    (16,12,11,1), # 120000
+    (17,13,12,1); # 60000
+
+
+
+
+
+
+
+
+
