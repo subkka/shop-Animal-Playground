@@ -30,10 +30,17 @@ public class ProductController {
         model.addAttribute("product", product);
         return "product/detail";
     }
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable Long id, Model model) {
+        log.info("GET /product/edit/{}", id);
+        ProductDto product = productService.findByProductId(id);
+        model.addAttribute("product", product);
+        return "product/edit";  // edit.html 템플릿을 사용
+    }
     @PostMapping("/edit")
-    public String edit(@ModelAttribute ProductDto productDto) {
+    public String edit(@ModelAttribute ProductDto product) {
         log.info("POST /product/edit");
-        productService.updateProduct(productDto);
-        return "redirect:/product/detail/" + productDto.getProductId();
+        productService.updateProduct(product);
+        return "redirect:/product/detail/" + product.getProductId();
     }
 }

@@ -12,16 +12,16 @@
     <title>SB Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
-    <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -376,7 +376,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Product Information</h6>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{/admin/product/edit}" th:object="${product}" method="post">
+                        <form th:action="@{/product/edit}" th:object="${product}" method="post">
                             <input type="hidden" th:field="*{productId}">
 
                             <div class="form-group">
@@ -407,7 +407,7 @@
 
                             <div class="form-group">
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="isDisplay" th:field="*{isDisplay}">
+                                    <input type="checkbox" class="custom-control-input" id="isDisplay" name="isDisplay" th:checked="${product.isDisplay}">
                                     <label class="custom-control-label" for="isDisplay">Display Product</label>
                                 </div>
                             </div>
@@ -415,14 +415,17 @@
                             <div class="form-group">
                                 <label for="productStatus">Product Status</label>
                                 <select class="form-control" id="productStatus" th:field="*{productStatus}">
-                                    <option value="ACTIVE">Active</option>
-                                    <option value="INACTIVE">Inactive</option>
-                                    <option value="OUT_OF_STOCK">Out of Stock</option>
+                                    <option value="판매중">판매중</option>
+                                    <option value="단종">단종</option>
+                                    <option value="품절">품절</option>
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <a th:href="@{/admin/product/detail/{id}(id=${product.productId})}" class="btn btn-secondary">Cancel</a>
+                            <!-- 버튼들을 div로 감싸고 마진을 추가 -->
+                            <div class="form-group" style="margin-top: 20px;">
+                                <button type="submit" class="btn btn-primary" style="display: inline-block;">Save Changes</button>
+                                <a th:href="@{/product/detail/{id}(id=${product.productId})}" class="btn btn-secondary" style="display: inline-block; margin-left: 10px;">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -475,21 +478,21 @@
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="../vendor/jquery/jquery.min.js"></script>
-<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../vendor/jquery/jquery.min.js"></script>
+<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
-<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
 <!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
+<script src="../../js/sb-admin-2.min.js"></script>
 
 <!-- Page level plugins -->
-<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="../js/demo/datatables-demo.js"></script>
+<script src="../../js/demo/datatables-demo.js"></script>
 
 </body>
 
