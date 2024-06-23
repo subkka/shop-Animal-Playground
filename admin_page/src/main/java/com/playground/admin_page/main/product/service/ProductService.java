@@ -22,4 +22,8 @@ public class ProductService {
     public ProductDto findByProductId(int productId) {
         return productMapper.findByProductId(productId);
     }
+
+    public int createProduct(ProductDto product) {
+        return productMapper.createProduct(product);
+    }
 }

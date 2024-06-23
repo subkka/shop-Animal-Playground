@@ -10,4 +10,6 @@ public interface ProductMapper {
     List<ProductDto> findAll();
 
     ProductDto findByProductId(int productId);
+
+    int createProduct(ProductDto product);
 }

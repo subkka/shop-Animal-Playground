@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,4 +38,21 @@ class ProductMapperTest {
                         (_product) -> assertThat(_product.getPrice()).isPositive()
                 );
         }
+    @DisplayName("상품 등록")
+    @Test
+    void createProduct() {
+        ProductDto product = new ProductDto();
+        product.setProductName("고양이 낚시대");
+        product.setCategory("장난감");
+        product.setProductImage(null);
+        product.setProductDesc("알록달록한 고양이 낚시대");
+        product.setPrice(8000);
+        product.setAmount(30);
+        product.setDisplay(true);
+        product.setProductStatus("판매중");
+        product.setCreatedAt(LocalDateTime.now());
+
+        int result = productMapper.createProduct(product);
+        assertEquals(result, 1);
+    }
 }

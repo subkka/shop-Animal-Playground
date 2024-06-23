@@ -29,4 +29,11 @@
         where
             product_id = #{productId}
     </select>
+    <insert id="createProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into
+            product (product_name, category, product_image, product_desc, price, amount, is_display, product_status, created_at)
+        values (
+            #{productName}, #{category}, #{productImage}, #{productDesc}, #{price}, #{amount}, #{isDisplay}, #{productStatus}, #{createdAt}
+        )
+    </insert>
 </mapper>
