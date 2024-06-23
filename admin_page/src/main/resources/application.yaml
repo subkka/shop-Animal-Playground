@@ -2,9 +2,13 @@ spring:
   application:
     name: admin_page
   datasource:
-    url: ssg-java3.iptime.org:3306/playgrounddb
+    url: jdbc:mysql://ssg-java3.iptime.org:3306/playgrounddb
     username: playground
     password: db1234
+#    test url
+#    url: jdbc:mysql://localhost:3306
+#    username: root
+#    password: 0000
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       connection-timeout: 30000
@@ -23,9 +27,9 @@ logging:
     root: info
     com.playground.admin_page: debug
 
-#mybatis:
-#  configuration:
-#    map-underscore-to-camel-case: true
-#  type-aliases-package: com.playground
-#  mapper-locations: classpath*:mappers/**/*-mapper.xml
-
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+  type-aliases-package: com.playground
+  mapper-locations: classpath*:mappers/**/*-mapper.xml
