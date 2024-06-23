@@ -9,7 +9,9 @@ import java.util.List;
 public interface ProductMapper {
     List<ProductDto> findAll();
 
-    ProductDto findByProductId(int productId);
+    ProductDto findByProductId(Long productId);
 
     int createProduct(ProductDto product);
+
+    int updateProduct(ProductDto productDto);
 }

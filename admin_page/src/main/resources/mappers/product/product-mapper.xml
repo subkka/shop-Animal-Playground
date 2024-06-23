@@ -36,4 +36,12 @@
             #{productName}, #{category}, #{productImage}, #{productDesc}, #{price}, #{amount}, #{isDisplay}, #{productStatus}, #{createdAt}
         )
     </insert>
+    <update id="updateProduct">
+        update
+            product
+        set
+            product_name = #{productName}, category = #{category}, product_image = #{productImage}, product_desc = #{productDesc}, price = #{price}, amount = #{amount}, is_display = #{isDisplay}, product_status = #{productStatus}
+        where
+            product_id = #{productId}
+    </update>
 </mapper>

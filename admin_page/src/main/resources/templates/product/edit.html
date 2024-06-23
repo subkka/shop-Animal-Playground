@@ -368,44 +368,62 @@
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Product List</h1>
+                <h1 class="h3 mb-4 text-gray-800">Edit Product</h1>
 
+                <!-- Edit Product Form Card -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">상품 목록</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Product Information</h6>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Desc</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
-                                    <th>Display</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="product, stat : ${products}" th:object="${product}">
-                                    <td th:text="${product.productId}"></td>
-                                    <td><a th:href="@{/product/detail/{id}(id=${product.productId})}"
-                                           th:text="${product.productName}"></a></td>
-                                    <td th:text="${product.category}"></td>
-                                    <td th:text="${product.productDesc}"></td>
-                                    <td th:text="${product.price}"></td>
-                                    <td th:text="${product.amount}"></td>
-                                    <td th:text="${product.isDisplay}"></td>
-                                    <td th:text="${product.productStatus}"></td>
-                                    <td th:text="${product.createdAt}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <form th:action="@{/admin/product/edit}" th:object="${product}" method="post">
+                            <input type="hidden" th:field="*{productId}">
+
+                            <div class="form-group">
+                                <label for="productName">Product Name</label>
+                                <input type="text" class="form-control" id="productName" th:field="*{productName}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input type="text" class="form-control" id="category" th:field="*{category}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productDesc">Description</label>
+                                <textarea class="form-control" id="productDesc" th:field="*{productDesc}" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" th:field="*{price}" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="amount">Amount</label>
+                                    <input type="number" class="form-control" id="amount" th:field="*{amount}" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="isDisplay" th:field="*{isDisplay}">
+                                    <label class="custom-control-label" for="isDisplay">Display Product</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="productStatus">Product Status</label>
+                                <select class="form-control" id="productStatus" th:field="*{productStatus}">
+                                    <option value="ACTIVE">Active</option>
+                                    <option value="INACTIVE">Inactive</option>
+                                    <option value="OUT_OF_STOCK">Out of Stock</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a th:href="@{/admin/product/detail/{id}(id=${product.productId})}" class="btn btn-secondary">Cancel</a>
+                        </form>
                     </div>
                 </div>
 

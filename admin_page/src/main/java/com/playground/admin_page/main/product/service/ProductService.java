@@ -19,11 +19,15 @@ public class ProductService {
         return productMapper.findAll();
     }
 
-    public ProductDto findByProductId(int productId) {
+    public ProductDto findByProductId(Long productId) {
         return productMapper.findByProductId(productId);
     }
 
     public int createProduct(ProductDto product) {
         return productMapper.createProduct(product);
+    }
+
+    public int updateProduct(ProductDto productDto) {
+         return productMapper.updateProduct(productDto);
     }
 }
