@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SampleController {
     @GetMapping("/index")
     public String sampleIndex() {
-        return "index";
+        return "main";
     }
 
     @GetMapping("/tables")
