@@ -16,7 +16,7 @@ public class ProductDto {
     private String productDesc;
     private int price;
     private int amount;
-    private boolean isDisplay;
+    private Boolean isDisplay;
     private String productStatus;
     private LocalDateTime createdAt;
 }
