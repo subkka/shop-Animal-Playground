@@ -106,6 +106,14 @@ INSERT INTO user (user_id, user_name, user_email, user_email_able, address, join
        (6, '신윤정', 'emily.white@example.com', TRUE, '서울특별시 도봉구', '2022-06-30', '2023-06-22', 'Cat',false),
        (7, '박수빈', 'david.harris@example.com', FALSE, '서울특별시 강남구', '2022-07-15', '2023-06-15', 'Cat',false),
        (8, '박민혁', 'sophia.wilson@example.com', TRUE, '경기도 용인 ', '2022-08-25', '2023-06-16', 'Cat',false);
+INSERT INTO user (user_id, user_name, user_email, user_email_able, address, join_date, last_connect, user_pet,dormant_user) VALUES
+(9, '박명수', 'qkraudtn.wilson@example.com', TRUE, '경기도 분당 ', '2023-08-25', '2023-09-16', 'Cat',false),
+(10, '정준하', 'wjdwnsgk.wilson@example.com', TRUE, '서울특별시 도봉구 ', '2022-02-05', '2023-02-16', 'Dog',false),
+(11, '유재석', 'dbwotjr.wilson@example.com', TRUE, '강원도 철원 ', '2023-08-25', '2023-09-16', 'Cat',false),
+(12, '하하', 'gkgk.wilson@example.com', TRUE, '서울특별시 마포구 ', '2023-08-25', '2023-09-16', 'Cat',false),
+(13, '고윤정', 'rhdbswjd.wilson@example.com', TRUE, '서울특별시 성북구 ', '2022-01-25', '2022-02-16', 'Dog',false);
+
+
 # 주문 정보 추가
 select * from orders;
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
@@ -122,6 +130,12 @@ INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VA
       (11, 7, '2023-06-11 10:00:00', '배송완료', 40000),
       (12, 8, '2023-06-12 11:00:00', '입금후', 120000),
       (13, 8, '2023-06-13 12:00:00', '배송중', 60000);
+INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
+         (14,9,'2023-06-13 13:00:00','입금전',30000),
+         (15,10,'2023-06-14 14:00:00','입금전',30000),
+         (16,11,'2023-06-15 15:00:00','입금전',30000),
+         (17,12,'2023-06-16 16:00:00','입금전',30000),
+         (18,13,'2023-06-17 17:00:00','입금전',30000);
 
 # 상품 정보 추가
 select * from product;
@@ -144,6 +158,8 @@ VALUES
     (15, '고양이 산책 가방', '액세서리', NULL, '편안한 산책을 위한 가방', 40000, 60, TRUE, '판매중', '2024-06-16'),
     (16, '고양이 활동 장난감', '장난감', NULL, '활동적인 고양이를 위한 장난감', 22000, 80, TRUE, '판매중', '2024-06-18');
 
+
+select * from product;
 # 주문상품 정보 추가
 select * from order_product;
 INSERT into order_product (order_product_id, order_id,product_id,quantity)
@@ -168,11 +184,37 @@ values
     (16,12,11,1), # 120000
     (17,13,12,1); # 60000
 
+INSERT into order_product (order_product_id, order_id,product_id,quantity)
+values
+    (18,14,12,1), #60000
+    (19,15,7,1), # 35000
+    (20,16,13,1), # 30000
+    (21,17,14,1), # 75000
+    (22,18,12,1); # 60000
 
 
+select *
+from orders
+where order_status = '입금전';
 
+update orders
+set order_status='PENDING'
+where order_id = 14;
 
+update orders
+set order_status='PENDING'
+where order_id = 15;
+update orders
+set order_status='PENDING'
+where order_id = 16;
+update orders
+set order_status='PENDING'
+where order_id = 17;
+update orders
+set order_status='PENDING'
+where order_id = 18;
 
+select * from orders where order_status = 'PENDING'
 
 
 

@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h2>주문 조회</h2>
+
 <form action="" method="get">
     <input type="hidden" name="code" value="list">
     <div class="tbl_frm01">
@@ -52,49 +52,73 @@
 </form>
 <main layout:fragment="main" class="container">
 
-        <h1>주문 상세</h1>
-         <table class="table">
-            <thead>
-            <tr>
-                <th>주문 번호</th>
-                <th>고객 번호</th>
-                <th>주문 일시</th>
-                <th>주문 상태</th>
-                <th>주문 가격</th>
-                <th>상품 번호</th>
-                <th>주문한 상품 개수</th>
-                <th>상품 이름</th>
-                <th>상품 가격</th>
-            </tr>
-            </thead>
-            <tbody>
+    <h1>주문상품 재고 확인</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>주문 번호</th>
+            <th>고객 번호</th>
+            <th>주문 일시</th>
+            <th>주문 상태</th>
+            <th>주문 가격</th>
+            <th>상품 번호</th>
+            <th>주문한 상품 개수</th>
+            <th>상품 이름</th>
+            <th>상품 가격</th>
+            <th>상품 재고 수</th>
+
+        </tr>
+        </thead>
+        <tbody>
         <!--orderitem에 개수에 맞게 실행 할 수 있도록 수정 해야됨-->
-            <tr th:each="details : ${details}">
-                <td th:text="${details.orderId}"></td>
-                <td th:text="${details.userId}"></td>
-                <td th:text="${details.orderDate}"></td>
-                <td th:text="${details.orderStatus}"></td>
-                <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
-                <td th:text="${details.products[0].productId}"></td>
-                <td th:text="${details.products[0].quantity}"></td>
-                <td th:text="${details.products[0].productName}"></td>
-                <td th:text="${details.products[0].productPrice}"></td>
-            </tr>
+        <tr th:each="details : ${details}">
+            <td th:text="${details.orderId}"></td>
+            <td th:text="${details.userId}"></td>
+            <td th:text="${details.orderDate}"></td>
+            <td th:text="${details.orderStatus}"></td>
+            <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
+            <td th:text="${details.products[0].productId}"></td>
+            <td th:text="${details.products[0].quantity}"></td>
+            <td th:text="${details.products[0].productName}"></td>
+            <td th:text="${details.products[0].productPrice}"></td>
+            <td th:text="${details.products[0].amount}"></td>
+        </tr>
         <!--여기도 일단 수정-->
         <!--orderitems가 2개이상일 때 출력 1개 일때는  출력 안함-->
         <!--/*th:if="${detail.orderitems.size() > 1} 조건문 활용해서 해야될거 같은데 */-->
-            <tr th:each="details : ${details}">
-                <td th:text="${details.orderId}"></td>
-                <td th:text="${details.userId}"></td>
-                <td th:text="${details.orderDate}"></td>
-                <td th:text="${details.orderStatus}"></td>
-                <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
-        <!--/*        <td th:text="${details.orderItems[1].productId}"></td>*/-->
-        <!--/*        <td th:text="${details.orderItems[1].quantity}"></td>-*/-->
-            </tr>
-            </tbody>
-        </table>
+        <tr th:each="details : ${details}">
+            <td th:text="${details.orderId}"></td>
+            <td th:text="${details.userId}"></td>
+            <td th:text="${details.orderDate}"></td>
+            <td th:text="${details.orderStatus}"></td>
+            <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
+
+            <!--/*        <td th:text="${details.orderItems[1].productId}"></td>*/-->
+            <!--/*        <td th:text="${details.orderItems[1].quantity}"></td>-*/-->
+        </tr>
+        <tr th:each="details : ${details}">
+            <td>
+                <a th:href="@{|/order/orderCancel/${details.orderId}|}" onclick="showAlert()">
+                    <button type="button">주문취소</button>
+                </a>
+
+                <script th:inline="javascript">
+                    function showAlert() {
+                        alert('취소처리를 완료했습니다.');
+                    }
+                </script>
+            </td>
+            <td>
+                <a th:href="@{/order/findAllOrder}">
+                    <button type="button">주문 확인</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </main>
+
 </body>
 </html>
 <!--/*<td>

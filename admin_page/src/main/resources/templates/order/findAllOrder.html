@@ -64,6 +64,7 @@
                 <th>주문 상태</th>
                 <th>주문 가격</th>
                 <th>상세정보 보기</th>
+                <th>부가 기능</th>
             </tr>
             </thead>
             <tbody>
@@ -71,11 +72,21 @@
                 <td th:text="${order.orderId}"></td>
                 <td th:text="${order.userId}"></td>
                 <td th:text="${order.orderDate}"></td>
-                <td th:text="${order.orderStatus}"></td>
+                <td th:text="${order.orderStatus.getStatus()}"></td>
                 <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></td>
                 <td>
                     <a th:href="@{|/order/detail/${order.orderId}|}">
                         <button type="button">상세정보 보기</button>
+                    </a>
+                </td>
+                <td>
+                    <a th:if="${order.orderStatus.getStatus() == '입금전'}"
+                       th:href="@{|/order/informationProduct/${order.orderId}|}">
+                        <button type="button">재고확인</button>
+                    </a>
+                    <a th:if="${order.orderStatus.getStatus() == '주문취소'}"
+                       th:href="@{|/order/cancelInformation|}">
+                        <button type="button">취소정보</button>
                     </a>
                 </td>
             </tr>

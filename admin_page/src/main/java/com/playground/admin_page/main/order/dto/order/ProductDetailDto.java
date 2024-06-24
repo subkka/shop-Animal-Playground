@@ -13,4 +13,5 @@ public class ProductDetailDto {
     private int quantity;
     private String productName;
     private int productPrice;
+    private int amount;
 }
