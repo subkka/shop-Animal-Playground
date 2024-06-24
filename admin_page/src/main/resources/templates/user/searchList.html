@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 조회</title>
+</head>
+<body>
+
+<h2 class="m-3">회원 조회</h2>
+
+
+<form action="#" th:action="@{/user/findById}" method="get">
+    <label for="userNo">회원 번호:</label>
+    <input type="text" id="userNo" name="userNo">
+    <button type="submit">검색</button>
+</form>
+
+
+<form action="#" th:action="@{/user/findByPet}" method="get">
+    <label for="userPet">반려동물 종류:</label>
+    <select id="userPet" name="userPet">
+        <option value="DOG">Dog</option>
+        <option value="CAT">Cat</option>
+    </select>
+    <button type="submit">검색</button>
+</form>
+
+
+<form action="#" th:action="@{/user/findByEmailAbleStatus}" method="get">
+    <label for="userEmailAble">이메일 수신 동의 여부:</label>
+    <select id="userEmailAble" name="userEmailAble">
+        <option value="Y">Yes</option>
+        <option value="N">No</option>
+    </select>
+    <button type="submit">검색</button>
+</form>
+
+<h2 class="m-3">검색 결과</h2>
+<table class="table">
+    <thead>
+    <tr>
+        <th>회원 번호</th>
+        <th>회원 이름</th>
+        <th>회원 이메일</th>
+        <th>회원 주소</th>
+        <th>반려동물</th>
+        <th>이메일 수신 동의</th>
+        <th>가입 날짜</th>
+        <th>마지막 접속 날짜</th>
+        <th>휴면계정 여부</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userNo}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.userEmail}"></td>
+        <td th:text="${user.address}"></td>
+        <td th:text="${user.userPet}"></td>
+        <td th:text="${user.userEmailAble}"></td>
+        <td th:text="${user.joinDate}"></td>
+        <td th:text="${user.lastConnect}"></td>
+        <td th:text="${user.dormantUser}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
