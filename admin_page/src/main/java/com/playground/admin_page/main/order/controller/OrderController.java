@@ -34,7 +34,7 @@ public class OrderController {
 //        List<OrderDetailDto> details = orderService.getOrderDetail(id);
         List<OrderDetailDto> details = orderService.productDetail(id);
         model.addAttribute("details", details);
-        return "order/detail";
+        return "/order/detail";
     }
 
     //상태별 주문조회
@@ -44,7 +44,7 @@ public class OrderController {
         if (status == "") {
             orders = orderService.findAllOrder();
             model.addAttribute("orders", orders);
-            return "/order/findAllOrder";
+            return "findAllOrder";
         } else {
             orders = orderService.findByStatus(status);
             model.addAttribute("orders", orders);
@@ -60,7 +60,7 @@ public class OrderController {
 //        List<OrderDetailDto> details = orderService.getOrderDetail(id);
         List<OrderDetailDto> details = orderService.informationProductDetail(id);
         model.addAttribute("details", details);
-        return "order/informationProduct";
+        return "/order/informationProduct";
     }
 
     @GetMapping("/orderCancel/{orderId}")
