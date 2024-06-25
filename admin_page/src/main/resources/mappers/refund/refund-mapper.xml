@@ -16,7 +16,7 @@
         from
             refund
         where
-            order_id = #{orderId}
+            refund_id = #{refundId}
     </select>
 
     <update id="updateProcessStatus" parameterType="map">
