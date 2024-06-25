@@ -1,7 +1,6 @@
 package com.playground.admin_page.main.order.controller;
 
-import com.playground.admin_page.main.order.dto.order.OrderDetailDto;
-import com.playground.admin_page.main.order.dto.order.OrderDto;
+import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,22 +30,22 @@ public class OrderController {
     @GetMapping("/detail/{id}")
     public String getOrderDetail(@PathVariable int id, Model model) {
 //        List<OrderDetailDto> details = orderService.getOrderDetail(id);
-        List<OrderDetailDto> details = orderService.productDetail(id);
-        model.addAttribute("details", details);
-        return "order/detail";
+        OrderDetailDto detail = orderService.productDetail(id);
+        model.addAttribute("detail", detail);
+        return "/order/detail";
     }
 
+    //상태별 주문조회
     @GetMapping("/listByStatus")
     public String findByStatus(@RequestParam(name = "status", required = false) String status, Model model) {
         List<OrderDto> orders;
-        if(status == ""){
+        if (status == "") {
             orders = orderService.findAllOrder();
             model.addAttribute("orders", orders);
             return "/order/findAllOrder";
-        }
-        else{
+        } else {
             orders = orderService.findByStatus(status);
-            model.addAttribute("orders",orders);
+            model.addAttribute("orders", orders);
             System.out.println(orders);
 
             return "/order/findByStatus";
@@ -54,12 +53,42 @@ public class OrderController {
 
     }
 
+    @GetMapping("/informationProduct/{id}")
+    public String informationProduct(@PathVariable int id, Model model) {
+        OrderDetailDto orderDetailDto = orderService.informationProductDetail(id);
+        model.addAttribute("orderDetailDto", orderDetailDto);
+        return "/order/informationProduct";
+    }
+
+    @GetMapping("/orderCancel/{orderId}")
+    public String orderCancel(@PathVariable int orderId) {
+        orderService.statusChange(orderId);
+        orderService.insertCancel(orderId);
+        return "redirect:/order/findAllOrder";
+    }
 
 
-//    @GetMapping("/detail/{id}")
-//    public String getOrderDetail2(@PathVariable int id, Model model) {
-//        List<OrderDetailDto2> details = orderService.productDetail(id);
-//        model.addAttribute("details", details);
-//        return "order/detail";
-//    }
+    @GetMapping("/cancelInformation")
+    public String CancelInformation(Model model) {
+        List<CancelDto> cancels = orderService.cancelInformation();
+        log.debug("{}", cancels);
+        model.addAttribute("cancels", cancels);
+        return "/order/cancelInformation";
+    }
+
+    @GetMapping("/sales")
+    public String getSales(Model model) {
+        int count = orderService.getOrderCount();
+        int sales = orderService.getSales();
+        SalesDto salesDto = new SalesDto(count, sales);
+        model.addAttribute("salesDto", salesDto);
+        return "/order/sales";
+    }
+
+    @GetMapping("/findComplete")
+    public String findComplete(Model model) {
+        List<OrderDetailDto> lists = orderService.findComplete();
+        model.addAttribute("lists", lists);
+        return "/order/findComplete";
+    }
 }

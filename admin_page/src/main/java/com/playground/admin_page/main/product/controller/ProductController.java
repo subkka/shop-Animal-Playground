@@ -17,11 +17,12 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @GetMapping("/list")
-    public void list(Model model) {
+    public String list(Model model) {
         log.info("GET /product/list");
         List<ProductDto> products = productService.findAll();
         log.debug("products ={}", products);
         model.addAttribute("products", products);
+        return "/product/list";
     }
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
@@ -42,5 +43,17 @@ public class ProductController {
         log.info("POST /product/edit");
         productService.updateProduct(product);
         return "redirect:/product/detail/" + product.getProductId();
+    }
+    @GetMapping("/create")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new ProductDto());
+        return "product/create";
+    }
+
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute ProductDto productDto) {
+        log.info("Adding new product: {}", productDto);
+        productService.createProduct(productDto);
+        return "redirect:/product/list";
     }
 }

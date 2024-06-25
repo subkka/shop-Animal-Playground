@@ -21,7 +21,7 @@
     </select>
 
 
-    <resultMap id="productDetails" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
+    <resultMap id="productDetailMap" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
         <id property="orderId" column="order_id"/>
         <result property="userId" column="user_id"/>
         <result property="orderDate" column="order_date"/>
@@ -36,12 +36,122 @@
             <result property="productPrice" column="price"/>
         </collection>
     </resultMap>
-    <select id = "productDetail" resultMap = "productDetails">
+    <select id = "productDetail" resultMap = "productDetailMap">
         select o.*, op.*,p.product_name,p.price
         from orders o join order_product op
         on o.order_id= op.order_id
         join product p
         on p.product_id  = op.product_id
-        where op.order_id=#{orderId};
+        where op.order_id=#{orderId}
     </select>
+
+    <resultMap id="informationProductDetailMap" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
+    <id property="orderId" column="order_id"/>
+    <result property="userId" column="user_id"/>
+    <result property="orderDate" column="order_date"/>
+    <result property="orderStatus" column="order_status"/>
+    <result property="totalPrice" column="total_price"/>
+    <collection property="products" ofType="com.playground.admin_page.main.order.dto.order.ProductDetailDto">
+        <id property="orderProductId" column="order_product_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPrice" column="price"/>
+        <result property="productPrice" column="price"/>
+        <result property="amount" column="amount"/>
+    </collection>
+</resultMap>
+
+    <select id = "informationProductDetail" resultMap = "informationProductDetailMap">
+        select o.*, op.*,p.product_name,p.price, p.amount
+        from orders o join order_product op
+        on o.order_id= op.order_id
+        join product p
+        on p.product_id  = op.product_id
+        where op.order_id=#{orderId}
+    </select>
+
+    <update id = "statusChange">
+        update orders
+        set order_status ='CANCEL'
+        where order_id = #{orderId}
+    </update>
+
+<!--    insert into order_cancel-->
+<!--    values(1,-->
+<!--    (select order_id from orders where order_status = 'canceled'),'처리중','2024-02-01');-->
+
+
+
+    <resultMap id="findByOrderId" type="com.playground.admin_page.main.order.dto.order.OrderDto">
+        <id property="orderId" column="order_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="totalPrice" column="total_price"/>
+    </resultMap>
+
+    <select id = "findByOrderId" resultMap = "findByOrderId">
+        select * from orders where order_id = #{orderId}
+    </select>
+
+    <insert id="insertCancel">
+        Insert into order_cancel(cancel_id,cancel_reason,order_id,process_status,cancel_date)
+        values(0,'재고부족',#{orderId},'처리완료',NOW());
+    </insert>
+
+
+    <resultMap id="allCancelOrder" type="com.playground.admin_page.main.order.dto.order.CancelDto">
+        <id property="cancelId" column="cancel_id"/>
+        <result property="cancelReason" column="cancel_reason"/>
+        <result property="orderId" column="order_id"/>
+        <result property="processStatus" column="process_status"/>
+        <result property="cancelDate" column="cancel_date"/>
+    </resultMap>
+
+    <select id = "cancelInformation">
+       select * from order_cancel
+    </select>
+
+    <select id = "getSales" resultType ="java.lang.Integer">
+        select SUM(total_price)
+        from orders
+        where order_status='COMPLETE';
+    </select>
+
+    <select id = "getOrderCount" resultType ="java.lang.Integer">
+        select count(*)
+        from orders
+        where order_status='COMPLETE';
+    </select>
+
+
+    <resultMap id="findCompleteDetails" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
+    <id property="orderId" column="order_id"/>
+    <result property="userId" column="user_id"/>
+    <result property="orderDate" column="order_date"/>
+    <result property="orderStatus" column="order_status"/>
+    <result property="totalPrice" column="total_price"/>
+    <collection property="products" ofType="com.playground.admin_page.main.order.dto.order.ProductDetailDto">
+        <id property="orderProductId" column="order_product_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="productName" column="product_name"/>
+        <result property="productPrice" column="price"/>
+    </collection>
+</resultMap>
+<select id = "findComplete" resultMap = "findCompleteDetails">
+select o.*, op.*,p.product_name,p.price
+from orders o join order_product op
+on o.order_id= op.order_id
+join product p
+on p.product_id  = op.product_id
+where order_status ='COMPLETE';
+</select>
+
+
+
+
 </mapper>
