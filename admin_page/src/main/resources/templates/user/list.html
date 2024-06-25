@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>회원 조회</title>
-    <link rel="stylesheet">
+    <link rel="stylesheet" href="/css/userCss/user.css">
 </head>
 <body>
 
 <main>
     <h2 class="m-3">회원 조회</h2>
+    <form th:action="@{/user/searchList}" method="get">
+        <button type="submit">회원 검색</button>
+    </form>
+    <form th:action="@{/user/sendEmail}" method="get">
+        <button type="submit">이메일 보내기</button>
+    </form>
 
     <table class="table">
         <thead>
