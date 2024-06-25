@@ -7,7 +7,7 @@
         <id property="productId" column="product_id"/>
         <result property="productName" column="product_name"/>
         <result property="category" column="category"/>
-        <result property="productImage" column="product_image" jdbcType="BLOB"/>
+        <result property="productImage" column="product_image" jdbcType="VARCHAR"/>
         <result property="productDesc" column="product_desc"/>
         <result property="price" column="price"/>
         <result property="amount" column="amount"/>
