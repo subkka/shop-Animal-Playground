@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InfoDto {
-    private Long userNo;
+    private Long userId;
     private String userName;
     private String userEmail;
     private String address;

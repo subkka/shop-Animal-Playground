@@ -10,8 +10,8 @@
 
 
 <form action="#" th:action="@{/user/findById}" method="get">
-    <label for="userNo">회원 번호:</label>
-    <input type="text" id="userNo" name="userNo">
+    <label for="userId">회원 번호:</label>
+    <input type="text" id="userId" name="userId">
     <button type="submit">검색</button>
 </form>
 
@@ -43,7 +43,7 @@
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-        <td th:text="${user.userNo}"></td>
+        <td th:text="${user.userId}"></td>
         <td th:text="${user.userName}"></td>
         <td th:text="${user.userEmail}"></td>
         <td th:text="${user.address}"></td>

@@ -29,9 +29,9 @@ public class UserController {
     }
 
     @GetMapping("/findById")
-    public String findById(@RequestParam("userNo") Long userNo, Model model) {
+    public String findById(@RequestParam("userId") Long userId, Model model) {
         log.info("Get /user/findById");
-        List<InfoDto> users = userService.findById(userNo);
+        List<InfoDto> users = userService.findById(userId);
         log.debug("users = {}", users);
         model.addAttribute("users", users);
         return "list";

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>회원 조회</title>
+    <link rel="stylesheet">
 </head>
 <body>
 
+<main>
     <h2 class="m-3">회원 조회</h2>
 
     <table class="table">
@@ -15,26 +17,24 @@
             <th>회원 이름</th>
             <th>회원 이메일</th>
             <th>회원 주소</th>
-            <th>반려동물</th>
-            <th>이메일 수신 동의</th>
             <th>가입 날짜</th>
             <th>마지막 접속 날짜</th>
+            <th>반려동물</th>
+            <th>이메일 수신 동의</th>
             <th>휴면계정 여부</th>
-
-
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user, stat : ${users}" th:object="${user}">
-            <td th:text="*{userNo}"></td>
-            <td th:text="*{userName}"></td>
-            <td th:text="*{userEmail}"></td>
-            <td th:text="*{address}"></td>
-            <td th:text="*{userPet}"></td>
-            <td th:text="*{joinDate}"></td>
-            <td th:text="*{lastConnect}"></td>
-            <td th:text="*{dormantUser}"></td>
-
+        <tr th:each="user : ${users}">
+            <td th:text="${user.userId}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.userEmail}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.joinDate}"></td>
+            <td th:text="${user.lastConnect}"></td>
+            <td th:text="${user.userPet}"></td>
+            <td th:text="${user.userEmailAble}"></td>
+            <td th:text="${user.dormantUser}"></td>
         </tr>
         </tbody>
     </table>

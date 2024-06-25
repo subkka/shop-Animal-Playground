@@ -2,7 +2,7 @@ spring:
   application:
     name: admin_page
   datasource:
-    url: ssg-java3.iptime.org:3306/playgrounddb
+    url: jdbc:mysql://ssg-java3.iptime.org:3306/playgrounddb
     username: playground
     password: db1234
     driver-class-name: com.mysql.cj.jdbc.Driver

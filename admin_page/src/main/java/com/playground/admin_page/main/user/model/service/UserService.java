@@ -18,8 +18,8 @@ public class UserService {
     public List<InfoDto> findAll(){
         return userMapper.findAll();
     }
-    public List<InfoDto> findById(Long userNo){
-        return userMapper.findById(userNo);
+    public List<InfoDto> findById(Long userId){
+        return userMapper.findById(userId);
 
     }
     public List<InfoDto> findByPet(UserPet userPet){
