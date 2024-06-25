@@ -26,6 +26,8 @@ logging:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+
     default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
   type-aliases-package: com.playground
   mapper-locations: classpath*:mappers/**/*-mapper.xml
+
