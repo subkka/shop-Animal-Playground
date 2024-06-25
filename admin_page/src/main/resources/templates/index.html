@@ -78,7 +78,6 @@
                                                 <p style="margin: 0">입력한 내용을 다시 확인해주세요.</p>
                                             </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block" id="login-btn">로그인</button>
-                                        <div th:text="${session.adminAccount}"></div>
                                     </form>
                                 </div>
                             </div>
@@ -119,7 +118,6 @@
                     password: password
                 },
                 success (response) {
-                    console.log(response);
                     if (response === 'success') {
                         window.location.href = '[[@{/main}]]';
                     } else {

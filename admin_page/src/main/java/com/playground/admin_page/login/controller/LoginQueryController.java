@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class LoginQueryController {
     private final LoginService loginService;
 
-    @GetMapping(produces = "text/plain; charset=utf-8")
+    @GetMapping
     @ResponseBody
-    public String login(Model model, @RequestParam String id, @RequestParam String password) {
+    public String login(Model model, @RequestParam String id, @RequestParam String password) throws InterruptedException {
         log.info("GET /login");
         log.debug("id/pwd: {}/{}", id, password);
 
         // 로그인 정보로 쿼리 조회
         AdminAccountDto adminAccountDto = loginService.findByLoginInfo(id, password);
-        log.debug("memberDto = {}", adminAccountDto);
+        log.debug("adminAccountDto = {}", adminAccountDto);
 
         if (adminAccountDto != null) { // 아이디 패스워드가 일치하는 경우
             // session에 저장

@@ -12,11 +12,6 @@ import java.util.Map;
 
 @Slf4j
 @Controller
-@RequestMapping("/auth")
 public class AuthController {
-    @GetMapping("/check-login-status")
-    public String checkLoginStatus(Model model) {
-        log.info("GET /auth/check-login-status");
-        return "login";
-    }
+
 }
