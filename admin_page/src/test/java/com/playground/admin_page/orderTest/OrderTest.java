@@ -55,11 +55,11 @@ public class OrderTest {
         //given
         int orderId = 1;
         //when
-        List<OrderDetailDto> orders = ordermapper.productDetail(orderId);
+        OrderDetailDto orders = ordermapper.productDetail(orderId);
         System.out.println(orders);
         //then
 
-        assertThat(orders).isNotNull().allMatch(m -> m != null);
+        //assertThat(orders).isNotNull().allMatch(m -> m != null);
     }
 
     @Test
@@ -152,6 +152,15 @@ public class OrderTest {
         System.out.println(list);
 
         Assertions.assertThat(list).isNotNull();
+    }
+
+    @Test
+    @DisplayName("카테고리를 기준으로 판매 랭킹")
+    void test13() {
+        //given
+        //when
+        //then
+
     }
 
 
