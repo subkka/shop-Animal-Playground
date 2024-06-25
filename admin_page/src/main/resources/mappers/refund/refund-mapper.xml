@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playground.admin_page.main.refund.model.dao.RefundMapper">
+    <select id="findRefundList" resultType="refundDto">
+        select
+            *
+        from
+            refund
+    </select>
+
+    <select id="findRefundDetailList" resultType="refundDto">
+        select
+            *
+        from
+            refund
+        where
+            order_id = #{orderId}
+    </select>
+
+    <update id="updateProcessStatus" parameterType="map">
+        update
+            refund
+        set
+            process_status = #{processStatus}
+        where
+            order_id = #{orderId};
+    </update>
+
+    <insert id="insertRefundProduct" useGeneratedKeys="true" keyProperty="refundProductId">
+        insert into
+            refund_product (order_product_id, refund_id)
+        values
+        <foreach collection="list" item="prod" separator=",">
+            (#{prod.orderProductId}, #{prod.refundId})
+        </foreach>
+    </insert>
+
+    <resultMap id="RefundProductDtoMap" type="RefundProductDto">
+        <result column="order_product_id" property="orderProductId"/>
+        <result column="order_id" property="refundId"/>
+    </resultMap>
+
+    <select id="findProductForRefund" resultMap="RefundProductDtoMap">
+        select
+            order_product_id, order_id
+        from
+            order_product
+        where
+            order_id = #{orderId}
+    </select>
+</mapper>
