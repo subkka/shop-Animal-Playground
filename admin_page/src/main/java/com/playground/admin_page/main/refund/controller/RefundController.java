@@ -13,6 +13,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequestMapping("/refund")
 @RequiredArgsConstructor
 public class RefundController {
     private final RefundService refundService;
@@ -24,7 +25,7 @@ public class RefundController {
         List<RefundDto> refundList = refundService.findRefundList();
         log.debug("refundList = {}", refundList);
         model.addAttribute("refundList", refundList);
-        return "refundList";
+        return "refund/refundList";
     }
 
     @GetMapping("/refundDetailList/{orderId}")
