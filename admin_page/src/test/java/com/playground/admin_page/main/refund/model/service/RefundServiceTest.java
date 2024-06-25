@@ -51,7 +51,7 @@ class RefundServiceTest {
     void updateProcessStatus() {
         // given
         Long id = 1L;
-        String processStatus = "처리중";
+        String processStatus = "처리완료";
         // when
         int result = refundMapper.updateProcessStatus(id, processStatus);
         System.out.println(result);
