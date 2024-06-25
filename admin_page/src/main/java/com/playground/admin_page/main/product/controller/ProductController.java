@@ -43,4 +43,16 @@ public class ProductController {
         productService.updateProduct(product);
         return "redirect:/product/detail/" + product.getProductId();
     }
+    @GetMapping("/create")
+    public String showAddProductForm(Model model) {
+        model.addAttribute("product", new ProductDto());
+        return "product/create";
+    }
+
+    @PostMapping("/create")
+    public String createProduct(@ModelAttribute ProductDto productDto) {
+        log.info("Adding new product: {}", productDto);
+        productService.createProduct(productDto);
+        return "redirect:/product/list";
+    }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -9,19 +9,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>SB Admin 2 - Blank</title>
 
-    <!-- Custom fonts for this template -->
+    <!-- Custom fonts for this template-->
     <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
 
-    <!-- Custom styles for this template -->
+    <!-- Custom styles for this template-->
     <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -103,13 +100,14 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-               aria-expanded="true" aria-controls="collapsePages">
+        <li class="nav-item active">
+            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+               aria-controls="collapsePages">
                 <i class="fas fa-fw fa-folder"></i>
                 <span>Pages</span>
             </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div id="collapsePages" class="collapse show" aria-labelledby="headingPages"
+                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Login Screens:</h6>
                     <a class="collapse-item" href="login.html">Login</a>
@@ -118,7 +116,7 @@
                     <div class="collapse-divider"></div>
                     <h6 class="collapse-header">Other Pages:</h6>
                     <a class="collapse-item" href="404.html">404 Page</a>
-                    <a class="collapse-item" href="blank.html">Blank Page</a>
+                    <a class="collapse-item active" href="blank.html">Blank Page</a>
                 </div>
             </div>
         </li>
@@ -131,7 +129,7 @@
         </li>
 
         <!-- Nav Item - Tables -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="tables.html">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Tables</span></a>
@@ -158,11 +156,9 @@
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
                 <!-- Sidebar Toggle (Topbar) -->
-                <form class="form-inline">
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-                </form>
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
 
                 <!-- Topbar Search -->
                 <form
@@ -278,8 +274,7 @@
                                 </div>
                                 <div class="font-weight-bold">
                                     <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                        problem I've been having.
-                                    </div>
+                                        problem I've been having.</div>
                                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                                 </div>
                             </a>
@@ -291,8 +286,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">I have the photos that you ordered last month, how
-                                        would you like them sent to you?
-                                    </div>
+                                        would you like them sent to you?</div>
                                     <div class="small text-gray-500">Jae Chun · 1d</div>
                                 </div>
                             </a>
@@ -304,8 +298,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Last month's report looks great, I am very happy with
-                                        the progress so far, keep up the good work!
-                                    </div>
+                                        the progress so far, keep up the good work!</div>
                                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                 </div>
                             </a>
@@ -317,8 +310,7 @@
                                 </div>
                                 <div>
                                     <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                        told me that people say this to all dogs, even if they aren't good...
-                                    </div>
+                                        told me that people say this to all dogs, even if they aren't good...</div>
                                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                 </div>
                             </a>
@@ -365,56 +357,58 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
+            <!-- Begin Page Content -->
             <div class="container-fluid">
 
                 <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Product List</h1>
+                <h1 class="h3 mb-4 text-gray-800">상품 등록</h1>
 
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-primary">상품 목록</h6>
-                        <div>
-                            <a href="/admin/product/create" class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                                    <span class="text">상품 등록</span>
-                                </a>
-                            </div>
-                        </div>
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">상품 정보 입력</h6>
+                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Desc</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
-                                    <th>Display</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="product, stat : ${products}" th:object="${product}">
-                                    <td th:text="${product.productId}"></td>
-                                    <td>
-                                        <a th:href="@{/product/detail/{id}(id=${product.productId})}" th:text="${product.productName}"></a>
-                                    </td>
-                                    <td th:text="${product.category}"></td>
-                                    <td th:text="${product.productDesc}"></td>
-                                    <td th:text="${product.price}"></td>
-                                    <td th:class="${product.amount <= 10 ? 'text-danger font-weight-bold' : ''}" th:text="${product.amount}"></td>
-                                    <td th:text="${product.isDisplay}"></td>
-                                    <td th:text="${product.productStatus}"></td>
-                                    <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <form th:action="@{/product/create}" method="post">
+                            <div class="form-group">
+                                <label for="productName">상품명</label>
+                                <input type="text" class="form-control" id="productName" name="productName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">카테고리</label>
+                                <input type="text" class="form-control" id="category" name="category">
+                            </div>
+                            <div class="form-group">
+                                <label for="productDesc">상품 설명</label>
+                                <textarea class="form-control" id="productDesc" name="productDesc" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="price">가격</label>
+                                    <input type="number" class="form-control" id="price" name="price" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="amount">수량</label>
+                                    <input type="number" class="form-control" id="amount" name="amount" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        <input type="hidden" name="isDisplay" value="false" />
+                                        <input type="checkbox" class="custom-control-input" id="isDisplay" name="isDisplay" value="true">
+                                        <label class="custom-control-label" for="isDisplay">상품 진열</label>
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="productStatus">상품 상태</label>
+                                <select class="form-control" id="productStatus" name="productStatus">
+                                    <option value="판매중">판매중</option>
+                                    <option value="단종">단종</option>
+                                    <option value="품절">품절</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">등록</button>
+                            <a href="/admin/product/list" class="btn btn-secondary">취소</a>
+                        </form>
                     </div>
                 </div>
 
@@ -474,13 +468,6 @@
 
 <!-- Custom scripts for all pages-->
 <script src="/admin/js/sb-admin-2.min.js"></script>
-
-<!-- Page level plugins -->
-<script src="/admin/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-<!-- Page level custom scripts -->
-<script src="/admin/js/demo/datatables-demo.js"></script>
 
 </body>
 
