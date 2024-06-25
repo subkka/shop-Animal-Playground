@@ -5,9 +5,9 @@
 
 <head>
     <title>update</title>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<!--    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">-->
+<!--    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>-->
+<!--    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>-->
 </head>
 
 <body id="page-top">
@@ -22,7 +22,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <form th:action="@{/refund/update}" method="post" th:object="${refundDetailList}">
-                            <input type="hidden" name="refundId" th:value="*{orderId}">
+                            <input type="hidden" name="orderId" th:value="*{orderId}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>주문 번호:</strong> <span th:text="*{orderId}"></span></p>
@@ -33,9 +33,14 @@
                                                 <option value="확정" selected>확정</option>
                                                 <option value="반려">반려</option>
                                             </th:block>
-                                            <th:block th:unless="*{refundYn == '확정'}">
-                                                <option>확정</option>
+                                            <th:block th:if="*{refundYn == '반려'}">
+                                                <option value="확정">확정</option>
                                                 <option value="반려" selected>반려</option>
+                                            </th:block>
+                                            <th:block th:unless="*{refundYn}">
+                                                <option value="" selected disabled>미정</option>
+                                                <option value="확정">확정</option>
+                                                <option value="반려">반려</option>
                                             </th:block>
                                         </select>
                                     </p>

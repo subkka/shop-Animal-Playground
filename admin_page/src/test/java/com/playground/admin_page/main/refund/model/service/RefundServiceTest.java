@@ -8,12 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class RefundServiceTest {
@@ -53,7 +51,7 @@ class RefundServiceTest {
         Long id = 1L;
         String processStatus = "처리완료";
         // when
-        int result = refundMapper.updateProcessStatus(id, processStatus);
+        int result = refundMapper.updateProcessStatus(id, processStatus, processStatus);
         System.out.println(result);
         // then
         assertThat(result)

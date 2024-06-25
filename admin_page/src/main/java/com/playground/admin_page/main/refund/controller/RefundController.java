@@ -48,19 +48,25 @@ public class RefundController {
     }
 
     @PostMapping("/update")
-    public void updateProcessStatus(@RequestParam Long refundId, @RequestParam String refundYn, @RequestParam String processStatus) {
+    public String updateProcessStatus(@RequestParam("orderId") Long orderId, @RequestParam(required = false) String refundYn, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
         log.info("POST updateProcessStatus");
-        log.debug("orderId = {}", refundId);
+        log.debug("orderId = {}", orderId);
         log.debug("refundYn = {}", refundYn);
         log.debug("processStatus = {}", processStatus);
+        if (refundYn != null && refundYn.isEmpty()) {
+            refundYn = null;
+        }
+        int refundDetailList = refundService.updateProcessStatus(orderId, refundYn, processStatus);
+        redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
+        return "redirect:/refund/refundDetailList/" + orderId;
     }
 
 //    @PostMapping("/update")
-//    public String updateProcessStatus(@ModelAttribute RefundDto refundDto, RedirectAttributes redirectAttributes) {
+//    public String updateProcessStatus(@RequestParam Long orderId, @RequestParam String refundYn, @RequestParam String processStatus) {
 //        log.info("POST updateProcessStatus");
-//        log.debug("refundDto = {}", refundDto);
-////        int refundDetailList = refundService.updateProcessStatus(id, processStatus);
-////        redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
-//        return "redirect:/refund/refundDetailList";
+//        log.debug("orderId = {}", orderId);
+//        log.debug("refundYn = {}", refundYn);
+//        log.debug("processStatus = {}", processStatus);
+//        return "redirect:/refund/refundDetailList/" + orderId;
 //    }
 }
