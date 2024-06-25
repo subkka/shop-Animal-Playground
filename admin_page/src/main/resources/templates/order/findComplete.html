@@ -1,0 +1,58 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+</head>
+<body>
+
+<main layout:fragment="main" class="container">
+
+    <h1>주문 내역 출력 </h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>주문 번호</th>
+            <th>고객 번호</th>
+            <th>주문 일시</th>
+            <th>주문 상태</th>
+            <th>주문 가격</th>
+            <th>상품 번호</th>
+            <th>주문한 상품 개수</th>
+            <th>상품 이름</th>
+            <th>상품 가격</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="lists : ${lists}">
+            <td th:text="${lists.orderId}"></td>
+            <td th:text="${lists.userId}"></td>
+            <td th:text="${lists.orderDate}"></td>
+            <td th:text="${lists.orderStatus}"></td>
+            <td th:text="${#numbers.formatInteger(lists.totalPrice, 3, 'COMMA')}"></td>
+            <td th:text="${lists.products[0].productId}"></td>
+            <td th:text="${lists.products[0].quantity}"></td>
+            <td th:text="${lists.products[0].productName}"></td>
+            <td th:text="${lists.products[0].productPrice}"></td>
+        </tr>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+</body>
+</html>
+<!--/*<td>
+    <table>
+        <tr th:each="details : ${details}">
+        <tr th:each="item : ${details.orderItems} ">
+            <td th:text="${item.productId}"></td>
+            <td th:text="${item.quantity}"></td>
+        </tr>
+    </table>
+</td>*/-->
