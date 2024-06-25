@@ -4,7 +4,7 @@
       layout:decorate="~{layout/default}">
 
 <head>
-    <title>RefundDetail</title>
+    <title>update</title>
 </head>
 
 <body id="page-top">
@@ -26,18 +26,18 @@
                             <div class="col-md-6">
                                 <h5 class="mb-3">Additional Details</h5>
                                 <p><strong>환불 여부:</strong>
-                                    <span th:if="${refundDetailList.refundId}" class="badge badge-success">Displayed</span>
-                                    <span th:unless="${refundDetailList.refundId}" class="badge badge-secondary">미정</span>
+                                    <select th:text="${refundDetailList.processStatus}">
+                                        <option value="" selected disabled>선택</option>
+                                        <option value="처리중">처리중</option>
+                                        <option value="처리완료">처리완료</option>
+                                    </select>
                                 </p>
-<!--                                <p><strong>환불 처리 상태:</strong>-->
-<!--                                    <select th:text="${refundDetailList.processStatus}">-->
-<!--                                        <option value="처리대기">처리대기</option>-->
-<!--                                        <option value="처리중">처리중</option>-->
-<!--                                        <option value="처리완료">처리완료</option>-->
-<!--                                    </select>-->
-<!--                                </p>-->
                                 <p><strong>환불 처리 상태:</strong>
-                                    <span th:text="${refundDetailList.processStatus}" class="badge badge-info"></span>
+                                    <select th:text="${refundDetailList.processStatus}">
+                                        <option value="처리대기">처리대기</option>
+                                        <option value="처리중">처리중</option>
+                                        <option value="처리완료">처리완료</option>
+                                    </select>
                                 </p>
                             </div>
                         </div>
@@ -54,7 +54,6 @@
             </div>
         </div>
         <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/refund/update}">수정</button>
-        <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/ref}">목록</button>
     </main>
 
     <!-- Scroll to Top Button-->

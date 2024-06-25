@@ -37,7 +37,7 @@ public class RefundController {
         return "refund/refundDetailList";
     }
 
-    @PostMapping("/updateProcessStatus/{orderId}")
+    @PostMapping("/update/{orderId}")
     public String updateProcessStatus(@PathVariable("orderId") Long id, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
         log.info("POST updateProcessStatus");
         int refundDetailList = refundService.updateProcessStatus(id, processStatus);
