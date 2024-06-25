@@ -48,9 +48,9 @@ public class UserController {
 
 
     @GetMapping("/findByEmailAble")
-    public String findByEmailAbleStatus(@RequestParam("userEmailAble") String userEmailAble, Model model) {
+    public String findByEmailAbleStatus(@RequestParam("userEmailAble") UserEmailAble userEmailAble, Model model) {
         log.info("Get /user/findByEmailAbleStatus");
-        List<InfoDto> users = userService.findByEmailAble();
+        List<InfoDto> users = userService.findByEmailAble(userEmailAble);
         log.debug("users = {}", users);
         model.addAttribute("users", users);
         return "list";

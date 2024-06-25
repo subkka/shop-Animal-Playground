@@ -26,8 +26,8 @@ public class UserService {
         return userMapper.findByPet(userPet);
     }
 
-    public List<InfoDto> findByEmailAble() {
-        return userMapper.findByEmailAble();
+    public List<InfoDto> findByEmailAble(UserEmailAble userEmailAble) {
+        return userMapper.findByEmailAble(userEmailAble);
     }
 
     public void setDormant() {
