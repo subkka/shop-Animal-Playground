@@ -6,5 +6,20 @@ import lombok.NoArgsConstructor;
 
 
 public enum UserEmailAble {
-    Y,N;
+    Y("1", true),
+    N("0", false);
+
+    private String a;
+    private boolean b;
+
+    UserEmailAble(String a, boolean b) {
+        this.a = a;
+        this.b = b;
+    }
+    public String getA(){
+        return a;
+    }
+    public boolean isB(){
+        return b;
+    }
 }
