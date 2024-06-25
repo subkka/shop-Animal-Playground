@@ -17,11 +17,12 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @GetMapping("/list")
-    public void list(Model model) {
+    public String list(Model model) {
         log.info("GET /product/list");
         List<ProductDto> products = productService.findAll();
         log.debug("products ={}", products);
         model.addAttribute("products", products);
+        return "/product/list";
     }
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable Long id, Model model) {
