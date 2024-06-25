@@ -42,7 +42,7 @@ public class OrderController {
         if (status == "") {
             orders = orderService.findAllOrder();
             model.addAttribute("orders", orders);
-            return "findAllOrder";
+            return "/order/findAllOrder";
         } else {
             orders = orderService.findByStatus(status);
             model.addAttribute("orders", orders);
