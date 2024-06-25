@@ -14,44 +14,46 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
                 </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>주문번호</th>
-                                    <th>신청일시</th>
-                                    <th>처리상태</th>
-                                    <th>사유</th>
-                                    <th>사유상세</th>
-                                </tr>
-                            </thead>
-<!--                                    <tfoot>-->
-<!--                                        <tr>-->
-<!--                                            <th>Name</th>-->
-<!--                                            <th>Position</th>-->
-<!--                                            <th>Office</th>-->
-<!--                                            <th>Age</th>-->
-<!--                                            <th>Start date</th>-->
-<!--                                            <th>Salary</th>-->
-<!--                                        </tr>-->
-<!--                                    </tfoot>-->
-                            <tbody>
-                                <tr th:each="refundDetail, stat : ${refundDetailList}" th:object="${refundDetail}">
-                                    <td th:text="*{orderId}">주문번호</td>
-                                    <td th:text="*{applicationDate}">신청일시</td>
-                                    <td th:text="*{processStatus}">처리상태</td>
-                                    <td th:text="*{refundReasonType}">사유</td>
-                                    <td th:text="*{refundReasonDetail}">사유상세</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>주문 번호:</strong> <span th:text="${refundDetailList.refundId}"></span></p>
+                                <p><strong>신청 일시:</strong> <span th:text="${#temporals.format(refundDetailList.applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Additional Details</h5>
+                                <p><strong>환불 여부:</strong>
+                                    <span th:if="${refundDetailList.refundId}" class="badge badge-success">Displayed</span>
+                                    <span th:unless="${refundDetailList.refundId}" class="badge badge-secondary">Not Displayed</span>
+                                </p>
+<!--                                <p><strong>환불 처리 상태:</strong>-->
+<!--                                    <select th:text="${refundDetailList.processStatus}">-->
+<!--                                        <option value="처리대기">처리대기</option>-->
+<!--                                        <option value="처리중">처리중</option>-->
+<!--                                        <option value="처리완료">처리완료</option>-->
+<!--                                    </select>-->
+<!--                                </p>-->
+                                <p><strong>환불 처리 상태:</strong>
+                                    <span th:text="${refundDetailList.processStatus}" class="badge badge-info"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h5 class="mb-3">Description</h5>
+                                <p><strong>사유:</strong> <span th:text="${refundDetailList.refundReasonType}"></span></p>
+                                <p><strong>상세 내용</strong></p>
+                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="${refundDetailList.refundReasonDetail}"></textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <button type="button" class="btn_medium" style="align-content: center" th:onclick="@{/refund/refundEdit}">수정</button>
     </main>
 
     <!-- Scroll to Top Button-->
