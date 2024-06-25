@@ -71,32 +71,20 @@
         </thead>
         <tbody>
         <!--orderitem에 개수에 맞게 실행 할 수 있도록 수정 해야됨-->
-        <tr th:each="details : ${details}">
-            <td th:text="${details.orderId}"></td>
-            <td th:text="${details.userId}"></td>
-            <td th:text="${details.orderDate}"></td>
-            <td th:text="${details.orderStatus}"></td>
-            <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
-            <td th:text="${details.products[0].productId}"></td>
-            <td th:text="${details.products[0].quantity}"></td>
-            <td th:text="${details.products[0].productName}"></td>
-            <td th:text="${details.products[0].productPrice}"></td>
-            <td th:text="${details.products[0].amount}"></td>
-        </tr>
-        <!--여기도 일단 수정-->
-        <!--orderitems가 2개이상일 때 출력 1개 일때는  출력 안함-->
-        <!--/*th:if="${detail.orderitems.size() > 1} 조건문 활용해서 해야될거 같은데 */-->
-        <tr th:each="details : ${details}">
-            <td th:text="${details.orderId}"></td>
-            <td th:text="${details.userId}"></td>
-            <td th:text="${details.orderDate}"></td>
-            <td th:text="${details.orderStatus}"></td>
-            <td th:text="${#numbers.formatInteger(details.totalPrice, 3, 'COMMA')}"></td>
 
-            <!--/*        <td th:text="${details.orderItems[1].productId}"></td>*/-->
-            <!--/*        <td th:text="${details.orderItems[1].quantity}"></td>-*/-->
+        <tr th:each="product : ${orderDetailDto.products}">
+            <td th:text="${orderDetailDto.orderId}"></td>
+            <td th:text="${orderDetailDto.userId}"></td>
+            <td th:text="${orderDetailDto.orderDate}"></td>
+            <td th:text="${orderDetailDto.orderStatus}"></td>
+            <td th:text="${#numbers.formatInteger(orderDetailDto.totalPrice, 3, 'COMMA')}"></td>
+            <td th:text="${product.productId}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td th:text="${product.amount}"></td>
         </tr>
-        <tr th:each="details : ${details}">
+        <tr th:each="orderDetailDto : ${orderDetailDto}">
             <td>
                 <a th:href="@{|/order/orderCancel/${details.orderId}|}" onclick="showAlert()">
                     <button type="button">주문취소</button>

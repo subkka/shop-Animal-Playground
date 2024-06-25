@@ -1,8 +1,6 @@
 package com.playground.admin_page.main.order.controller;
 
-import com.playground.admin_page.main.order.dto.order.CancelDto;
-import com.playground.admin_page.main.order.dto.order.OrderDetailDto;
-import com.playground.admin_page.main.order.dto.order.OrderDto;
+import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +30,8 @@ public class OrderController {
     @GetMapping("/detail/{id}")
     public String getOrderDetail(@PathVariable int id, Model model) {
 //        List<OrderDetailDto> details = orderService.getOrderDetail(id);
-        List<OrderDetailDto> details = orderService.productDetail(id);
-        model.addAttribute("details", details);
+        OrderDetailDto detail = orderService.productDetail(id);
+        model.addAttribute("detail", detail);
         return "/order/detail";
     }
 
@@ -57,9 +55,8 @@ public class OrderController {
 
     @GetMapping("/informationProduct/{id}")
     public String informationProduct(@PathVariable int id, Model model) {
-//        List<OrderDetailDto> details = orderService.getOrderDetail(id);
-        List<OrderDetailDto> details = orderService.informationProductDetail(id);
-        model.addAttribute("details", details);
+        OrderDetailDto orderDetailDto = orderService.informationProductDetail(id);
+        model.addAttribute("orderDetailDto", orderDetailDto);
         return "/order/informationProduct";
     }
 
@@ -75,8 +72,23 @@ public class OrderController {
     public String CancelInformation(Model model) {
         List<CancelDto> cancels = orderService.cancelInformation();
         log.debug("{}", cancels);
-        model.addAttribute("cancels",  cancels);
+        model.addAttribute("cancels", cancels);
         return "/order/cancelInformation";
     }
 
+    @GetMapping("/sales")
+    public String getSales(Model model) {
+        int count = orderService.getOrderCount();
+        int sales = orderService.getSales();
+        SalesDto salesDto = new SalesDto(count, sales);
+        model.addAttribute("salesDto", salesDto);
+        return "/order/sales";
+    }
+
+    @GetMapping("/findComplete")
+    public String findComplete(Model model) {
+        List<OrderDetailDto> lists = orderService.findComplete();
+        model.addAttribute("lists", lists);
+        return "/order/findComplete";
+    }
 }

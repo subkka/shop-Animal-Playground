@@ -113,7 +113,6 @@ INSERT INTO user (user_id, user_name, user_email, user_email_able, address, join
 (12, '하하', 'gkgk.wilson@example.com', TRUE, '서울특별시 마포구 ', '2023-08-25', '2023-09-16', 'Cat',false),
 (13, '고윤정', 'rhdbswjd.wilson@example.com', TRUE, '서울특별시 성북구 ', '2022-01-25', '2022-02-16', 'Dog',false);
 
-
 # 주문 정보 추가
 select * from orders;
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
@@ -137,6 +136,23 @@ INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VA
          (17,12,'2023-06-16 16:00:00','입금전',30000),
          (18,13,'2023-06-17 17:00:00','입금전',30000);
 
+INSERT INTO orders (order_id, user_id, order_date, order_status, total_price)
+VALUES
+    (19,9,'2022-06-13 13:00:00','COMPLETE',30000),
+    (20,9,'2022-06-13 13:00:00','COMPLETE',40000),
+    (21,9,'2022-06-13 13:00:00','COMPLETE',20000),
+    (22,10,'2023-06-13 13:00:00','COMPLETE',50000),
+    (23,11,'2023-06-13 13:00:00','COMPLETE',10000),
+    (24,12,'2023-06-13 13:00:00','COMPLETE',30000),
+    (25,13,'2023-06-13 13:00:00','COMPLETE',40000),
+    (26,13,'2024-06-13 13:00:00','COMPLETE',20000),
+    (27,8
+,'2024-06-13 13:00:00','COMPLETE',60000),
+    (28,8,'2024-06-13 13:00:00','COMPLETE',32000);
+999 10 11 12 13 13 8 8
+select *
+from orders where order_status = 'COMPLETE';
+
 # 상품 정보 추가
 select * from product;
 INSERT INTO product (product_id, product_name, category, product_image, product_desc, price, amount, is_display, product_status, created_at)
@@ -157,7 +173,6 @@ VALUES
     (14, '고양이 캣타워', '가구', NULL, '다채로운 캣타워', 75000, 30, TRUE, '판매중', '2024-06-14'),
     (15, '고양이 산책 가방', '액세서리', NULL, '편안한 산책을 위한 가방', 40000, 60, TRUE, '판매중', '2024-06-16'),
     (16, '고양이 활동 장난감', '장난감', NULL, '활동적인 고양이를 위한 장난감', 22000, 80, TRUE, '판매중', '2024-06-18');
-
 
 select * from product;
 # 주문상품 정보 추가
@@ -192,29 +207,26 @@ values
     (21,17,14,1), # 75000
     (22,18,12,1); # 60000
 
+INSERT into order_product (order_product_id, order_id,product_id,quantity)
+values
+    (23,19,10,1),#15000
+    (24,20,11,1),# 120000
+    (25,21,12,1),#60000
+    (26,22,9,1), #18000
+    (27,23,13,1),#30000
+    (28,24,14,1),#75000
+    (29,25,15,1),#40000
+    (30,26,16,1),#22000
+    (31,27,10,1),#15000
+    (32,28,11,1);#120000
 
-select *
-from orders
-where order_status = '입금전';
+                                update orders
+                                set total_price = 15000
+                                where order_id =27;
 
-update orders
-set order_status='PENDING'
-where order_id = 14;
 
-update orders
-set order_status='PENDING'
-where order_id = 15;
-update orders
-set order_status='PENDING'
-where order_id = 16;
-update orders
-set order_status='PENDING'
-where order_id = 17;
-update orders
-set order_status='PENDING'
-where order_id = 18;
 
-select * from orders where order_status = 'PENDING'
+
 
 
 

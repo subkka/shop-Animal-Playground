@@ -4,6 +4,7 @@ import com.playground.admin_page.main.order.dao.OrderMapper;
 import com.playground.admin_page.main.order.dto.order.CancelDto;
 import com.playground.admin_page.main.order.dto.order.OrderDetailDto;
 import com.playground.admin_page.main.order.dto.order.OrderDto;
+import com.playground.admin_page.main.order.dto.order.ProductDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,11 @@ public class OrderService {
     }
 
 
-    public List<OrderDetailDto> productDetail(int orderId) {
+    public OrderDetailDto productDetail(int orderId) {
         return orderMapper.productDetail(orderId);
     }
 
-    public List<OrderDetailDto> informationProductDetail(int id) {
+    public OrderDetailDto informationProductDetail(int id) {
         return orderMapper.informationProductDetail(id);
     }
 
@@ -41,5 +42,17 @@ public class OrderService {
 
     public List<CancelDto> cancelInformation() {
         return orderMapper.cancelInformation();
+    }
+
+    public int getSales() {
+        return orderMapper.getSales();
+    }
+
+    public int getOrderCount() {
+        return orderMapper.getOrderCount();
+    }
+
+    public List<OrderDetailDto> findComplete() {
+        return orderMapper.findComplete();
     }
 }

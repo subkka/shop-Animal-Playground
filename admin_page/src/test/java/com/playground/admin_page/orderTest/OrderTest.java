@@ -120,8 +120,40 @@ public class OrderTest {
         //when
         Assertions.assertThat(cancel).isNotNull();
         //then
-
     }
+
+    @Test
+    @DisplayName("총 매출 조회하기")
+    void test10() {
+        //given 692000
+        int sales = ordermapper.getSales();
+        //when
+        Assertions.assertThat(sales).isEqualTo(692000);
+        //then
+    }
+
+    @Test
+    @DisplayName("")
+    void test11() {
+        //given
+        int result = ordermapper.getOrderCount();
+        //when
+        Assertions.assertThat(result).isEqualTo(16);
+        //then
+    }
+
+
+
+    @Test
+    @DisplayName("상태 주문 완료인거 조회")
+    void test12() {
+        //given
+        List<OrderDetailDto> list = ordermapper.findComplete();
+        System.out.println(list);
+
+        Assertions.assertThat(list).isNotNull();
+    }
+
 
 
 }
