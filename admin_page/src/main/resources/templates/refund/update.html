@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns="http://www.w3.org/1999/html"
       layout:decorate="~{layout/default}">
 
 <head>
@@ -17,43 +17,57 @@
                     <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
                 </div>
                 <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>주문 번호:</strong> <span th:text="${refundDetailList.refundId}"></span></p>
-                                <p><strong>신청 일시:</strong> <span th:text="${#temporals.format(refundDetailList.applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                    <form name="refundUpdate" action="" method="post">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>주문 번호:</strong> <span th:text="${refundDetailList.refundId}"></span></p>
+                                    <p><strong>신청 일시:</strong> <span th:text="${#temporals.format(refundDetailList.applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                                    <p><strong>환불 여부:</strong>
+                                        <select>
+                                            <th:block th:if="${refundDetailList.refundYn == '확정'}">
+                                                <option th:text="${refundDetailList.refundYn}" selected></option>
+                                                <option>반려</option>
+                                            </th:block>
+                                            <th:block th:unless="${refundDetailList.refundYn == '확정'}">
+                                                <option>확정</option>
+                                                <option th:text="${refundDetailList.refundYn}" selected></option>
+                                            </th:block>
+                                        </select>
+                                    </p>
+                                    <p><strong>환불 처리 상태:</strong>
+                                        <select>
+                                            <th:block th:if="${refundDetailList.processStatus == '처리대기'}">
+                                                <option th:text="${refundDetailList.processStatus}" selected></option>
+                                                <option>처리중</option>
+                                                <option>처리완료</option>
+                                            </th:block>
+                                            <th:block th:if="${refundDetailList.processStatus == '처리중'}">
+                                                <option id="1">처리대기</option>
+                                                <option id="2" th:text="${refundDetailList.processStatus}" selected></option>
+                                                <option id="3">처리완료</option>
+                                            </th:block>
+                                        </select>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <h5 class="mb-3">Additional Details</h5>
-                                <p><strong>환불 여부:</strong>
-                                    <select th:text="${refundDetailList.processStatus}">
-                                        <option value="" selected disabled>선택</option>
-                                        <option value="처리중">처리중</option>
-                                        <option value="처리완료">처리완료</option>
-                                    </select>
-                                </p>
-                                <p><strong>환불 처리 상태:</strong>
-                                    <select th:text="${refundDetailList.processStatus}">
-                                        <option value="처리대기">처리대기</option>
-                                        <option value="처리중">처리중</option>
-                                        <option value="처리완료">처리완료</option>
-                                    </select>
-                                </p>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <h5 class="mb-3">Description</h5>
+                                    <p><strong>사유:</strong> <span th:text="${refundDetailList.refundReasonType}"></span></p>
+                                    <p><strong>상세 내용</strong></p>
+                                    <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="${refundDetailList.refundReasonDetail}" readonly></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <h5 class="mb-3">Description</h5>
-                                <p><strong>사유:</strong> <span th:text="${refundDetailList.refundReasonType}"></span></p>
-                                <p><strong>상세 내용</strong></p>
-                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="${refundDetailList.refundReasonDetail}"></textarea>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
+            <div class="mb-4">
+                <a class="btn btn-primary" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">수정</a>
+                <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundDetailList/{refundId}(refundId=*{refundId})}';|">이전</a>
+            </div>
         </div>
-        <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/refund/update}">수정</button>
     </main>
 
     <!-- Scroll to Top Button-->
@@ -80,6 +94,20 @@
             </div>
         </div>
     </div>
-</body>
+<!--    <script>-->
+<!--        $(document).ready(function() {-->
+<!--            console.log("ready");-->
+<!--            $("#proStatus2").change(function() {-->
+<!--                console.log("change");-->
+<!--                const selectedOption = $(this).children("option:selected");-->
 
+<!--                // 선택된 옵션의 ID가 3이면 alert을 띄웁니다.-->
+<!--                if (selectedOption.attr("id") === "3") {-->
+<!--                    alert("Option with ID 3 is selected!");-->
+<!--                    console.log("alert 실행!");-->
+<!--                }-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+</body>
 </html>

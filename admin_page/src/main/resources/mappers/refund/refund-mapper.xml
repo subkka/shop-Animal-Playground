@@ -19,7 +19,7 @@
             refund_id = #{refundId}
     </select>
 
-    <update id="updateProcessStatus" parameterType="map">
+    <update id="updateProcessStatus">
         update
             refund
         set

@@ -37,8 +37,17 @@ public class RefundController {
         return "refund/refundDetailList";
     }
 
-    @PostMapping("/update/{orderId}")
-    public String updateProcessStatus(@PathVariable("orderId") Long id, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
+    @GetMapping("/updatePage/{refundId}")
+    public String goToUpdatePage(@PathVariable("refundId") Long id, Model model) {
+        log.info("GET goToUpdatePage");
+        log.debug("id = {}",id);
+        RefundDto refundDetailList = refundService.findRefundDetailList(id);
+        model.addAttribute("refundDetailList", refundDetailList);
+        return "refund/update";
+    }
+
+    @PostMapping("/update/{refundId}")
+    public String updateProcessStatus(@PathVariable("refundId") Long id, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
         log.info("POST updateProcessStatus");
         int refundDetailList = refundService.updateProcessStatus(id, processStatus);
         redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
