@@ -72,16 +72,17 @@ CREATE TABLE IF NOT EXISTS refund (
      process_status VARCHAR(10) NULL,
      refund_reason_type VARCHAR(20) NULL,
      refund_reason_detail VARCHAR(300) NULL,
+     refund_yn VARCHAR(10) NULL,
      PRIMARY KEY (refund_id),
      FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
 
 CREATE TABLE IF NOT EXISTS refund_product (
-     refund_product_no INTEGER auto_increment NOT NULL,
-     order_product_no INTEGER NOT NULL,
+     refund_product_id INTEGER auto_increment NOT NULL,
+     order_product_id INTEGER NOT NULL,
      refund_id BIGINT NOT NULL,
-     PRIMARY KEY (refund_product_no),
-     FOREIGN KEY (order_product_no) REFERENCES order_product (order_product_id),
+     PRIMARY KEY (refund_product_id),
+     FOREIGN KEY (order_product_id) REFERENCES order_product (order_product_id),
      FOREIGN KEY (refund_id) REFERENCES refund (refund_id)
 );
 
@@ -138,7 +139,7 @@ INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VA
 
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price)
 VALUES
-    (19,9,'2022-06-13 13:00:00','COMPLETE',15000),
+    (19,9,'2022-06-13 13:00:00','COMPLETE',30000),
     (20,9,'2022-06-13 13:00:00','COMPLETE',40000),
     (21,9,'2022-06-13 13:00:00','COMPLETE',20000),
     (22,10,'2023-06-13 13:00:00','COMPLETE',50000),
@@ -149,7 +150,7 @@ VALUES
     (27,8
 ,'2024-06-13 13:00:00','COMPLETE',60000),
     (28,8,'2024-06-13 13:00:00','COMPLETE',32000);
-
+999 10 11 12 13 13 8 8
 select *
 from orders where order_status = 'COMPLETE';
 
@@ -220,6 +221,9 @@ values
     (31,27,10,1),#15000
     (32,28,11,1);#120000
 
+update orders
+set total_price = 15000
+where order_id =27;
 
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
       (14,9,'2023-06-13 13:00:00','입금전',60000),
@@ -228,9 +232,26 @@ INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VA
       (17,12,'2023-06-16 16:00:00','입금전',75000),
       (18,13,'2023-06-17 17:00:00','입금전',60000);
 
+INSERT INTO
+    refund
+VALUES
+    (null, 1, '2024-01-01', '처리완료', '단순변심', '변경하고싶어요.', '반려'),
+    (null, 2, '2024-01-02', '처리중', '상품불량', '상품에 문제가 있네요.', '확정'),
+    (null, 3, '2024-01-03', '처리대기', '상품불량', '상품에 이물질이 묻었어요.', null),
+    (null, 4, '2024-01-01', '처리완료', '단순변심', '변경하고싶어요.', '반려'),
+    (null, 5, '2024-01-02', '처리중', '상품불량', '상품에 문제가 있네요.', '확정'),
+    (null, 6, '2024-01-03', '처리대기', '상품불량', '상품에 이물질이 묻었어요.', null),
+    (null, 7, '2024-01-03', '처리대기', '상품불량', '글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다글자수테스트중입니다', null);
 
-
-
+insert into
+    refund_product
+values
+    (null, 6, 4),
+    (null, 10, 7),
+    (null, 13, 10),
+    (null, 14, 10),
+    (null, 17, 13),
+    (null, 20, 16);
 
 
 

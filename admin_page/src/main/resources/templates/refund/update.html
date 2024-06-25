@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <title>update</title>
+</head>
+
+<body id="page-top">
+    <main layout:fragment="main">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
+                </div>
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>주문 번호:</strong> <span th:text="${refundDetailList.refundId}"></span></p>
+                                <p><strong>신청 일시:</strong> <span th:text="${#temporals.format(refundDetailList.applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="mb-3">Additional Details</h5>
+                                <p><strong>환불 여부:</strong>
+                                    <select th:text="${refundDetailList.processStatus}">
+                                        <option value="" selected disabled>선택</option>
+                                        <option value="처리중">처리중</option>
+                                        <option value="처리완료">처리완료</option>
+                                    </select>
+                                </p>
+                                <p><strong>환불 처리 상태:</strong>
+                                    <select th:text="${refundDetailList.processStatus}">
+                                        <option value="처리대기">처리대기</option>
+                                        <option value="처리중">처리중</option>
+                                        <option value="처리완료">처리완료</option>
+                                    </select>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h5 class="mb-3">Description</h5>
+                                <p><strong>사유:</strong> <span th:text="${refundDetailList.refundReasonType}"></span></p>
+                                <p><strong>상세 내용</strong></p>
+                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="${refundDetailList.refundReasonDetail}"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/refund/update}">수정</button>
+    </main>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" th:href="@{login}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

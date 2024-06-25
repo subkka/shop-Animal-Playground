@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playground.admin_page.main.user.model.dao.UserMapper">
+    <resultMap id="infoDtoMap" type="InfoDto">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="user_email_able" property="userEmailAble"/>
+        <result column="address" property="address"/>
+        <result column="join_date" property="joinDate"/>
+        <result column="last_connect" property="lastConnect"/>
+        <result column="user_pet" property="userPet"/>
+        <result column="dormant_user" property="dormantUser"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="infoDtoMap">
+        SELECT
+            *
+        FROM
+            user
+        ORDER BY
+            user_id
+    </select>
+    <select id="findById" resultMap="infoDtoMap">
+        select
+            *
+        from
+            user
+        where
+            user_id = #{userId}
+    </select>
+    <select id="findByPet" resultMap="infoDtoMap">
+        select
+            *
+        from
+            user
+        where
+            dormant_user != '0' and
+            user_pet = #{userPet}
+    </select>
+    <select id="findByEmailAble" resultMap="infoDtoMap">
+        select
+            *
+        from
+            user
+        where
+            dormant_user != 'O'
+            and
+            user_email_able = #{userEmailAble}
+    </select>
+    <update id="setDormant">
+        UPDATE user
+        SET dormant_user = '1'
+        <![CDATA[WHERE last_connect < DATE_SUB(NOW(), INTERVAL 36 MONTH)]]>
+    </update>
+</mapper>
