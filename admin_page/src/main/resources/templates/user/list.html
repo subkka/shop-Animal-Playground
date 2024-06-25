@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
     <title>회원 조회</title>
@@ -7,11 +10,13 @@
 </head>
 <body>
 
-<main>
+<main layout:fragment="main">
     <h2 class="m-3">회원 조회</h2>
+
     <form th:action="@{/user/searchList}" method="get">
         <button type="submit">회원 검색</button>
     </form>
+
     <form th:action="@{/user/sendEmail}" method="get">
         <button type="submit">이메일 보내기</button>
     </form>

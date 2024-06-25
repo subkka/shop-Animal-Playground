@@ -30,10 +30,10 @@
                             </thead>
                             <tbody>
                                 <tr th:each="refund, stat : ${refundList}" th:object="${refund}">
-                                    <td th:text="*{orderId}">Tiger Nixon</td>
-                                    <td th:text="*{applicationDate}">System Architect</td>
-                                    <td th:text="*{processStatus}">Edinburgh</td>
-                                    <td><button type="button" th:onclick="|location.href='@{/refund/refundDetailList/{orderId}(orderId=*{orderId})}';|">상세보기</button></td>
+                                    <td th:text="*{orderId}">주문번호</td>
+                                    <td th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd HH:mm')}">신청일시</td>
+                                    <td th:text="*{processStatus}">처리상태</td>
+                                    <td><button type="button" th:onclick="|location.href='@{/refund/refundDetailList/{refundId}(refundId=*{refundId})}';|">상세보기</button></td>
                                 </tr>
                             </tbody>
                         </table>
