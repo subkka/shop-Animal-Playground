@@ -138,7 +138,7 @@ INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VA
 
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price)
 VALUES
-    (19,9,'2022-06-13 13:00:00','COMPLETE',30000),
+    (19,9,'2022-06-13 13:00:00','COMPLETE',15000),
     (20,9,'2022-06-13 13:00:00','COMPLETE',40000),
     (21,9,'2022-06-13 13:00:00','COMPLETE',20000),
     (22,10,'2023-06-13 13:00:00','COMPLETE',50000),
@@ -149,7 +149,7 @@ VALUES
     (27,8
 ,'2024-06-13 13:00:00','COMPLETE',60000),
     (28,8,'2024-06-13 13:00:00','COMPLETE',32000);
-999 10 11 12 13 13 8 8
+
 select *
 from orders where order_status = 'COMPLETE';
 
@@ -220,9 +220,13 @@ values
     (31,27,10,1),#15000
     (32,28,11,1);#120000
 
-                                update orders
-                                set total_price = 15000
-                                where order_id =27;
+
+INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
+      (14,9,'2023-06-13 13:00:00','입금전',60000),
+      (15,10,'2023-06-14 14:00:00','입금전',35000),
+      (16,11,'2023-06-15 15:00:00','입금전',30000),
+      (17,12,'2023-06-16 16:00:00','입금전',75000),
+      (18,13,'2023-06-17 17:00:00','입금전',60000);
 
 
 
