@@ -47,10 +47,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/findByEmailAbleStatus")
+    @GetMapping("/findByEmailAble")
     public String findByEmailAbleStatus(@RequestParam("userEmailAble") String userEmailAble, Model model) {
         log.info("Get /user/findByEmailAbleStatus");
-        List<InfoDto> users = userService.findEmailAble();
+        List<InfoDto> users = userService.findByEmailAble();
         log.debug("users = {}", users);
         model.addAttribute("users", users);
         return "list";

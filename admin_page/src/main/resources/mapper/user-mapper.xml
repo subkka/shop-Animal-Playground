@@ -42,7 +42,7 @@
         dormant_user != 'O' and
         user_pet = #{userPet}
     </select>
-    <select id="finbyEmailAble" resultMap="infoDto">
+    <select id="findByEmailAble" resultMap="infoDto">
         select
         *
         from
@@ -53,7 +53,7 @@
     </select>
     <update id="setDormant">
         UPDATE user
-        SET dormant_user = 'O'
+        SET dormant_user = '1'
         WHERE last_connect < DATE_SUB(NOW(), INTERVAL 36 MONTH)
     </update>
 </mapper>

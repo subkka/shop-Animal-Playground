@@ -14,6 +14,6 @@ public interface UserMapper {
     List<InfoDto> findById(Long userNo);
     List<InfoDto> findByPet(UserPet userPet);
 
-    List<InfoDto> findEmailAble();
+    List<InfoDto> findByEmailAble();
     void setDormant();
 }
