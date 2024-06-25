@@ -47,6 +47,7 @@
         user
         where
         dormant_user != 'O'
+        and user_email_able = '1'
     </select>
     <update id="setDormant">
         UPDATE user

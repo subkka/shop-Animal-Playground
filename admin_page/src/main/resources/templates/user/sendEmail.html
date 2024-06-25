@@ -9,16 +9,8 @@
 
 <h2 class="m-3">회원 조회</h2>
 
-<form action="#" th:action="@{/user/findByEmailAble}" method="get">
-    <label for="userEmailAble">이메일 수신 동의 여부:</label>
-    <select id="userEmailAble" name="userEmailAble">
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-    </select>
-    <button type="submit">검색</button>
-</form>
 
-<h2 class="m-3">검색 결과</h2>
+<h2 class="m-3">이메일 수신 동의 계정</h2>
 <form th:action="@{/user/sendEmails}" method="post">
     <button type="submit">이메일 보내기</button>
     <table class="table">
