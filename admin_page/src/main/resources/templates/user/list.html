@@ -4,22 +4,56 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <meta charset="UTF-8">
     <title>회원 조회</title>
-    <link rel="stylesheet" href="/css/userCss/user.css">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/user/user.css}">
 </head>
 <body>
 
 <main layout:fragment="main">
     <h2 class="m-3">회원 조회</h2>
 
-    <form th:action="@{/user/searchList}" method="get">
-        <button type="submit">회원 검색</button>
-    </form>
-
-    <form th:action="@{/user/sendEmail}" method="get">
-        <button type="submit">이메일 보내기</button>
-    </form>
+    <!--회원 이름 검색-->
+    <div class="search-by-username">
+        <label for="username">사용자 이름 검색: </label>
+        <input type="text" id="username">
+        <button type="button">검색</button>
+    </div>
+    <script>
+        // 사용자 이름 검색
+        $(function () {
+            $('#username').autocomplete({
+                source(request, response) {
+                    $.ajax({
+                        url: '[[@{/user/searchByUsername}]]',
+                        method: 'get',
+                        data: {
+                            searchValue: request.term // 서버와 일치하는 매개변수 이름
+                        },
+                        success (data) {
+                            data = data.map((userName) => ({
+                                label: userName,
+                                value: userName
+                            }));
+                            response(data);
+                        },
+                        error: console.log
+                    });
+                },
+                focus(event) {
+                    event.preventDefault();
+                },
+                select(event, selected) {
+                    const {item: {label, value}} = selected;
+                    $('#username').val(value);
+                }
+            });
+        });
+    </script>
 
     <table class="table">
         <thead>
