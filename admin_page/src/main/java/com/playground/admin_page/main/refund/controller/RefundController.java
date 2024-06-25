@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -46,11 +47,20 @@ public class RefundController {
         return "refund/update";
     }
 
-    @PostMapping("/update/{refundId}")
-    public String updateProcessStatus(@PathVariable("refundId") Long id, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
+    @PostMapping("/update")
+    public void updateProcessStatus(@RequestParam Long refundId, @RequestParam String refundYn, @RequestParam String processStatus) {
         log.info("POST updateProcessStatus");
-        int refundDetailList = refundService.updateProcessStatus(id, processStatus);
-        redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
-        return "redirect:/refund/refundDetailList";
+        log.debug("orderId = {}", refundId);
+        log.debug("refundYn = {}", refundYn);
+        log.debug("processStatus = {}", processStatus);
     }
+
+//    @PostMapping("/update")
+//    public String updateProcessStatus(@ModelAttribute RefundDto refundDto, RedirectAttributes redirectAttributes) {
+//        log.info("POST updateProcessStatus");
+//        log.debug("refundDto = {}", refundDto);
+////        int refundDetailList = refundService.updateProcessStatus(id, processStatus);
+////        redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
+//        return "redirect:/refund/refundDetailList";
+//    }
 }
