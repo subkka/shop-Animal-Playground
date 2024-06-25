@@ -17,5 +17,5 @@ public class RefundDto {
     private String processStatus;
     private String refundReasonType;
     private String refundReasonDetail;
-
+    private String refundYn;
 }

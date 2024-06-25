@@ -20,7 +20,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">상품 정보 입력</h6>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{/product/create}" method="post">
+                        <form th:action="@{/product/create}" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="productName">상품명</label>
                                 <input type="text" class="form-control" id="productName" name="productName" required>
@@ -58,6 +58,15 @@
                                     <option value="품절">품절</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="productImage">Product Image</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="productImage" name="imageFile" accept="image/*">
+                                    <label class="custom-file-label" for="productImage">Choose file</label>
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">등록</button>
                             <a href="/admin/product/list" class="btn btn-secondary">취소</a>
                         </form>
@@ -66,6 +75,13 @@
 
             </div>
             <!-- /.container-fluid -->
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            const fileName = e.target.files[0].name;
+            const nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 </main>
 
 </body>

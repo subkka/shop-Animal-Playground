@@ -87,8 +87,25 @@ public class OrderController {
 
     @GetMapping("/findComplete")
     public String findComplete(Model model) {
-        List<OrderDetailDto> lists = orderService.findComplete();
-        model.addAttribute("lists", lists);
+        int count = orderService.getOrderCount();
+        int sales = orderService.getSales();
+        SalesDto salesDto = new SalesDto(count, sales);
+        model.addAttribute("salesDto", salesDto);
+
+        List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
+        model.addAttribute("orderDetailDtos", orderDetailDtos);
         return "/order/findComplete";
     }
+
+//    @GetMapping("/findComplete1")
+//    public String findComplete1(Model model) {
+//        int count = orderService.getOrderCount();
+//        int sales = orderService.getSales();
+//        SalesDto salesDto = new SalesDto(count, sales);
+//        model.addAttribute("salesDto", salesDto);
+//
+//        List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
+//        model.addAttribute("orderDetailDtos", orderDetailDtos);
+//        return "findComplete";
+//    }
 }

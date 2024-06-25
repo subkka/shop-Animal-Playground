@@ -34,14 +34,14 @@ public class RefundService {
             isolation = Isolation.READ_COMMITTED,
             rollbackFor = Exception.class
     )
-    public int updateProcessStatus(Long id, String processStatus) {
+    public int updateProcessStatus(Long orderId, String refundYn, String processStatus) {
         // 처리 상태 업데이트
-        if (refundMapper.updateProcessStatus(id, processStatus) != 1) {
+        if (refundMapper.updateProcessStatus(orderId, refundYn, processStatus) != 1) {
             throw new RuntimeException("처리 상태 업데이트 실패");
         }
 
         // 환불 상품 저장
-        List<RefundProductDto> productForRefund = refundMapper.findProductForRefund(id);
+        List<RefundProductDto> productForRefund = refundMapper.findProductForRefund(orderId);
         int result = insertRefundProduct(productForRefund);
         if(result <= 0) {
             throw new RuntimeException("환불 상품 저장 실패");
