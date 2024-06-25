@@ -13,9 +13,9 @@ public interface RefundMapper {
 
     RefundDto findRefundDetailList(Long id);
 
-    int updateProcessStatus(@Param("orderId") Long id, @Param("processStatus") String processStatus);
+    int updateProcessStatus(@Param("orderId") Long orderId, @Param("refundYn") String refundYn, @Param("processStatus") String processStatus);
 
     int insertRefundProduct(List<RefundProductDto> refundProductList);
 
-    List<RefundProductDto> findProductForRefund(Long id);
+    List<RefundProductDto> findProductForRefund(Long orderId);
 }
