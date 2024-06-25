@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import java.util.List;
 
@@ -17,15 +18,17 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@SessionAttributes({"adminAccount"})
 public class UserController {
     private final UserService userService;
+
     @GetMapping("/list")
     public String list(Model model) {
         log.info("Get /user/list");
         List<InfoDto> users = userService.findAll();
         log.debug("users = {}", users);
         model.addAttribute("users", users);
-        return "list";
+        return "user/list";
     }
 
     @GetMapping("/findById")
@@ -34,7 +37,7 @@ public class UserController {
         List<InfoDto> users = userService.findById(userId);
         log.debug("users = {}", users);
         model.addAttribute("users", users);
-        return "list";
+        return "user/searchList";
     }
 
     @GetMapping("/findByPet")
@@ -43,9 +46,8 @@ public class UserController {
         List<InfoDto> users = userService.findByPet(userPet);
         log.debug("users = {}", users);
         model.addAttribute("users", users);
-        return "list";
+        return "list/searchList";
     }
-
 
     @GetMapping("/findByEmailAble")
     public String findByEmailAbleStatus(@RequestParam("userEmailAble") UserEmailAble userEmailAble, Model model) {
@@ -53,8 +55,9 @@ public class UserController {
         List<InfoDto> users = userService.findByEmailAble(userEmailAble);
         log.debug("users = {}", users);
         model.addAttribute("users", users);
-        return "list";
+        return "user/sendEmail";
     }
+
     @GetMapping("/setDormantUsers")
     public String setDormantUsers() {
         userService.setDormant();
