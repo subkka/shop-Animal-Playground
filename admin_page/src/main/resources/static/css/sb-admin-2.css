@@ -6419,21 +6419,7 @@ button.bg-primary:hover,
 button.bg-primary:focus {
   background-color: #2653d4 !important;
 }
-/*여기서부터*/
-.btn_confirm input:hover,
-.btn_confirm input:focus {
-  background-color: #2653d4 !important; /* 호버 및 포커스 시 배경색 */
-}
 
-.btn_confirm input.grey {
-  background-color: grey; /* .grey 클래스에 대한 기본 배경색 */
-}
-
-.btn_confirm input.grey:hover,
-.btn_confirm input.grey:focus {
-  background-color: darkgrey !important; /* .grey 클래스의 호버 및 포커스 시 배경색 */
-}
-/*여기까지 */
 .bg-secondary {
   background-color: #858796 !important;
 }
