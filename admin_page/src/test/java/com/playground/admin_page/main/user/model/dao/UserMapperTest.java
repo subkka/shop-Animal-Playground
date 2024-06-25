@@ -28,17 +28,32 @@ class UserMapperTest {
                 .isNotEmpty()
                 .allMatch((user)->user!=null);
     }
+    @Test
+    public void testFindById() {
+        List<InfoDto> users = userMapper.findById(1L);
+        System.out.println(users);
+        assertThat(users).isNotEmpty()
+                .isNotNull()
+                .allMatch((user) -> user != null);
+    }
+
 
     @Test
     public void testFindByPet() {
         List<InfoDto> users = userMapper.findByPet(UserPet.Dog);
-        assertThat(users).isNotEmpty();
+        System.out.println(users);
+        assertThat(users).isNotEmpty()
+                .isNotNull()
+                .allMatch((user) -> user != null);
     }
 
     @Test
     public void testFindByEmailAble() {
         List<InfoDto> users = userMapper.findByEmailAble(UserEmailAble.Y);
-        assertThat(users).isNotEmpty();
+        System.out.println(users);
+        assertThat(users).isNotEmpty()
+                .isNotNull()
+                .allMatch((user) -> user != null);
     }
 
     @Test
