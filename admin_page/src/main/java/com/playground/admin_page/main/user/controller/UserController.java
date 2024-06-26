@@ -1,4 +1,5 @@
 package com.playground.admin_page.main.user.controller;
+
 import com.playground.admin_page.main.user.model.dto.UserDto;
 import com.playground.admin_page.main.user.model.dto.UserEmailAble;
 import com.playground.admin_page.main.user.model.dto.UserPet;
@@ -58,6 +59,20 @@ public class UserController {
         log.debug("searchValue: {}", username);
 
         return userService.findByUsername(username);
+    }
+
+    @GetMapping(path = "/search-by-pet", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<UserDto> searchByPet(@RequestParam String selectedPet) {
+        log.info("GET /user/search-by-pet");
+        log.debug("selectedPet: {}", selectedPet);
+
+        return switch (selectedPet) {
+            case "All" -> userService.findAll();
+            case "Dog" -> userService.findByPet(UserPet.Dog);
+            case "Cat" -> userService.findByPet(UserPet.Cat);
+            default -> null;
+        };
     }
 
 //    사용 불가

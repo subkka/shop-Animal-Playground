@@ -24,6 +24,15 @@
         <button type="submit">검색</button>
     </form>
 
+    <div>
+        <label for="pet-filter">반려동물: </label>
+        <select name="pet-filter" id="pet-filter">
+            <option value="All" selected>전체</option>
+            <option value="Dog">강아지</option>
+            <option value="Cat">고양이</option>
+        </select>
+    </div>
+
     <table class="table">
         <thead>
             <tr>
@@ -126,6 +135,40 @@
         event.preventDefault();
         searchByUsername();
     });
+    // 반려동물로 사용자 조회
+    const $petFilter = document.querySelector('#pet-filter');
+
+    const petFilter = function () {
+        const selectedPet = $petFilter.value;
+
+        $.ajax({
+            url: '[[@{/user/search-by-pet}]]',
+            data: {
+                selectedPet: selectedPet
+            },
+            success(data) {
+                $userList.innerHTML = ''; // 기존 내용 초기화
+                data.forEach((user) => {
+                    const userListItem = `
+                        <tr>
+                            <td>${user.userId}</td>
+                            <td>${user.userName}</td>
+                            <td>${user.userEmail}</td>
+                            <td>${user.address}</td>
+                            <td>${user.joinDate}</td>
+                            <td>${user.lastConnect}</td>
+                            <td>${user.userPet}</td>
+                            <td>${user.userEmailAble}</td>
+                            <td>${user.dormantUser}</td>
+                        </tr>
+                    `;
+                    $userList.insertAdjacentHTML('beforeend', userListItem);
+                });
+            },
+            error: console.log
+        });
+    };
+    $petFilter.addEventListener('change', petFilter);
 </script>
 </body>
 </html>
