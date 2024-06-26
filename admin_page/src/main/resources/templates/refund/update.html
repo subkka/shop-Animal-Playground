@@ -18,7 +18,7 @@
                 </div>
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <form th:action="@{/refund/update}" method="post" th:object="${refundDetailList}">
+                        <form id="updateForm" th:action="@{/refund/update}" method="post" th:object="${refundDetailList}">
                             <input type="hidden" name="orderId" th:value="*{orderId}">
                             <div class="row">
                                 <div class="col-md-6">
@@ -104,6 +104,16 @@
         $(document).ready(function(){
             $("#sideRefund").addClass("active");
         });
+
+        $('#updateForm').submit(function(event){
+            const refundYnValue = $('select[name="refundYn"]').val();
+
+            if (refundYnValue == null) {
+                alert("🐕환불 여부를 선택해주세요🐾");
+                event.preventDefault();
+            }
+        });
+
     </script>
 </body>
 </html>

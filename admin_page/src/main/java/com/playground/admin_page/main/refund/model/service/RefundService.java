@@ -36,6 +36,16 @@ public class RefundService {
     )
     public int updateProcessStatus(Long orderId, String refundYn, String processStatus) {
         // 처리 상태 업데이트
+        String prodReturnVal = refundMapper.checkProdReturnStatus(orderId);
+        if(prodReturnVal.equals("Y")) {
+            if(!processStatus.equals("처리대기")) {
+                processStatus = "처리완료";
+            }
+        }
+
+        if(processStatus.equals("처리완료")) {
+            refundMapper.updateProdReturnStatus(orderId);
+        }
         if (refundMapper.updateProcessStatus(orderId, refundYn, processStatus) != 1) {
             throw new RuntimeException("처리 상태 업데이트 실패");
         }
@@ -53,4 +63,7 @@ public class RefundService {
         return refundMapper.insertRefundProduct(refundProductList);
     }
 
+    public int updateComplete(Long orderId, String processStatus) {
+        return refundMapper.updateComplete(orderId, processStatus);
+    }
 }
