@@ -19,7 +19,9 @@ import java.util.List;
 public class RefundController {
     private final RefundService refundService;
 
-    //
+    /**
+     * 환불 목록 조회
+     */
     @GetMapping("/refundList")
     public String refundList(Model model) {
         log.info("GET refundList");
@@ -29,6 +31,9 @@ public class RefundController {
         return "refund/refundList";
     }
 
+    /**
+     * 환불 목록 상세 조회
+     */
     @GetMapping("/refundDetailList/{refundId}")
     public String refundDetailList(@PathVariable("refundId") Long id, Model model) {
         log.info("GET refundDetailList");
@@ -38,6 +43,9 @@ public class RefundController {
         return "refund/refundDetailList";
     }
 
+    /**
+     * 환불 목록 수정 페이지 조회
+     */
     @GetMapping("/updatePage/{refundId}")
     public String goToUpdatePage(@PathVariable("refundId") Long id, Model model) {
         log.info("GET goToUpdatePage");
@@ -47,6 +55,13 @@ public class RefundController {
         return "refund/update";
     }
 
+    /**
+     * 환불 목록 상세 페이지에서 수정 눌렀을 때
+     * 1. 환불 상품 철회 완료 여부 확인
+     * 2. 처리 상태가 처리완료일 때, 환불 상품 철회 완료 되었다고 처리
+     * 3. 처리 상태 업데이트 처리
+     * 4. 철회 완료된 상품 정보 저장
+     */
     @PostMapping("/update")
     public String updateProcessStatus(@RequestParam("orderId") Long orderId, @RequestParam(required = false) String refundYn, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
         log.info("POST updateProcessStatus");
@@ -54,18 +69,7 @@ public class RefundController {
             refundYn = null;
         }
         int updateResult = refundService.updateProcessStatus(orderId, refundYn, processStatus);
-        redirectAttributes.addFlashAttribute("updateResult", updateResult > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
+        redirectAttributes.addFlashAttribute("updateResult", updateResult > 0 ? "🐕수정되었습니다🐾" : "🐈수정을 실패하였습니다. 다시 시도해주세요🐾");
         return "redirect:/refund/refundDetailList/" + orderId;
     }
-
-//    @PostMapping("/updateProcessStatus")
-//    public String updateComplete(@RequestParam("orderId") Long orderId, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
-//        log.info("POST updateProcessStatus");
-//        log.debug("orderId = {}", orderId);
-//        log.debug("processStatus = {}", processStatus);
-//
-//        int updateCompleteVal = refundService.updateComplete(orderId, processStatus);
-//        redirectAttributes.addFlashAttribute("updateCompleteVal", updateCompleteVal > 0 ? "success" : "fail");
-//        return "redirect:/refund/refundDetailList/" + orderId;
-//    }
 }
