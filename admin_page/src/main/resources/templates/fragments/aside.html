@@ -112,25 +112,38 @@
                 <span>Tables</span></a>
         </li>
 
-        <!-- Nav Item - Refund -->
+        <!-- Nav Item - Product -->
+        <li class="nav-item" id="sideProduct">
+            <a class="nav-link" th:href="@{product/list}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Product</span></a>
+        </li>
 
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/order/findAllOrder}">
+        <!-- Nav Item - Order -->
+        <li class="nav-item" id="sideOrder">
+            <a class="nav-link" th:href="@{order/findAllOrder}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Order</span></a>
         </li>
 
-        <li class="nav-item active">
-            <a class="nav-link" th:href="@{/order/findComplete}">
+        <li class="nav-item" id="sideSales">
+            <a class="nav-link" th:href="@{order/findComplete}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Sales</span></a>
         </li>
 
         <!-- Nav Item - Refund -->
-        <li class="nav-item active">
+        <li class="nav-item" id="sideRefund">
             <a class="nav-link" th:href="@{refund/refundList}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Refund</span></a>
+        </li>
+
+        <!-- Nav Item - User -->
+        <li class="nav-item" id="sideUser">
+            <a class="nav-link" th:href="@{user/list}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>User</span></a>
         </li>
 
         <!-- Divider -->

@@ -75,8 +75,13 @@
         </div>
     </div>
     <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideRefund").addClass("active");
+        });
+
         const updateResult = `[[${updateResult}]]`;
         updateResult && alert(updateResult);
+
     </script>
 </body>
 
