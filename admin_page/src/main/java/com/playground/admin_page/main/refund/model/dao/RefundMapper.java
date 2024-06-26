@@ -18,4 +18,10 @@ public interface RefundMapper {
     int insertRefundProduct(List<RefundProductDto> refundProductList);
 
     List<RefundProductDto> findProductForRefund(Long orderId);
+
+    int updateComplete(Long orderId, String processStatus);
+
+    String checkProdReturnStatus(Long orderId);
+
+    int updateProdReturnStatus(Long orderId);
 }

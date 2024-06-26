@@ -19,7 +19,7 @@
             refund_id = #{refundId}
     </select>
 
-    <update id="updateProcessStatus"  parameterType="map">
+    <update id="updateProcessStatus" parameterType="map">
         update
             refund
         set
@@ -48,6 +48,24 @@
             order_product_id, order_id
         from
             order_product
+        where
+            order_id = #{orderId}
+    </select>
+
+    <update id="updateProdReturnStatus">
+        update
+            refund
+        set
+            prod_return_yn = 'Y'
+        where
+            order_id = #{orderId};
+    </update>
+
+    <select id="checkProdReturnStatus">
+        select
+            prod_return_yn
+        from
+            refund
         where
             order_id = #{orderId}
     </select>
