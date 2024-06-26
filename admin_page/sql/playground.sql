@@ -150,7 +150,7 @@ VALUES
     (27,8
 ,'2024-06-13 13:00:00','COMPLETE',60000),
     (28,8,'2024-06-13 13:00:00','COMPLETE',32000);
-
+999 10 11 12 13 13 8 8
 select *
 from orders where order_status = 'COMPLETE';
 
@@ -224,6 +224,13 @@ values
 update orders
 set total_price = 15000
 where order_id =27;
+
+INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
+      (14,9,'2023-06-13 13:00:00','입금전',60000),
+      (15,10,'2023-06-14 14:00:00','입금전',35000),
+      (16,11,'2023-06-15 15:00:00','입금전',30000),
+      (17,12,'2023-06-16 16:00:00','입금전',75000),
+      (18,13,'2023-06-17 17:00:00','입금전',60000);
 
 INSERT INTO
     refund

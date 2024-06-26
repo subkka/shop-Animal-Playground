@@ -17,44 +17,37 @@
                     <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
                 </div>
                 <div class="card shadow mb-4">
-                    <div class="card-body">
+                    <div class="card-body" th:object="${refundDetailList}">
                         <div class="row">
                             <div class="col-md-6">
-                                <p><strong>주문 번호:</strong> <span th:text="${refundDetailList.refundId}"></span></p>
-                                <p><strong>신청 일시:</strong> <span th:text="${#temporals.format(refundDetailList.applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
-                            </div>
-                            <div class="col-md-6">
-                                <h5 class="mb-3">Additional Details</h5>
+                                <p><strong>주문 번호:</strong> <span th:text="*{refundId}"></span></p>
+                                <p><strong>신청 일시:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
                                 <p><strong>환불 여부:</strong>
-                                    <span th:if="${refundDetailList.refundId}" class="badge badge-success">Displayed</span>
-                                    <span th:unless="${refundDetailList.refundId}" class="badge badge-secondary">미정</span>
+                                    <span th:if="*{refundYn}" class="badge badge-success" th:text="*{refundYn}"></span>
+                                    <span th:unless="*{refundYn}" class="badge badge-secondary">미정</span>
                                 </p>
-<!--                                <p><strong>환불 처리 상태:</strong>-->
-<!--                                    <select th:text="${refundDetailList.processStatus}">-->
-<!--                                        <option value="처리대기">처리대기</option>-->
-<!--                                        <option value="처리중">처리중</option>-->
-<!--                                        <option value="처리완료">처리완료</option>-->
-<!--                                    </select>-->
-<!--                                </p>-->
                                 <p><strong>환불 처리 상태:</strong>
-                                    <span th:text="${refundDetailList.processStatus}" class="badge badge-info"></span>
+                                    <span th:text="*{processStatus}" class="badge badge-info"></span>
                                 </p>
                             </div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-12">
                                 <h5 class="mb-3">Description</h5>
-                                <p><strong>사유:</strong> <span th:text="${refundDetailList.refundReasonType}"></span></p>
+                                <p><strong>사유:</strong> <span th:text="*{refundReasonType}"></span></p>
                                 <p><strong>상세 내용</strong></p>
-                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="${refundDetailList.refundReasonDetail}"></textarea>
+                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="*{refundReasonDetail}" readonly></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="mb-4">
+                <a class="btn btn-primary" th:if="|${refundDetailList.processStatus == '처리완료'}|" hidden="until-found">수정</a>
+                <a class="btn btn-primary" th:unless="|${refundDetailList.processStatus == '처리완료'}|" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">수정</a>
+                <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundList}';|">목록</a>
+            </div>
         </div>
-        <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/refund/update}">수정</button>
-        <button class="btn_medium" type="button" style="align-items: center" th:onclick="@{/ref}">목록</button>
     </main>
 
     <!-- Scroll to Top Button-->
@@ -81,6 +74,10 @@
             </div>
         </div>
     </div>
+    <script layout:fragment="js">
+        const updateResult = `[[${updateResult}]]`;
+        updateResult && alert(updateResult);
+    </script>
 </body>
 
 </html>

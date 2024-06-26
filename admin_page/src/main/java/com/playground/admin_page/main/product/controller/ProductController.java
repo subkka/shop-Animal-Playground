@@ -6,9 +6,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @Slf4j
@@ -39,8 +48,18 @@ public class ProductController {
         return "product/edit";  // edit.html 템플릿을 사용
     }
     @PostMapping("/edit")
-    public String edit(@ModelAttribute ProductDto product) {
-        log.info("POST /product/edit");
+    public String edit(@ModelAttribute ProductDto product, @RequestParam("imageFile") MultipartFile file) {
+        log.info("Received edit request. Product: {}, File: {}", product, (file != null ? file.getOriginalFilename() : "No file"));
+        if (file != null && !file.isEmpty()) {
+            try {
+                String fileName = saveImage(file);
+                if (fileName != null) {
+                    product.setProductImage(fileName);
+                }
+            } catch (IOException e) {
+                log.error("Error saving image file", e);
+            }
+        }
         productService.updateProduct(product);
         return "redirect:/product/detail/" + product.getProductId();
     }
@@ -51,9 +70,36 @@ public class ProductController {
     }
 
     @PostMapping("/create")
-    public String createProduct(@ModelAttribute ProductDto productDto) {
-        log.info("Adding new product: {}", productDto);
-        productService.createProduct(productDto);
+    public String createProduct(@ModelAttribute ProductDto product, @RequestParam("imageFile") MultipartFile file) {
+        log.info("Received edit request. Product: {}, File: {}", product, (file != null ? file.getOriginalFilename() : "No file"));
+        if (file != null && !file.isEmpty()) {
+            try {
+                String fileName = saveImage(file);
+                if (fileName != null) {
+                    product.setProductImage(fileName);
+                }
+            } catch (IOException e) {
+                log.error("Error saving image file", e);
+            }
+        }
+        productService.createProduct(product);
         return "redirect:/product/list";
+    }
+    private String saveImage(MultipartFile file) throws IOException {
+        if (file == null || file.isEmpty()) {
+            return null;
+        }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        Path uploadPath = Paths.get("admin_page/src/main/resources/static/img/uploads");
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+        try (InputStream inputStream = file.getInputStream()) {
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            return "/img/uploads/" + fileName;  // 반환 경로 수정
+        } catch (IOException e) {
+            throw new IOException("Could not save image file: " + fileName, e);
+        }
     }
 }

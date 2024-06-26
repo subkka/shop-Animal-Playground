@@ -40,6 +40,14 @@
                                 <p><strong>Created At:</strong> <span th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
                             </div>
                         </div>
+                        <!-- 현재 이미지가 있다면 표시 -->
+                        <div class="form-group" th:if="${product.productImage != null and !product.productImage.isEmpty()}">
+                            <label>Current Image:</label>
+                            <div class="card" style="width: 50%">
+                                <img class="card-img-top" th:src="@{'' + ${product.productImage}}" alt="Product Image">
+                            </div>
+                        </div>
+
                         <div class="row mt-4">
                             <div class="col-12">
                                 <h5 class="mb-3">Description</h5>

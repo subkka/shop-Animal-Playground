@@ -22,7 +22,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Product Information</h6>
                     </div>
                     <div class="card-body">
-                        <form th:action="@{/product/edit}" th:object="${product}" method="post">
+                        <form th:action="@{/product/edit}" th:object="${product}" method="post" enctype="multipart/form-data">
                             <input type="hidden" th:field="*{productId}">
 
                             <div class="form-group">
@@ -67,6 +67,22 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label for="productImage">Product Image</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="productImage" name="imageFile" accept="image/*">
+                                    <label class="custom-file-label" for="productImage">Choose file</label>
+                                </div>
+                            </div>
+
+                            <!-- 현재 이미지가 있다면 표시 -->
+                            <div class="form-group" th:if="${product.productImage != null and !product.productImage.isEmpty()}">
+                                <label>Current Image:</label>
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" th:src="@{'' + ${product.productImage}}" alt="Product Image">
+                                </div>
+                            </div>
+
                             <!-- 버튼들을 div로 감싸고 마진을 추가 -->
                             <div class="form-group" style="margin-top: 20px;">
                                 <button type="submit" class="btn btn-primary" style="display: inline-block;">Save Changes</button>
@@ -78,6 +94,13 @@
 
             </div>
             <!-- /.container-fluid -->
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            const fileName = e.target.files[0].name;
+            const nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
 </main>
 
 </body>

@@ -21,7 +21,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/main}">
+            <a class="nav-link" th:href="@{/}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -100,42 +100,37 @@
 
         <!-- Nav Item - Charts -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/charts}">
+            <a class="nav-link" th:href="@{charts}">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Charts</span></a>
         </li>
         <!---->
         <!-- Nav Item - Tables -->
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/tables}">
+            <a class="nav-link" th:href="@{tables}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Tables</span></a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/product/list}">
-                <i class="fas fa-fw fa-table"></i>
-                <span>Product</span></a>
-        </li>
-
         <!-- Nav Item - Refund -->
+
         <li class="nav-item">
             <a class="nav-link" th:href="@{/order/findAllOrder}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Order</span></a>
         </li>
 
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{/order/findComplete}">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Sales</span></a>
+        </li>
+
         <!-- Nav Item - Refund -->
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/refund/refundList}">
+        <li class="nav-item active">
+            <a class="nav-link" th:href="@{refund/refundList}">
                 <i class="fas fa-fw fa-table"></i>
                 <span>Refund</span></a>
-        </li>
-        <!-- Nav Item - User -->
-        <li class="nav-item active">
-            <a class="nav-link" th:href="@{user/list}">
-                <i class="fas fa-fw fa-table"></i>
-                <span>User</span></a>
         </li>
 
         <!-- Divider -->
