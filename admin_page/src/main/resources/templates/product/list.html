@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/default}">
 
@@ -8,65 +9,65 @@
 </head>
 
 <body id="page-top">
-        <main layout:fragment="main">
+    <main layout:fragment="main">
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
 
-                <!-- Page Heading -->
-                <h1 class="h3 mb-2 text-gray-800">Product List</h1>
+            <!-- Page Heading -->
+            <h1 class="h3 mb-2 text-gray-800">Product List</h1>
 
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                        <h6 class="m-0 font-weight-bold text-primary">상품 목록</h6>
-                        <div>
-                            <a href="/admin/product/create" class="btn btn-primary btn-icon-split">
-                    <span class="icon text-white-50">
-                        <i class="fas fa-plus"></i>
-                    </span>
-                                    <span class="text">상품 등록</span>
-                                </a>
-                            </div>
-                        </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Desc</th>
-                                    <th>Price</th>
-                                    <th>Amount</th>
-                                    <th>Display</th>
-                                    <th>Status</th>
-                                    <th>Created</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="product, stat : ${products}" th:object="${product}">
-                                    <td th:text="${product.productId}"></td>
-                                    <td>
-                                        <a th:href="@{/product/detail/{id}(id=${product.productId})}" th:text="${product.productName}"></a>
-                                    </td>
-                                    <td th:text="${product.category}"></td>
-                                    <td th:text="${product.productDesc}"></td>
-                                    <td th:text="${product.price}"></td>
-                                    <td th:class="${product.amount <= 10 ? 'text-danger font-weight-bold' : ''}" th:text="${product.amount}"></td>
-                                    <td th:text="${product.isDisplay}"></td>
-                                    <td th:text="${product.productStatus}"></td>
-                                    <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd')}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">상품 목록</h6>
+                    <div>
+                        <a href="/admin/product/create" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text">상품 등록</span>
+                        </a>
                     </div>
                 </div>
-
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Desc</th>
+                                <th>Price</th>
+                                <th>Amount</th>
+                                <th>Display</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="product, stat : ${products}" th:object="${product}">
+                                <td th:text="${product.productId}"></td>
+                                <td>
+                                    <a th:href="@{/product/detail/{id}(id=${product.productId})}" th:text="${product.productName}"></a>
+                                </td>
+                                <td th:text="${product.category}"></td>
+                                <td th:text="${product.productDesc}"></td>
+                                <td th:text="${product.price}"></td>
+                                <td th:class="${product.amount <= 10 ? 'text-danger font-weight-bold' : ''}" th:text="${product.amount}"></td>
+                                <td th:text="${product.isDisplay}"></td>
+                                <td th:text="${product.productStatus}"></td>
+                                <td th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd')}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <!-- /.container-fluid -->
-        </main>
-    </body>
+
+        </div>
+        <!-- /.container-fluid -->
+    </main>
+</body>
 
 </html>
