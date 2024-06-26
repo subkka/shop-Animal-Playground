@@ -48,15 +48,16 @@ public class RefundService {
         // 철회 여부 확인
         String prodReturnVal = refundMapper.checkProdReturnStatus(orderId);
         if(prodReturnVal.equals("Y")) { // 철회 완료 시
-            if(!processStatus.equals("처리대기")) { // 처리대기로 수정하지 않았을 때
+            if(processStatus.equals("처리중")) { // 철회도 완료하였고 처리상태가 처리중일 때
                 processStatus = "처리완료";
+            }
+        }else {
+            // 처리완료로 수정하였을 때
+            if(processStatus.equals("처리완료")) {
+                refundMapper.updateProdReturnStatus(orderId); // 철회 여부 완료로 수정
             }
         }
 
-        // 처리완료로 수정하였을 때
-        if(processStatus.equals("처리완료")) {
-            refundMapper.updateProdReturnStatus(orderId); // 철회 여부 완료로 수정
-        }
         if (refundMapper.updateProcessStatus(orderId, refundYn, processStatus) != 1) { // 처리상태 수정에 실패했을 때
             throw new RuntimeException("처리 상태 업데이트 실패");
         }
