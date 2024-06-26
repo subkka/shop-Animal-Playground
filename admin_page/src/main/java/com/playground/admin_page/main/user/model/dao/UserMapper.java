@@ -11,9 +11,9 @@ import java.util.List;
 public interface UserMapper {
     List<UserDto> findAll();
 
-    List<UserDto> findById(Long userNo);
+    List<UserDto> findByUsername(String username);
+
     List<UserDto> findByPet(UserPet userPet);
 
     List<UserDto> findByEmailAble(UserEmailAble userEmailAble);
-    void setDormant();
 }

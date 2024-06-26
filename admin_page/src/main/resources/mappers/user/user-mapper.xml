@@ -23,13 +23,10 @@
         ORDER BY
             user_id
     </select>
-    <select id="findById" resultMap="userDtoMap">
-        select
-            *
-        from
-            user
-        where
-            user_id = #{userId}
+    <select id="findByUsername" resultMap="userDtoMap">
+        select *
+        from user
+        where user_name like CONCAT('%', #{username}, '%')
     </select>
     <select id="findByPet" resultMap="userDtoMap">
         select
@@ -37,7 +34,6 @@
         from
             user
         where
-            dormant_user != '0' and
             user_pet = #{userPet}
     </select>
     <select id="findByEmailAble" resultMap="userDtoMap">
@@ -50,9 +46,4 @@
             and
             user_email_able = #{userEmailAble}
     </select>
-    <update id="setDormant">
-        UPDATE user
-        SET dormant_user = '1'
-        <![CDATA[WHERE last_connect < DATE_SUB(NOW(), INTERVAL 36 MONTH)]]>
-    </update>
 </mapper>

@@ -1,6 +1,6 @@
 package com.playground.admin_page.main.user.controller;
+
 import com.playground.admin_page.main.user.model.dto.UserDto;
-import com.playground.admin_page.main.user.model.dto.UserEmailAble;
 import com.playground.admin_page.main.user.model.dto.UserPet;
 import com.playground.admin_page.main.user.model.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +40,10 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/searchByUsername", produces = "application/json; charset=utf-8")
+    @GetMapping(path = "/get-username-list", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public List<String> searchByUsername(@RequestParam String searchValue) {
-        log.info("GET /user/searchByUsername");
+    public List<String> getUsernameList(@RequestParam String searchValue) {
+        log.info("GET /user/get-username-list");
         log.debug("searchValue: {}", searchValue);
 
         return userNames.stream()
@@ -51,39 +51,26 @@ public class UserController {
                 .toList();
     }
 
+    @GetMapping(path = "/search-by-username", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<UserDto> searchByUsername(@RequestParam String username) {
+        log.info("GET /user/search-by-username");
+        log.debug("searchValue: {}", username);
 
-//    사용 불가
-
-    @GetMapping("/findById")
-    public String findById(@RequestParam("userId") Long userId, Model model) {
-        log.info("Get /user/findById");
-        List<UserDto> users = userService.findById(userId);
-        log.debug("users = {}", users);
-        model.addAttribute("users", users);
-        return "user/searchList";
+        return userService.findByUsername(username);
     }
 
-    @GetMapping("/findByPet")
-    public String findByPet(@RequestParam("userPet") UserPet userPet, Model model) {
-        log.info("Get /user/findByPet");
-        List<UserDto> users = userService.findByPet(userPet);
-        log.debug("users = {}", users);
-        model.addAttribute("users", users);
-        return "list/searchList";
-    }
+    @GetMapping(path = "/search-by-pet", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<UserDto> searchByPet(@RequestParam String selectedPet) {
+        log.info("GET /user/search-by-pet");
+        log.debug("selectedPet: {}", selectedPet);
 
-    @GetMapping("/findByEmailAble")
-    public String findByEmailAbleStatus(@RequestParam("userEmailAble") UserEmailAble userEmailAble, Model model) {
-        log.info("Get /user/findByEmailAbleStatus");
-        List<UserDto> users = userService.findByEmailAble(userEmailAble);
-        log.debug("users = {}", users);
-        model.addAttribute("users", users);
-        return "user/sendEmail";
-    }
-
-    @GetMapping("/setDormantUsers")
-    public String setDormantUsers() {
-        userService.setDormant();
-        return "redirect:/user/list";
+        return switch (selectedPet) {
+            case "All" -> userService.findAll();
+            case "Dog" -> userService.findByPet(UserPet.Dog);
+            case "Cat" -> userService.findByPet(UserPet.Cat);
+            default -> null;
+        };
     }
 }

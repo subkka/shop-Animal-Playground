@@ -7,5 +7,6 @@ import lombok.NoArgsConstructor;
 
 
 public enum UserPet {
-    Dog, Cat;
+    Dog,
+    Cat;
 }
