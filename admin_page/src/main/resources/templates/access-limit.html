@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>접근 제한</title>
+
+    <link rel="stylesheet" th:href="@{/css/access/access.css}">
+</head>
+<body>
+    <main layout:fragment="main">
+        <img th:src="@{/img/access/access-limit-icon.png}" alt="접근 제한 아이콘">
+        <h1>접근 제한</h1>
+        <div>현재 페이지에 접근 권한이 없습니다.</div>
+        <div>자세한 내용은 관리자에게 문의해주세요.</div>
+    </main>
+</body>
+</html>
