@@ -154,11 +154,26 @@ public class OrderTest {
         Assertions.assertThat(list).isNotNull();
     }
 
+
+
     @Test
-    @DisplayName("카테고리를 기준으로 판매 랭킹")
+    @DisplayName("카테고리 종류 출력")
     void test13() {
         //given
         //when
+        List<String> categoryList = ordermapper.getCategoryList();
+        System.out.println(categoryList);
+        //then
+        Assertions.assertThat(categoryList).isNotNull();
+
+    }
+
+    @Test
+    @DisplayName("카테고리별 판매 수")
+    void test14 () {
+        //given
+        //when
+        List<Integer> countByCategory = ordermapper.getCountByCategory();
         //then
 
     }

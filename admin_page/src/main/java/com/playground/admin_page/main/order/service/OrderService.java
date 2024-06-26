@@ -55,4 +55,20 @@ public class OrderService {
     public List<OrderDetailDto> findComplete() {
         return orderMapper.findComplete();
     }
+
+    public List<String> getCategoryList() {
+        return orderMapper.getCategoryList();
+    }
+
+    public List<Integer> getCountByCategory() {
+        return orderMapper.getCountByCategory();
+    }
+
+    public List<String> getPetList() {
+        return orderMapper.getPetList();
+    }
+
+    public List<Integer> getCountByUserPet() {
+        return orderMapper.getCountByUserPet();
+    }
 }

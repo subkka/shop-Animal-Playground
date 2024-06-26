@@ -53,10 +53,31 @@
             color: red; /* 숫자 부분 굵게 */
         }
     </style>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+        }
+        .chart-container {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 10px;
+            display: inline-block;
+
+        }
+        .pie-chart {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 
 <body id="page-top">
 <main layout:fragment = "main">
+
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -269,6 +290,124 @@
                                     </p>
                                 </span>
                             </div>
+                            <div class="chart-container">
+                                <canvas id="pie-chart1" class="pie-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="pie-chart2" class="pie-chart"></canvas>
+                            </div>
+                            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                var labels1 = /*[[${categoryList}]]*/ [];
+                                var values1 = /*[[${getCount}]]*/ [];
+
+                                var labels2 = /*[[${categoryList2}]]*/ [];
+                                var values2 = /*[[${getCount2}]]*/ [];
+                                /*]]>*/
+
+
+                                new Chart(document.getElementById("pie-chart1"), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels1,
+                                        datasets: [{
+                                            label: "",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: values1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            datalabels: {
+                                                formatter: (value, context) => {
+                                                    let total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                                    let percentage = Math.round(value / total * 100);
+                                                    return percentage + '%';
+                                                },
+                                                color: '#fff',
+                                                font: {
+                                                    size: 12
+                                                },
+                                                anchor: 'end',
+                                                align: 'start'
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: '카테고리별 제품 판매수',
+                                                font: {
+                                                    size: 18
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(tooltipItem) {
+                                                        let value = tooltipItem.raw;
+                                                        let dataset = tooltipItem.chart.data.datasets[tooltipItem.datasetIndex];
+                                                        let total = dataset.data.reduce((acc, val) => acc + val, 0);
+                                                        let percentage = Math.round(value / total * 100);
+                                                        return tooltipItem.label + ': ' + value + ' 개 (' + percentage + '%)';
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        radius: '70%'
+                                    }
+                                });
+
+                                // 두 번째 차트 생성
+                                new Chart(document.getElementById("pie-chart2"), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels2,
+                                        datasets: [{
+                                            label: "",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: values2
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            datalabels: {
+                                                formatter: (value, context) => {
+                                                    let total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                                    let percentage = Math.round(value / total * 100);
+                                                    return percentage + '%';
+                                                },
+                                                color: '#fff',
+                                                font: {
+                                                    size: 12
+                                                },
+                                                anchor: 'end',
+                                                align: 'start'
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: '동물별 제품 판매수',
+                                                font: {
+                                                    size: 18
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(tooltipItem) {
+                                                        let value = tooltipItem.raw;
+                                                        let dataset = tooltipItem.chart.data.datasets[tooltipItem.datasetIndex];
+                                                        let total = dataset.data.reduce((acc, val) => acc + val, 0);
+                                                        let percentage = Math.round(value / total * 100);
+                                                        return tooltipItem.label + ': ' + value + ' 개 (' + percentage + '%)';
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        radius: '70%'
+                                    }
+                                });
+
+                            </script>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -291,26 +430,10 @@
                                         <td th:text="${orderDetail.orderDate}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text="${orderDetail.orderStatus}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text="${#numbers.formatInteger(orderDetail.totalPrice, 3, 'COMMA')}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
-                                        <td colspan="4">
-                                            <table class="inner-table">
-                                                <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="product : ${orderDetail.products}">
-                                                    <td th:text="${product.productId}"></td>
-                                                    <td th:text="${product.quantity}"></td>
-                                                    <td th:text="${product.productName}"></td>
-                                                    <td th:text="${product.productPrice}"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
+                                        <td th:text =${orderDetail.products.productId}> </td>
+                                        <td th:text =${orderDetail.products.quantity}> </td>
+                                        <td th:text =${orderDetail.products.productName}> </td>
+                                        <td th:text =${orderDetail.products.productPrice}> </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -345,7 +468,6 @@
             </div>
         </div>
     </div>
-
 
 
 </body>

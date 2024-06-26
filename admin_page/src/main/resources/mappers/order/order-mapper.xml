@@ -127,31 +127,79 @@
     </select>
 
 
-    <resultMap id="findCompleteDetails" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
+    <resultMap id="findCompleteDetailsMaps" type="com.playground.admin_page.main.order.dto.order.OrderDetailDto">
     <id property="orderId" column="order_id"/>
     <result property="userId" column="user_id"/>
     <result property="orderDate" column="order_date"/>
     <result property="orderStatus" column="order_status"/>
     <result property="totalPrice" column="total_price"/>
-    <collection property="products" ofType="com.playground.admin_page.main.order.dto.order.ProductDetailDto">
+    <association property="products" javaType="com.playground.admin_page.main.order.dto.order.ProductDetailDto">
         <id property="orderProductId" column="order_product_id"/>
         <result property="orderId" column="order_id"/>
         <result property="productId" column="product_id"/>
         <result property="quantity" column="quantity"/>
         <result property="productName" column="product_name"/>
         <result property="productPrice" column="price"/>
-    </collection>
-</resultMap>
-<select id = "findComplete" resultMap = "findCompleteDetails">
-select o.*, op.*,p.product_name,p.price
-from orders o join order_product op
-on o.order_id= op.order_id
-join product p
-on p.product_id  = op.product_id
-where order_status ='COMPLETE';
+    </association>
+    </resultMap>
+    <select id = "findComplete" resultMap = "findCompleteDetailsMaps">
+    select o.*, op.*,p.product_name,p.price
+    from orders o join order_product op
+    on o.order_id= op.order_id
+    join product p
+    on p.product_id  = op.product_id
+    where order_status ='COMPLETE';
+    </select>
+
+
+<select id = "getCategoryList">
+    SELECT
+    category
+    FROM
+    orders o
+    JOIN order_product op ON o.order_id = op.order_id
+    JOIN product p ON p.product_id = op.product_id
+    WHERE
+    o.order_status = 'COMPLETE'
+    group by category
+    order by category;
 </select>
 
+<select id = "getCountByCategory">
+    SELECT
+    count(*)
+    FROM
+    orders o
+    JOIN order_product op ON o.order_id = op.order_id
+    JOIN product p ON p.product_id = op.product_id
+    WHERE
+    o.order_status = 'COMPLETE'
+    group by category
+    order by category;
+</select>
 
+<select id = "getPetList">
+    SELECT user_pet
+    FROM orders o
+    join user u on o.user_id = u.user_id
+    JOIN order_product op ON o.order_id = op.order_id
+    JOIN product p ON p.product_id = op.product_id
+    WHERE o.order_status = 'COMPLETE'
+    group by user_pet
+    order by user_pet;
+</select>
+
+<select id = "getCountByUserPet">
+    SELECT
+    count(*)
+    FROM orders o
+    join user u on o.user_id = u.user_id
+    JOIN order_product op ON o.order_id = op.order_id
+    JOIN product p ON p.product_id = op.product_id
+    WHERE o.order_status = 'COMPLETE'
+    group by user_pet
+    order by user_pet;
+</select>
 
 
 </mapper>
