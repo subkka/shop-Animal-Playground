@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -34,5 +35,11 @@ public class LoginQueryController {
         } else {
             return "fail";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout(SessionStatus sessionStatus) {
+        sessionStatus.setComplete(); // 세션 폐기
+        return "redirect:/";
     }
 }
