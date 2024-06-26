@@ -15,27 +15,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper userMapper;
+
     public List<UserDto> findAll(){
         return userMapper.findAll();
     }
-    public List<UserDto> findById(Long userId){
-        return userMapper.findById(userId);
 
+    public List<UserDto> findByUsername(String username) {
+        return userMapper.findByUsername(username);
     }
+
     public List<UserDto> findByPet(UserPet userPet){
         return userMapper.findByPet(userPet);
     }
 
     public List<UserDto> findByEmailAble(UserEmailAble userEmailAble) {
         return userMapper.findByEmailAble(userEmailAble);
-    }
-
-    public void setDormant() {
-        userMapper.setDormant();
-    }
-
-
-    public List<UserDto> findByUsername(String username) {
-        return userMapper.findByUsername(username);
     }
 }
