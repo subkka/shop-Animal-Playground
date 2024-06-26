@@ -17,11 +17,11 @@
 
 <main layout:fragment="main">
     <div class="container-fluid">
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">회원관리</h1>
-
         <!--테이블 카드-->
         <div class="card shadow md-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">회원 관리</h6>
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="filter-block">
@@ -50,11 +50,11 @@
                             <th>회원 이름</th>
                             <th>회원 이메일</th>
                             <th>회원 주소</th>
+                            <th>반려동물</th>
                             <th>가입 날짜</th>
                             <th>마지막 접속 날짜</th>
-                            <th>반려동물</th>
-                            <th>이메일 수신 동의</th>
                             <th>휴면계정 여부</th>
+                            <th>이메일 수신 동의</th>
                         </tr>
                         </thead>
                         <tbody id="user-list">
@@ -63,11 +63,11 @@
                             <td th:text="${user.userName}"></td>
                             <td th:text="${user.userEmail}"></td>
                             <td th:text="${user.address}"></td>
+                            <td th:text="${user.getUserPetToString}"></td>
                             <td th:text="${user.joinDate}"></td>
                             <td th:text="${user.lastConnect}"></td>
-                            <td th:text="${user.userPet}"></td>
-                            <td th:text="${user.userEmailAble}"></td>
-                            <td th:text="${user.dormantUser}"></td>
+                            <td th:text="${user.getDormantUserToString}"></td>
+                            <td th:text="${user.getUserEmailAbleToString}"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -126,17 +126,21 @@
             success(data) {
                 $userList.innerHTML = ''; // 기존 내용 초기화
                 data.forEach((user) => {
+                    const userPet = user.userPet === 'Dog' ? '강아지' : '고양이';
+                    const dormantUser = user.dormantUser === '1' ? '휴면' : '';
+                    const userEmailAble = user.userEmailAble === '1' ? '동의' : '';
+
                     const userListItem = `
                         <tr>
                             <td>${user.userId}</td>
                             <td>${user.userName}</td>
                             <td>${user.userEmail}</td>
                             <td>${user.address}</td>
+                            <td>${userPet}</td>
                             <td>${user.joinDate}</td>
                             <td>${user.lastConnect}</td>
-                            <td>${user.userPet}</td>
-                            <td>${user.userEmailAble}</td>
-                            <td>${user.dormantUser}</td>
+                            <td>${dormantUser}</td>
+                            <td>${userEmailAble}</td>
                         </tr>
                     `;
                     $userList.insertAdjacentHTML('beforeend', userListItem);
@@ -164,17 +168,21 @@
             success(data) {
                 $userList.innerHTML = ''; // 기존 내용 초기화
                 data.forEach((user) => {
+                    const userPet = user.userPet === 'Dog' ? '강아지' : '고양이';
+                    const dormantUser = user.dormantUser === '1' ? '휴면' : '';
+                    const userEmailAble = user.userEmailAble === '1' ? '동의' : '';
+
                     const userListItem = `
                         <tr>
                             <td>${user.userId}</td>
                             <td>${user.userName}</td>
                             <td>${user.userEmail}</td>
                             <td>${user.address}</td>
+                            <td>${userPet}</td>
                             <td>${user.joinDate}</td>
                             <td>${user.lastConnect}</td>
-                            <td>${user.userPet}</td>
-                            <td>${user.userEmailAble}</td>
-                            <td>${user.dormantUser}</td>
+                            <td>${dormantUser}</td>
+                            <td>${userEmailAble}</td>
                         </tr>
                     `;
                     $userList.insertAdjacentHTML('beforeend', userListItem);
