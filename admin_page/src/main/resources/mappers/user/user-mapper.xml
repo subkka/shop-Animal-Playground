@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.playground.admin_page.main.user.model.dao.UserMapper">
-    <resultMap id="infoDtoMap" type="InfoDto">
+    <resultMap id="userDtoMap" type="UserDto">
         <id column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
         <result column="user_email" property="userEmail"/>
@@ -15,7 +15,7 @@
         <result column="dormant_user" property="dormantUser"/>
     </resultMap>
 
-    <select id="findAll" resultMap="infoDtoMap">
+    <select id="findAll" resultMap="userDtoMap">
         SELECT
             *
         FROM
@@ -23,7 +23,7 @@
         ORDER BY
             user_id
     </select>
-    <select id="findById" resultMap="infoDtoMap">
+    <select id="findById" resultMap="userDtoMap">
         select
             *
         from
@@ -31,7 +31,7 @@
         where
             user_id = #{userId}
     </select>
-    <select id="findByPet" resultMap="infoDtoMap">
+    <select id="findByPet" resultMap="userDtoMap">
         select
             *
         from
@@ -40,7 +40,7 @@
             dormant_user != '0' and
             user_pet = #{userPet}
     </select>
-    <select id="findByEmailAble" resultMap="infoDtoMap">
+    <select id="findByEmailAble" resultMap="userDtoMap">
         select
             *
         from
