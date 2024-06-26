@@ -18,11 +18,11 @@
     <h2 class="m-3">회원 조회</h2>
 
     <!--회원 이름 검색-->
-    <div class="search-by-username">
+    <form id="search-username" class="search-by-username">
         <label for="username">사용자 이름 검색: </label>
         <input type="text" id="username">
-        <button type="button" id="search-username-btn">검색</button>
-    </div>
+        <button type="submit">검색</button>
+    </form>
 
     <table class="table">
         <thead>
@@ -86,10 +86,10 @@
         });
     });
     // 사용자 이름 검색
-    const $searchUsernameBtn = document.querySelector('#search-username-btn');
+    const $searchUsername = document.querySelector('#search-username');
     const $userList = document.querySelector('#user-list');
 
-    $searchUsernameBtn.addEventListener('click', () => {
+    const searchByUsername = function () {
         const username = $usernameInput.val().trim();
         $.ajax({
             url: '[[@{/user/search-by-username}]]',
@@ -119,6 +119,10 @@
             },
             error: console.log
         });
+    };
+    $searchUsername.addEventListener('submit', (event) => {
+        event.preventDefault();
+        searchByUsername();
     });
 </script>
 </body>
