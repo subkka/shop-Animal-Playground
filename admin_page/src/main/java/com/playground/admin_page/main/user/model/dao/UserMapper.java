@@ -16,4 +16,6 @@ public interface UserMapper {
 
     List<UserDto> findByEmailAble(UserEmailAble userEmailAble);
     void setDormant();
+
+    List<UserDto> findByUsername(String username);
 }

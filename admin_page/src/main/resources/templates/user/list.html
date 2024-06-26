@@ -21,69 +21,105 @@
     <div class="search-by-username">
         <label for="username">사용자 이름 검색: </label>
         <input type="text" id="username">
-        <button type="button">검색</button>
+        <button type="button" id="search-username-btn">검색</button>
     </div>
-    <script>
-        // 사용자 이름 검색
-        $(function () {
-            $('#username').autocomplete({
-                source(request, response) {
-                    $.ajax({
-                        url: '[[@{/user/searchByUsername}]]',
-                        method: 'get',
-                        data: {
-                            searchValue: request.term // 서버와 일치하는 매개변수 이름
-                        },
-                        success (data) {
-                            data = data.map((userName) => ({
-                                label: userName,
-                                value: userName
-                            }));
-                            response(data);
-                        },
-                        error: console.log
-                    });
-                },
-                focus(event) {
-                    event.preventDefault();
-                },
-                select(event, selected) {
-                    const {item: {label, value}} = selected;
-                    $('#username').val(value);
-                }
-            });
-        });
-    </script>
 
     <table class="table">
         <thead>
-        <tr>
-            <th>회원 번호</th>
-            <th>회원 이름</th>
-            <th>회원 이메일</th>
-            <th>회원 주소</th>
-            <th>가입 날짜</th>
-            <th>마지막 접속 날짜</th>
-            <th>반려동물</th>
-            <th>이메일 수신 동의</th>
-            <th>휴면계정 여부</th>
-        </tr>
+            <tr>
+                <th>회원 번호</th>
+                <th>회원 이름</th>
+                <th>회원 이메일</th>
+                <th>회원 주소</th>
+                <th>가입 날짜</th>
+                <th>마지막 접속 날짜</th>
+                <th>반려동물</th>
+                <th>이메일 수신 동의</th>
+                <th>휴면계정 여부</th>
+            </tr>
         </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-            <td th:text="${user.userId}"></td>
-            <td th:text="${user.userName}"></td>
-            <td th:text="${user.userEmail}"></td>
-            <td th:text="${user.address}"></td>
-            <td th:text="${user.joinDate}"></td>
-            <td th:text="${user.lastConnect}"></td>
-            <td th:text="${user.userPet}"></td>
-            <td th:text="${user.userEmailAble}"></td>
-            <td th:text="${user.dormantUser}"></td>
-        </tr>
-        </tbody>
+            <tbody id="user-list">
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.userId}"></td>
+                    <td th:text="${user.userName}"></td>
+                    <td th:text="${user.userEmail}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td th:text="${user.joinDate}"></td>
+                    <td th:text="${user.lastConnect}"></td>
+                    <td th:text="${user.userPet}"></td>
+                    <td th:text="${user.userEmailAble}"></td>
+                    <td th:text="${user.dormantUser}"></td>
+                </tr>
+            </tbody>
     </table>
 </main>
+<script layout:fragment="js">
+    // 사용자 이름 검색 입력란 자동완성
+    const $usernameInput = $('#username');
 
+    $(function () {
+        $usernameInput.autocomplete({
+            source(request, response) {
+                $.ajax({
+                    url: '[[@{/user/get-username-list}]]',
+                    method: 'get',
+                    data: {
+                        searchValue: request.term // 서버와 일치하는 매개변수 이름
+                    },
+                    success (data) {
+                        data = data.map((userName) => ({
+                            label: userName,
+                            value: userName
+                        }));
+                        response(data);
+                    },
+                    error: console.log
+                });
+            },
+            focus(event) {
+                event.preventDefault();
+            },
+            select(event, selected) {
+                const {item: {label, value}} = selected;
+                $usernameInput.val(value);
+            }
+        });
+    });
+    // 사용자 이름 검색
+    const $searchUsernameBtn = document.querySelector('#search-username-btn');
+    const $userList = document.querySelector('#user-list');
+
+    $searchUsernameBtn.addEventListener('click', () => {
+        const username = $usernameInput.val().trim();
+        $.ajax({
+            url: '[[@{/user/search-by-username}]]',
+            data: {
+                username: username
+            },
+            success(data) {
+                console.log(data);
+
+                $userList.innerHTML = ''; // 기존 내용 초기화
+                data.forEach((user) => {
+                    const userListItem = `
+                        <tr>
+                            <td>${user.userId}</td>
+                            <td>${user.userName}</td>
+                            <td>${user.userEmail}</td>
+                            <td>${user.address}</td>
+                            <td>${user.joinDate}</td>
+                            <td>${user.lastConnect}</td>
+                            <td>${user.userPet}</td>
+                            <td>${user.userEmailAble}</td>
+                            <td>${user.dormantUser}</td>
+                        </tr>
+                    `;
+                    $userList.insertAdjacentHTML('beforeend', userListItem);
+                });
+            },
+            error: console.log
+        });
+    });
+</script>
 </body>
 </html>

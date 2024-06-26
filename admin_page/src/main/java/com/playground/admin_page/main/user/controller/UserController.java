@@ -40,10 +40,10 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/searchByUsername", produces = "application/json; charset=utf-8")
+    @GetMapping(path = "/get-username-list", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public List<String> searchByUsername(@RequestParam String searchValue) {
-        log.info("GET /user/searchByUsername");
+    public List<String> getUsernameList(@RequestParam String searchValue) {
+        log.info("GET /user/get-username-list");
         log.debug("searchValue: {}", searchValue);
 
         return userNames.stream()
@@ -51,6 +51,14 @@ public class UserController {
                 .toList();
     }
 
+    @GetMapping(path = "/search-by-username", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public List<UserDto> searchByUsername(@RequestParam String username) {
+        log.info("GET /user/search-by-username");
+        log.debug("searchValue: {}", username);
+
+        return userService.findByUsername(username);
+    }
 
 //    사용 불가
 

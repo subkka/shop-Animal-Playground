@@ -23,6 +23,11 @@
         ORDER BY
             user_id
     </select>
+    <select id="findByUsername" resultMap="userDtoMap">
+        select *
+        from user
+        where user_name like CONCAT('%', #{username}, '%')
+    </select>
     <select id="findById" resultMap="userDtoMap">
         select
             *

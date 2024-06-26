@@ -35,4 +35,7 @@ public class UserService {
     }
 
 
+    public List<UserDto> findByUsername(String username) {
+        return userMapper.findByUsername(username);
+    }
 }
