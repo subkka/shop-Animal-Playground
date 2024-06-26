@@ -54,6 +54,10 @@
     </table>
 </main>
 <script layout:fragment="js">
+    $(document).ready(function(){
+        $("#sideUser").addClass("active");
+    });
+
     // 사용자 이름 검색 입력란 자동완성
     const $usernameInput = $('#username');
 
