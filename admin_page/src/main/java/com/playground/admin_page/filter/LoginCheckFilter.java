@@ -10,23 +10,24 @@ import org.springframework.core.annotation.Order;
 import java.io.IOException;
 
 @Slf4j
-@WebFilter(urlPatterns = {"/main/*"})
+@WebFilter(urlPatterns = {"/main/*", "/user/*"})
 @Order(1)
 public class LoginCheckFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("LoginCheckFilter init()");
+        log.info("LoginCheckFilter init");
     }
 
     @Override
     public void destroy() {
-        log.info("LoginCheckFilter destroy()");
+        log.info("LoginCheckFilter destroy");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
             HttpServletResponse response = (HttpServletResponse) servletResponse;
+
             String requestURI = request.getRequestURI();
             log.info("[{}] LoginFilter doFilter Start", requestURI);
 

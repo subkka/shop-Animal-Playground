@@ -1,7 +1,6 @@
 package com.playground.admin_page.main.user.controller;
 
 import com.playground.admin_page.main.user.model.dto.UserDto;
-import com.playground.admin_page.main.user.model.dto.UserEmailAble;
 import com.playground.admin_page.main.user.model.dto.UserPet;
 import com.playground.admin_page.main.user.model.service.UserService;
 import lombok.RequiredArgsConstructor;
