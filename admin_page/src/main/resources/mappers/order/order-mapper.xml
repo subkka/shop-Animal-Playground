@@ -201,5 +201,21 @@
     order by user_pet;
 </select>
 
+    <select id="getKindStatus">
+        select order_status
+        from orders
+        group by order_status
+        order by order_status
+    </select>
+
+    <select id = "getCountStatus">
+        select count(order_status)
+        from orders
+        group by order_status
+        order by order_status;
+    </select>
+
+
+
 
 </mapper>

@@ -2,6 +2,7 @@ package com.playground.admin_page.main.order.controller;
 
 import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.order.service.OrderService;
+import com.playground.admin_page.main.refund.model.service.RefundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final RefundService refundService;
 
     @GetMapping("/findAllOrder")
     public String findAllOrder(Model model) {
@@ -130,7 +132,6 @@ public class OrderController {
     }
 
 
-
     @GetMapping("/chart")
     public String index(Model model) {
         List<String> categoryList = orderService.getCategoryList();
@@ -145,7 +146,6 @@ public class OrderController {
 
         return "/order/piechart";
     }
-
 
 
 }
