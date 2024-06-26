@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 
@@ -9,9 +10,7 @@
 
 <body id="page-top">
     <main layout:fragment="main">
-        <!-- Begin Page Content -->
         <div class="container-fluid">
-            <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
@@ -35,45 +34,30 @@
                             <div class="col-12">
                                 <h5 class="mb-3">Description</h5>
                                 <p><strong>사유:</strong> <span th:text="*{refundReasonType}"></span></p>
-                                <p><strong>상세 내용</strong></p>
-                                <textarea style="border: 1px solid #000; width: 300px; height: 150px; resize: none;" th:text="*{refundReasonDetail}" readonly></textarea>
+                                <label for="refund-reason-detail"><strong>상세 내용</strong></label>
+                                <br>
+                                <textarea
+                                    style="
+                                        border: 1px solid #000;
+                                        width: 300px; height: 150px;
+                                        resize: none;"
+                                    th:text="*{refundReasonDetail}"
+                                    readonly
+                                    id="refund-reason-detail"
+                                ></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-4">
-                <a class="btn btn-primary" th:if="|${refundDetailList.processStatus == '처리완료'}|" hidden="until-found">수정</a>
-                <a class="btn btn-primary" th:unless="|${refundDetailList.processStatus == '처리완료'}|" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">수정</a>
-                <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundList}';|">목록</a>
+                <div class="btn-group-custom">
+                    <a class="btn btn-primary" th:if="|${refundDetailList.processStatus == '처리완료'}|" hidden="until-found">수정</a>
+                    <a class="btn btn-primary" th:unless="|${refundDetailList.processStatus == '처리완료'}|" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">수정</a>
+                    <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundList}';|">목록</a>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" th:href="@{login}">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
     <script layout:fragment="js">
         $(document).ready(function(){
             $("#sideRefund").addClass("active");
