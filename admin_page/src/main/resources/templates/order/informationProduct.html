@@ -84,9 +84,9 @@
             <td th:text="${product.productPrice}"></td>
             <td th:text="${product.amount}"></td>
         </tr>
-        <tr th:each="orderDetailDto : ${orderDetailDto}">
+        <tr th:object="${orderDetailDto}">
             <td>
-                <a th:href="@{|/order/orderCancel/${details.orderId}|}" onclick="showAlert()">
+                <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()">
                     <button type="button">주문취소</button>
                 </a>
 
@@ -102,6 +102,8 @@
                 </a>
             </td>
         </tr>
+
+
         </tbody>
     </table>
 

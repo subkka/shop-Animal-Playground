@@ -1,10 +1,7 @@
 package com.playground.admin_page.main.order.service;
 
 import com.playground.admin_page.main.order.dao.OrderMapper;
-import com.playground.admin_page.main.order.dto.order.CancelDto;
-import com.playground.admin_page.main.order.dto.order.OrderDetailDto;
-import com.playground.admin_page.main.order.dto.order.OrderDto;
-import com.playground.admin_page.main.order.dto.order.ProductDetailDto;
+import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.refund.model.dao.RefundMapper;
 import com.playground.admin_page.main.refund.model.dto.RefundDto;
 import lombok.RequiredArgsConstructor;
@@ -90,5 +87,9 @@ public class OrderService {
         int size = refundDtos.size();
         countStatus.add(size);
         return countStatus;
+    }
+
+    public List<SumByYearDto> sumByYear() {
+        return orderMapper.sumByYear();
     }
 }

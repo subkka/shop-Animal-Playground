@@ -147,5 +147,15 @@ public class OrderController {
         return "/order/piechart";
     }
 
+    @GetMapping("/totalChart")
+    @ResponseBody
+    public List<SumByYearDto> sumByYear() {
+        List<SumByYearDto> totalList = orderService.sumByYear();
+
+
+        return totalList;
+
+    }
+
 
 }

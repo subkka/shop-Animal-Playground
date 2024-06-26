@@ -47,4 +47,6 @@ public interface OrderMapper {
     List<Integer> getCountStatus();
 
     String getRefund();
+
+    List<SumByYearDto> sumByYear();
 }

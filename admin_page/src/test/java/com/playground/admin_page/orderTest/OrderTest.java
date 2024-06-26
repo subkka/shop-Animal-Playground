@@ -237,6 +237,17 @@ public class OrderTest {
 //
 //    }
 
+    @Test
+    @DisplayName("년도별 매출 누적합 구하기")
+    void test20() {
+        //given
+        List<SumByYearDto> list = ordermapper.sumByYear();
+        System.out.println(list);
+        //when
+        //then
+        Assertions.assertThat(list).isNotNull();
+    }
+
 
 
 }
