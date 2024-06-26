@@ -53,8 +53,19 @@ public class RefundController {
         if (refundYn != null && refundYn.isEmpty()) {
             refundYn = null;
         }
-        int refundDetailList = refundService.updateProcessStatus(orderId, refundYn, processStatus);
-        redirectAttributes.addFlashAttribute("updateResult", refundDetailList > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
+        int updateResult = refundService.updateProcessStatus(orderId, refundYn, processStatus);
+        redirectAttributes.addFlashAttribute("updateResult", updateResult > 0 ? "처리 상태가 변경되었습니다." : "처리 상태 변경을 실패했습니다. 다시 시도해주세요.");
         return "redirect:/refund/refundDetailList/" + orderId;
     }
+
+//    @PostMapping("/updateProcessStatus")
+//    public String updateComplete(@RequestParam("orderId") Long orderId, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
+//        log.info("POST updateProcessStatus");
+//        log.debug("orderId = {}", orderId);
+//        log.debug("processStatus = {}", processStatus);
+//
+//        int updateCompleteVal = refundService.updateComplete(orderId, processStatus);
+//        redirectAttributes.addFlashAttribute("updateCompleteVal", updateCompleteVal > 0 ? "success" : "fail");
+//        return "redirect:/refund/refundDetailList/" + orderId;
+//    }
 }

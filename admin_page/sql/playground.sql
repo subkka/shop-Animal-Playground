@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS refund (
      refund_reason_type VARCHAR(20) NULL,
      refund_reason_detail VARCHAR(300) NULL,
      refund_yn VARCHAR(10) NULL,
+     prod_return_yn VARCHAR(10) NOT NULL,
      PRIMARY KEY (refund_id),
      FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
@@ -253,5 +254,15 @@ values
     (null, 17, 13),
     (null, 20, 16);
 
+update refund
+set
+    prod_return_yn = 'N'
+where
+    process_status != '처리완료';
 
+update refund
+set
+    prod_return_yn = 'Y'
+where
+    process_status = '처리완료';
 
