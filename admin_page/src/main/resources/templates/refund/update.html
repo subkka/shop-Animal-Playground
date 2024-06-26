@@ -15,16 +15,16 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">환불 관리</h6>
                 </div>
-                <div class="card shadow mb-4">
+                <div class="card shadow">
                     <div class="card-body">
                         <form id="updateForm" th:action="@{/refund/update}" method="post" th:object="${refundDetailList}">
                             <input type="hidden" name="orderId" th:value="*{orderId}">
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>주문 번호:</strong> <span th:text="*{orderId}"></span></p>
-                                    <p><strong>신청 일시:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                                    <p><strong>신청일:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd')}"></span></p>
                                     <p><strong>환불 여부:</strong>
                                         <select name="refundYn" th:value="*{refundYn}">
                                             <th:block th:if="*{refundYn == '확정'}">
@@ -60,9 +60,8 @@
                             </div>
                             <div class="row mt-4">
                                 <div class="col-12">
-                                    <h5 class="mb-3">Description</h5>
+                                    <h5 class="mb-3">설명</h5>
                                     <p><strong>사유:</strong> <span th:text="*{refundReasonType}"></span></p>
-                                    <p><strong>상세 내용</strong></p>
                                     <label for="refund-reason-detail"><strong>상세 내용</strong></label>
                                     <br>
                                     <textarea
@@ -78,7 +77,7 @@
                             </div>
                             <div class="btn-group-custom">
                                 <input class="btn btn-primary" type="submit" value="수정">
-                                <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundDetailList/{refundId}(refundId=*{refundId})}';|">이전</a>
+                                <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundDetailList/{refundId}(refundId=*{refundId})}';|">취소</a>
                             </div>
                         </form>
                     </div>

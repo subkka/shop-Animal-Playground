@@ -13,14 +13,14 @@
         <div class="container-fluid">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Refund Detail</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">환불 상세</h6>
                 </div>
-                <div class="card shadow mb-4">
+                <div class="card shadow">
                     <div class="card-body" th:object="${refundDetailList}">
                         <div class="row">
                             <div class="col-md-6">
                                 <p><strong>주문 번호:</strong> <span th:text="*{refundId}"></span></p>
-                                <p><strong>신청 일시:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
+                                <p><strong>신청일:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd')}"></span></p>
                                 <p><strong>환불 여부:</strong>
                                     <span th:if="*{refundYn}" class="badge badge-success" th:text="*{refundYn}"></span>
                                     <span th:unless="*{refundYn}" class="badge badge-secondary">미정</span>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-12">
-                                <h5 class="mb-3">Description</h5>
+                                <h5 class="mb-3">설명</h5>
                                 <p><strong>사유:</strong> <span th:text="*{refundReasonType}"></span></p>
                                 <label for="refund-reason-detail"><strong>상세 내용</strong></label>
                                 <br>
@@ -47,12 +47,12 @@
                                 ></textarea>
                             </div>
                         </div>
+                        <div class="btn-group-custom">
+                            <a class="btn btn-primary" th:if="|${refundDetailList.processStatus == '처리완료'}|" hidden="until-found">관리</a>
+                            <a class="btn btn-primary" th:unless="|${refundDetailList.processStatus == '처리완료'}|" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">관리</a>
+                            <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundList}';|">목록</a>
+                        </div>
                     </div>
-                </div>
-                <div class="btn-group-custom">
-                    <a class="btn btn-primary" th:if="|${refundDetailList.processStatus == '처리완료'}|" hidden="until-found">수정</a>
-                    <a class="btn btn-primary" th:unless="|${refundDetailList.processStatus == '처리완료'}|" th:onclick="|location.href='@{/refund/updatePage/{refundId}(refundId=*{refundId})}';|">수정</a>
-                    <a class="btn btn-secondary" th:onclick="|location.href='@{/refund/refundList}';|">목록</a>
                 </div>
             </div>
         </div>
