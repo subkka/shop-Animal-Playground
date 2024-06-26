@@ -18,7 +18,7 @@
     <h2 class="m-3">회원 조회</h2>
 
     <!--회원 이름 검색-->
-    <form id="search-username" class="search-by-username">
+    <form id="search-username">
         <label for="username">사용자 이름 검색: </label>
         <input type="text" id="username">
         <button type="submit">검색</button>
@@ -97,8 +97,6 @@
                 username: username
             },
             success(data) {
-                console.log(data);
-
                 $userList.innerHTML = ''; // 기존 내용 초기화
                 data.forEach((user) => {
                     const userListItem = `
