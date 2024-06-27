@@ -9,7 +9,7 @@
 </head>
 
 <body id="page-top">
-<main layout:fragment="main">
+    <main layout:fragment="main">
             <div class="container-fluid">
 
                 <!-- Product Detail Card -->
@@ -59,12 +59,13 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
-            <!-- /.container-fluid -->
-</main>
-
+    </main>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideProduct").addClass("active");
+        });
+    </script>
 </body>
 
 </html>

@@ -9,8 +9,7 @@
 </head>
 
 <body id="page-top">
-<main layout:fragment="main">
-
+    <main layout:fragment="main">
             <!-- Begin Page Content -->
             <div class="container-fluid">
 
@@ -91,16 +90,18 @@
                 </div>
 
             </div>
-            <!-- /.container-fluid -->
-    <script>
+    </main>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideProduct").addClass("active");
+        });
+
         document.querySelector('.custom-file-input').addEventListener('change', function (e) {
             const fileName = e.target.files[0].name;
             const nextSibling = e.target.nextElementSibling;
             nextSibling.innerText = fileName;
         });
     </script>
-</main>
-
 </body>
 
 </html>
