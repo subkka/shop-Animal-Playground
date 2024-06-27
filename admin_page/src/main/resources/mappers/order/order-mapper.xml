@@ -74,7 +74,7 @@
 
     <update id = "statusChange">
         update orders
-        set order_status ='CANCEL'
+        set order_status ='주문취소'
         where order_id = #{orderId}
     </update>
 
@@ -117,13 +117,13 @@
     <select id = "getSales" resultType ="java.lang.Integer">
         select SUM(total_price)
         from orders
-        where order_status='COMPLETE';
+        where order_status='배송완료';
     </select>
 
     <select id = "getOrderCount" resultType ="java.lang.Integer">
         select count(*)
         from orders
-        where order_status='COMPLETE';
+        where order_status='배송완료';
     </select>
 
 
@@ -148,7 +148,7 @@
     on o.order_id= op.order_id
     join product p
     on p.product_id  = op.product_id
-    where order_status ='COMPLETE';
+    where order_status ='배송완료';
     </select>
 
 
@@ -160,7 +160,7 @@
     JOIN order_product op ON o.order_id = op.order_id
     JOIN product p ON p.product_id = op.product_id
     WHERE
-    o.order_status = 'COMPLETE'
+    o.order_status = '배송완료'
     group by category
     order by category;
 </select>
@@ -173,7 +173,7 @@
     JOIN order_product op ON o.order_id = op.order_id
     JOIN product p ON p.product_id = op.product_id
     WHERE
-    o.order_status = 'COMPLETE'
+    o.order_status = '배송완료'
     group by category
     order by category;
 </select>
@@ -184,7 +184,7 @@
     join user u on o.user_id = u.user_id
     JOIN order_product op ON o.order_id = op.order_id
     JOIN product p ON p.product_id = op.product_id
-    WHERE o.order_status = 'COMPLETE'
+    WHERE o.order_status = '배송완료'
     group by user_pet
     order by user_pet;
 </select>
@@ -196,7 +196,7 @@
     join user u on o.user_id = u.user_id
     JOIN order_product op ON o.order_id = op.order_id
     JOIN product p ON p.product_id = op.product_id
-    WHERE o.order_status = 'COMPLETE'
+    WHERE o.order_status = '배송완료'
     group by user_pet
     order by user_pet;
 </select>
@@ -228,7 +228,7 @@
     FROM
     orders
     WHERE
-    order_status = 'complete'
+    order_status = '배송완료'
     GROUP BY
     YEAR(order_date)
     ) AS yearly_totals
