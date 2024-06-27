@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,12 +76,13 @@ public class OrderService {
         return orderMapper.getCountByUserPet();
     }
 
-    public List<String> getKindStaus() {
-        List<String> kindStatus = orderMapper.getKindStatus();
-        String refund = "REFUND";
-        kindStatus.add(refund);
-        Collections.sort(kindStatus);
-        return kindStatus;
+    public List<String> getKindStatus() {
+        List<String> getKindStatus = orderMapper.getKindStatus();
+        String refund = "환불";
+        getKindStatus.add(refund);
+        Collections.sort(getKindStatus);
+
+        return getKindStatus;
     }
 
     public List<Integer> getCountStatus() {
@@ -95,3 +97,5 @@ public class OrderService {
         return orderMapper.sumByYear();
     }
 }
+
+

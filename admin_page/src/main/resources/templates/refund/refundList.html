@@ -21,6 +21,7 @@
                         <table class="table table-bordered" id="dataTable">
                             <thead>
                                 <tr>
+                                    <th>번호</th>
                                     <th>주문번호</th>
                                     <th>신청일</th>
                                     <th>처리상태</th>
@@ -29,6 +30,7 @@
                             </thead>
                             <tbody>
                                 <tr th:each="refund, stat : ${refundList}" th:object="${refund}">
+                                    <td th:text="*{refundId}">번호</td>
                                     <td th:text="*{orderId}">주문번호</td>
                                     <td th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd')}">신청일</td>
                                     <td th:text="*{processStatus}">처리상태</td>
