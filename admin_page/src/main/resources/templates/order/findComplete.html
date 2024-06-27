@@ -236,7 +236,7 @@
                                     <tr th:each="orderDetail : ${orderDetailDtos}">
                                         <td th:text="${orderDetail.orderId}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text="${orderDetail.userId}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
-                                        <td th:text="${orderDetail.orderDate}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd')}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text="${orderDetail.orderStatus}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text="${#numbers.formatInteger(orderDetail.totalPrice, 3, 'COMMA')}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
                                         <td th:text =${orderDetail.products.productId}> </td>

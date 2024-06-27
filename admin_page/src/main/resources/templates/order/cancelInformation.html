@@ -36,7 +36,7 @@
                                     <td th:text="${cancel.cancelReason}"></td>
                                     <td th:text="${cancel.orderId}"></td>
                                     <td th:text="${cancel.processStatus}"></td>
-                                    <td th:text="${cancel.cancelDate}"></td>
+                                    <td th:text="${#temporals.format(cancel.cancelDate, 'yyyy-MM-dd')}"></td>
                                 </tr>
                             </tbody>
                         </table>

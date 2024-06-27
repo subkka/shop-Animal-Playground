@@ -48,7 +48,7 @@
                             <tr th:each="order : ${orders}">
                                 <td th:text="${order.orderId}"></td>
                                 <td th:text="${order.userId}"></td>
-                                <td th:text="${order.orderDate}"></td>
+                                <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}"></td>
                                 <td th:text="${order.orderStatus.getStatus()}"></td>
                                 <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></td>
                                 <td>
