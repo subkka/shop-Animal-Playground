@@ -2,6 +2,7 @@ package com.playground.admin_page.main.product.controller;
 
 import com.playground.admin_page.main.product.dto.ProductDto;
 import com.playground.admin_page.main.product.service.ProductService;
+import com.playground.admin_page.main.refund.controller.RefundController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -101,5 +101,28 @@ public class ProductController {
         } catch (IOException e) {
             throw new IOException("Could not save image file: " + fileName, e);
         }
+    }
+    // chart
+    @GetMapping("/chart-data")
+    @ResponseBody
+    public Map<String, Object> getChartData() {
+        List<ProductDto> products = productService.findAll();
+        products.sort((a, b) -> b.getAmount() - a.getAmount()); // 수량 기준 내림차순 정렬
+
+        List<String> labels = new ArrayList<>();
+        List<Integer> data = new ArrayList<>();
+
+        // 상위 10개 제품만 선택
+        for (int i = 0; i < Math.min(10, products.size()); i++) {
+            ProductDto product = products.get(i);
+            labels.add(product.getProductName());
+            data.add(product.getAmount());
+        }
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("labels", labels);
+        result.put("data", data);
+
+        return result;
     }
 }

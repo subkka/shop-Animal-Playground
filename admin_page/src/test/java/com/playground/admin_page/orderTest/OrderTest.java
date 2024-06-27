@@ -2,26 +2,35 @@ package com.playground.admin_page.orderTest;
 
 import com.playground.admin_page.main.order.dao.OrderMapper;
 import com.playground.admin_page.main.order.dto.order.*;
+import com.playground.admin_page.main.refund.model.dao.RefundMapper;
+import com.playground.admin_page.main.refund.model.dto.RefundDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class OrderTest {
 
-
+    private RefundMapper refundMapper;
     private  OrderMapper ordermapper;
-    @Autowired
+
     public OrderTest(OrderMapper ordermapper) {
         this.ordermapper = ordermapper;
     }
 
+
+    public OrderTest(RefundMapper refundMapper) {
+        this.refundMapper = refundMapper;
+    }
     @Test
     @DisplayName("모든 주문 내역 조회 ")
     void test1() {
@@ -175,7 +184,68 @@ public class OrderTest {
         //when
         List<Integer> countByCategory = ordermapper.getCountByCategory();
         //then
+    }
 
+    @Test
+    @DisplayName("주문 상태 조회하기 ")
+    void test15() {
+        //given
+        //when
+        List<String> getKindStatus = ordermapper.getKindStatus();
+        System.out.println(getKindStatus);
+        //then
+        Assertions.assertThat(getKindStatus).isNotNull();
+    }
+
+    @Test
+    @DisplayName("주문 상태 가져오기")
+    void test16() {
+        //given
+        //when
+        List<Integer> getCountStatus = ordermapper.getCountStatus();
+        System.out.println(getCountStatus);
+        //then
+        Assertions.assertThat(getCountStatus).isNotNull();
+    }
+
+//    @Test
+//    @DisplayName("환불 가져오기")
+//    void test17() {
+//        //given
+//        //when
+//        List<String> listName = ordermapper.getKindStatus();
+//        String name = "REFUND";
+//        listName.add(name);
+//        Collections.sort(listName);
+//
+//        List<RefundDto> refundList = refundMapper.findRefundList();
+//        int size = refundList.size();
+//
+//        List<Integer> listCount = ordermapper.getCountStatus();
+//        listCount.add(size);
+//
+//        for (String itemName : listName) {
+//            System.out.println(itemName);
+//        }
+//
+//        for (int a : listCount) {
+//            System.out.println(
+//           a );
+//        }
+//
+//        //then
+//
+//    }
+
+    @Test
+    @DisplayName("년도별 매출 누적합 구하기")
+    void test20() {
+        //given
+        List<SumByYearDto> list = ordermapper.sumByYear();
+        System.out.println(list);
+        //when
+        //then
+        Assertions.assertThat(list).isNotNull();
     }
 
 

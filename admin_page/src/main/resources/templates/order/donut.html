@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Population Pie Charts</title>
+    <style>
+        body {
+            display: flex;
+
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .chart-container {
+            max-width: 300px;
+            width: 100%;
+            margin: 0 10px;
+        }
+        .pie-chart {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="chart-container">
+    <canvas id="pie-chart1" class="pie-chart"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="pie-chart2" class="pie-chart"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var labels1 = /*[[${getKindStatus}]]*/ [];
+    var values1 = /*[[${getCountStatus}]]*/ [];
+    /*]]>*/
+
+
+    new Chart(document.getElementById("pie-chart1"), {
+        type: 'pie',
+        data: {
+            labels: labels1,
+            datasets: [{
+                label: "",
+                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: values1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    formatter: (value, context) => {
+                        let total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                        let percentage = Math.round(value / total * 100);
+                        return percentage + '%';
+                    },
+                    color: '#fff',
+                    font: {
+                        size: 12
+                    },
+                    anchor: 'end',
+                    align: 'start'
+                },
+                title: {
+                    display: true,
+                    text: '주문 상태 수',
+                    font: {
+                        size: 18
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            let value = tooltipItem.raw;
+                            let dataset = tooltipItem.chart.data.datasets[tooltipItem.datasetIndex];
+                            let total = dataset.data.reduce((acc, val) => acc + val, 0);
+                            let percentage = Math.round(value / total * 100);
+                            return tooltipItem.label + ': ' + value + ' 개 (' + percentage + '%)';
+                        }
+                    }
+                }
+            },
+            radius: '70%'
+        }
+    });
+
+</script>
+</body>
+</html>
