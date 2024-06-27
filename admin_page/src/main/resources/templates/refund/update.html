@@ -19,6 +19,7 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <form id="updateForm" th:action="@{/refund/update}" method="post" th:object="${refundDetailList}">
+                            <input type="hidden" name="refundId" th:value="*{refundId}">
                             <input type="hidden" name="orderId" th:value="*{orderId}">
                             <div class="row">
                                 <div class="col-md-6">

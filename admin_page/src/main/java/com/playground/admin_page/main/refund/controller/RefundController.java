@@ -63,13 +63,13 @@ public class RefundController {
      * 4. 철회 완료된 상품 정보 저장
      */
     @PostMapping("/update")
-    public String updateProcessStatus(@RequestParam("orderId") Long orderId, @RequestParam(required = false) String refundYn, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
+    public String updateProcessStatus(@RequestParam("refundId") Long refundId, @RequestParam("orderId") Long orderId, @RequestParam(required = false) String refundYn, @RequestParam String processStatus, RedirectAttributes redirectAttributes) {
         log.info("POST updateProcessStatus");
         if (refundYn != null && refundYn.isEmpty()) {
             refundYn = null;
         }
         int updateResult = refundService.updateProcessStatus(orderId, refundYn, processStatus);
         redirectAttributes.addFlashAttribute("updateResult", updateResult > 0 ? "🐕수정되었습니다🐾" : "🐈수정을 실패하였습니다. 다시 시도해주세요🐾");
-        return "redirect:/refund/refundDetailList/" + orderId;
+        return "redirect:/refund/refundDetailList/" + refundId;
     }
 }
