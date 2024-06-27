@@ -224,12 +224,15 @@ update orders
 set total_price = 15000
 where order_id =27;
 
+select *
+from orders;
+
 INSERT INTO orders (order_id, user_id, order_date, order_status, total_price) VALUES
-      (14,9,'2023-06-13 13:00:00','입금전',60000),
-      (15,10,'2023-06-14 14:00:00','입금전',35000),
-      (16,11,'2023-06-15 15:00:00','입금전',30000),
-      (17,12,'2023-06-16 16:00:00','입금전',75000),
-      (18,13,'2023-06-17 17:00:00','입금전',60000);
+      (null,9,'2023-06-13 13:00:00','입금전',60000),
+      (null,10,'2023-06-14 14:00:00','입금전',35000),
+      (null,11,'2023-06-15 15:00:00','입금전',30000),
+      (null,12,'2023-06-16 16:00:00','입금전',75000),
+      (null,13,'2023-06-17 17:00:00','입금전',60000);
 
 INSERT INTO
     refund
@@ -258,4 +261,7 @@ values
     (null, 31, 11),
     (null, 32, 12);
 
-
+INSERT INTO admin_account (admin_id, password, permission)
+VALUES ('admin01', '12345678', 'SUPER'),
+       ('admin02', '12345678`', 'STANDARD'),
+       ('admin03', '12345678', 'STANDARD');
