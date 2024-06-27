@@ -77,4 +77,15 @@
         where
             order_id = #{orderId}
     </select>
+
+    <select id="searchRefundData" resultType="int">
+        select
+            count(refund_id)
+        from
+            refund_product rp join order_product op
+                using(order_product_id)
+        where
+            order_id = #{orderId}
+    </select>
+
 </mapper>
