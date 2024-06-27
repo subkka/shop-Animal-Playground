@@ -16,7 +16,6 @@ public class AppController {
         return "index";
     }
 
-
     @GetMapping("/main")
     public String getMain() {
         return "main";

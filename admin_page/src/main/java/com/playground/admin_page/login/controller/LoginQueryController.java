@@ -17,10 +17,10 @@ import org.springframework.web.bind.support.SessionStatus;
 public class LoginQueryController {
     private final LoginService loginService;
 
-    @GetMapping
+    @PostMapping
     @ResponseBody
     public String login(Model model, @RequestParam String id, @RequestParam String password) throws InterruptedException {
-        log.info("GET /login");
+        log.info("POST /login");
         log.debug("id/pwd: {}/{}", id, password);
 
         // 로그인 정보로 쿼리 조회
