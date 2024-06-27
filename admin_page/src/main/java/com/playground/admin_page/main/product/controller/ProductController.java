@@ -50,6 +50,10 @@ public class ProductController {
     @PostMapping("/edit")
     public String edit(@ModelAttribute ProductDto product, @RequestParam("imageFile") MultipartFile file) {
         log.info("Received edit request. Product: {}, File: {}", product, (file != null ? file.getOriginalFilename() : "No file"));
+
+        // 기존 상품 정보를 가져옵니다.
+        ProductDto existingProduct = productService.findByProductId(product.getProductId());
+
         if (file != null && !file.isEmpty()) {
             try {
                 String fileName = saveImage(file);
@@ -59,7 +63,11 @@ public class ProductController {
             } catch (IOException e) {
                 log.error("Error saving image file", e);
             }
+        } else {
+            // 새 이미지 파일이 업로드되지 않았다면 기존 이미지 정보를 유지합니다.
+            product.setProductImage(existingProduct.getProductImage());
         }
+
         productService.updateProduct(product);
         return "redirect:/product/detail/" + product.getProductId();
     }
