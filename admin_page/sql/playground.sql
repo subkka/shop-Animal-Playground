@@ -151,7 +151,7 @@ VALUES
     (27,8
 ,'2024-06-13 13:00:00','COMPLETE',60000),
     (28,8,'2024-06-13 13:00:00','COMPLETE',32000);
-999 10 11 12 13 13 8 8
+
 select *
 from orders where order_status = 'COMPLETE';
 
@@ -265,4 +265,5 @@ set
     prod_return_yn = 'Y'
 where
     process_status = '처리완료';
+
 

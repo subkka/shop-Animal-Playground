@@ -7,6 +7,7 @@ import com.playground.admin_page.main.order.dto.order.OrderDto;
 import com.playground.admin_page.main.order.dto.order.ProductDetailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,7 +24,6 @@ public class OrderService {
         return orderMapper.findByStatus(status);
     }
 
-
     public OrderDetailDto productDetail(int orderId) {
         return orderMapper.productDetail(orderId);
     }
@@ -32,12 +32,14 @@ public class OrderService {
         return orderMapper.informationProductDetail(id);
     }
 
-    public int statusChange(int orderId) {
-        return orderMapper.statusChange(orderId);
+    @Transactional
+    public void statusChange(int orderId) {
+        orderMapper.statusChange(orderId);
     }
 
-    public int insertCancel(int orderId) {
-        return orderMapper.insertCancel(orderId);
+    @Transactional
+    public void insertCancel(int orderId) {
+        orderMapper.insertCancel(orderId);
     }
 
     public List<CancelDto> cancelInformation() {
