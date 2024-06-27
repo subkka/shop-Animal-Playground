@@ -17,7 +17,7 @@ public class SampleController {
     private final OrderService orderService;
     @GetMapping("/main")
     public String getMain(Model model) {
-        List<String> getKindStatus = orderService.getKindStaus();
+        List<String> getKindStatus = orderService.getKindStatus();
         List<Integer> getCountStatus = orderService.getCountStatus();
         model.addAttribute("getKindStatus", getKindStatus);
         model.addAttribute("getCountStatus", getCountStatus);
