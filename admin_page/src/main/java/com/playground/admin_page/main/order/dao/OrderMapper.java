@@ -34,4 +34,19 @@ public interface OrderMapper {
     List<OrderDetailDto> findComplete();
 
 
+    List<String> getCategoryList();
+
+    List<Integer> getCountByCategory();
+
+    List<String> getPetList();
+
+    List<Integer> getCountByUserPet();
+
+    List<String> getKindStatus();
+
+    List<Integer> getCountStatus();
+
+    String getRefund();
+
+    List<SumByYearDto> sumByYear();
 }

@@ -50,7 +50,7 @@ class ProductMapperTest {
         product.setProductDesc("알록달록한 고양이 낚시대");
         product.setPrice(8000);
         product.setAmount(30);
-        product.setDisplay(true);
+        //product.setDisplay(true);
         product.setProductStatus("판매중");
         product.setCreatedAt(LocalDateTime.now());
 

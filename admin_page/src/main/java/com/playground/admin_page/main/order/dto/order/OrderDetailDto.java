@@ -15,6 +15,6 @@ public class OrderDetailDto {
     private LocalDateTime orderDate;
     private OrderStatus orderStatus;
     private int totalPrice;
-    private List<ProductDetailDto> products;
-
+//    private List<ProductDetailDto> products;
+    private ProductDetailDto products;
 }

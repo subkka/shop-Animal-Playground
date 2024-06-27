@@ -84,9 +84,9 @@
             <td th:text="${product.productPrice}"></td>
             <td th:text="${product.amount}"></td>
         </tr>
-        <tr th:each="orderDetailDto : ${orderDetailDto}">
+        <tr th:object="${orderDetailDto}">
             <td>
-                <a th:href="@{|/order/orderCancel/${details.orderId}|}" onclick="showAlert()">
+                <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()">
                     <button type="button">주문취소</button>
                 </a>
 
@@ -97,16 +97,23 @@
                 </script>
             </td>
             <td>
-                <a th:href="@{/templates/order/findAllOrder.html}">
+                <a th:href="@{/order/findAllOrder}">
                     <button type="button">주문 확인</button>
                 </a>
             </td>
         </tr>
+
+
         </tbody>
     </table>
 
 </main>
 
+<script th:inline="javascript">
+    function showAlert() {
+        alert('취소처리를 완료했습니다.');
+    }
+</script>
 </body>
 </html>
 <!--/*<td>

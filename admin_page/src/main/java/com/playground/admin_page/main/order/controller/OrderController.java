@@ -2,16 +2,14 @@ package com.playground.admin_page.main.order.controller;
 
 import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.order.service.OrderService;
+import com.playground.admin_page.main.refund.model.service.RefundService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -19,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
+    private final RefundService refundService;
 
     @GetMapping("/findAllOrder")
     public String findAllOrder(Model model) {
@@ -85,6 +84,29 @@ public class OrderController {
         return "/order/sales";
     }
 
+//    @GetMapping("/findComplete")
+//    public String findComplete(Model model) {
+//        int count = orderService.getOrderCount();
+//        int sales = orderService.getSales();
+//        SalesDto salesDto = new SalesDto(count, sales);
+//        model.addAttribute("salesDto", salesDto);
+//
+//        List<String> categoryList = orderService.getCategoryList();
+//        List<Integer> getCountCategory = orderService.getCountByCategory();
+//        List<String> petLIst = orderService.getPetList();
+//        List<Integer> getCountUserPet = orderService.getCountByUserPet();
+//
+//        model.addAttribute("categoryList", categoryList);
+//        model.addAttribute("getCount", getCountCategory);
+//        model.addAttribute("categoryList2", petLIst);
+//        model.addAttribute("getCount2", getCountUserPet);
+//
+//
+//        List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
+//        model.addAttribute("orderDetailDtos", orderDetailDtos);
+//        return "/order/findComplete";
+//    }
+
     @GetMapping("/findComplete")
     public String findComplete(Model model) {
         int count = orderService.getOrderCount();
@@ -92,20 +114,54 @@ public class OrderController {
         SalesDto salesDto = new SalesDto(count, sales);
         model.addAttribute("salesDto", salesDto);
 
+        List<String> categoryList = orderService.getCategoryList();
+        List<Integer> getCountCategory = orderService.getCountByCategory();
+        List<String> petLIst = orderService.getPetList();
+        List<Integer> getCountUserPet = orderService.getCountByUserPet();
+
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("getCount", getCountCategory);
+        model.addAttribute("categoryList2", petLIst);
+        model.addAttribute("getCount2", getCountUserPet);
+
+
         List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
         model.addAttribute("orderDetailDtos", orderDetailDtos);
         return "/order/findComplete";
     }
 
-//    @GetMapping("/findComplete1")
-//    public String findComplete1(Model model) {
-//        int count = orderService.getOrderCount();
-//        int sales = orderService.getSales();
-//        SalesDto salesDto = new SalesDto(count, sales);
-//        model.addAttribute("salesDto", salesDto);
-//
-//        List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
-//        model.addAttribute("orderDetailDtos", orderDetailDtos);
-//        return "findComplete";
-//    }
+
+
+    @GetMapping("/chart")
+    public String index(Model model) {
+        List<String> categoryList = orderService.getCategoryList();
+        List<Integer> getCountCategory = orderService.getCountByCategory();
+        List<String> petLIst = orderService.getPetList();
+        List<Integer> getCountUserPet = orderService.getCountByUserPet();
+
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("getCount", getCountCategory);
+        model.addAttribute("categoryList2", petLIst);
+        model.addAttribute("getCount2", getCountUserPet);
+
+        return "/order/piechart";
+    }
+
+    @GetMapping("/totalChart")
+    @ResponseBody
+    public Map<String, List<Object>> sumByYear() {
+        List<SumByYearDto> totalList = orderService.sumByYear();
+
+        List<Object> years = new ArrayList<>();
+        List<Object> prices = new ArrayList<>();
+        for (SumByYearDto dto : totalList) {
+            years.add(dto.getYear());
+            prices.add(dto.getTotalPrice());
+        }
+
+        Map<String, List<Object>> result = new HashMap<>();
+        result.put("year", years);
+        result.put("totalPrice", prices);
+        return result;
+     }
 }
