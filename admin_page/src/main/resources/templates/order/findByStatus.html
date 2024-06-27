@@ -1,96 +1,64 @@
 <!doctype html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <title>Order</title>
-    </head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
 <body>
-<main layout:fragment="content">
-    <h2>상태별 주문 조회</h2>
-    <form action="listByStatus" method="get">
-        <div class="tbl_frm01">
-            <table>
-                <colgroup>
-                    <col >
-                    <col>
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th scope="row">검색어</th>
-                    <td>
-                        <select >
-                            <option>주문번호</option>
-                            <option >회원번호</option>
-                        </select>
-                        <input type="text" class="frm_input" size="30">
-                    </td>
-                </tr>
-
-                <tr>
-                    <th scope="row">주문상태</th>
-                    <td>
-                        <label><input type="radio" name="status" value="" checked="checked"> 전체</label>
-                        <label><input type="radio" name="status" value="PENDING"> 입금전</label>
-                        <label><input type="radio" name="status" value="PAID"> 입금후</label>
-                        <label><input type="radio" name="status" value="DELIVERING"> 배송중</label>
-                        <label><input type="radio" name="status" value="COMPLETE"> 배송완료</label>
-                        <label><input type="radio" name="status" value="CANCEL"> 주문취소</label>
-                        <label><input type="radio" name="status" value="REFUND"> 환불</label>
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div class="btn_confirm">
-            <input type="submit" value="검색" class="btn_medium">
-            <input type="button" value="초기화" id="frmRest" class="btn_medium grey">
-        </div>
-    </form>
-</main>
-
-<div>
-
     <main layout:fragment="main" class="container">
-        <h1>상태별 주문 조회</h1>
-
-        <table class="table">
-            <thead>
-            <tr>
-                <th>주문 번호</th>
-                <th>고객 번호</th>
-                <th>주문 일시</th>
-                <th>주문 상태</th>
-                <th>주문 가격</th>
-                <th>상세정보 보기</th>
-                <th>부가 기능</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="order : ${orders}">
-                <td th:text="${order.orderId}"></td>
-                <td th:text="${order.userId}"></td>
-                <td th:text="${order.orderDate}"></td>
-                <td th:text="${order.orderStatus.getStatus()}"></td>
-                <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></td>
-                <td>
-                    <a th:href="@{|/order/detail/${order.orderId}|}">
-                        <button type="button">상세정보 보기</button>
-                    </a>
-                </td>
-                <td>
-                    <a th:if="${order.orderStatus.getStatus() == '입금전'}"
-                       th:href="@{|/order/informationProduct/${order.orderId}|}">
-                        <button type="button">재고확인</button>
-                    </a>
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <!--카드 헤더-->
+                <div class="card-header py-3">
+                    <!--카드 타이틀-->
+                    <h6 class="m-0 font-weight-bold text-primary">상태별 주문 조회</h6>
+                </div>
+                <!--카드 내용-->
+                <div class="card-body">
+                    <!--테이블 컨테이너-->
+                    <div class="table-responsive">
+                        <!--테이블-->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>주문 번호</th>
+                                    <th>고객 번호</th>
+                                    <th>주문 일시</th>
+                                    <th>주문 상태</th>
+                                    <th>주문 가격</th>
+                                    <th>상세정보 보기</th>
+                                    <th>부가 기능</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="order : ${orders}">
+                                    <td th:text="${order.orderId}"></td>
+                                    <td th:text="${order.userId}"></td>
+                                    <td th:text="${order.orderDate}"></td>
+                                    <td th:text="${order.orderStatus.getStatus()}"></td>
+                                    <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></td>
+                                    <td>
+                                        <a th:href="@{|/order/detail/${order.orderId}|}" class="btn btn-primary">상세보기</a>
+                                    </td>
+                                    <td>
+                                        <a th:if="${order.orderStatus.getStatus() == '입금전'}"
+                                           th:href="@{|/order/informationProduct/${order.orderId}|}" class="btn btn-primary">재고확인</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
-</div>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideSales").addClass("active");
+        });
+    </script>
 </body>
 </html>
