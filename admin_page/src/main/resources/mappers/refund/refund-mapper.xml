@@ -42,16 +42,10 @@
         </foreach>
     </insert>
 
-
-    <resultMap id="RefundProductDtoMap" type="RefundProductDto">
-        <result column="order_product_id" property="orderProductId"/>
-        <result column="order_id" property="refundId"/>
-    </resultMap>
-
     <!-- 철회된 상품 정보 조회 -->
-    <select id="findProductForRefund" resultMap="RefundProductDtoMap">
+    <select id="findProductForRefund" resultType="RefundProductDto">
         select
-            order_product_id, order_id
+            order_product_id
         from
             order_product
         where

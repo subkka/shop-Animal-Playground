@@ -45,7 +45,7 @@ public class RefundService {
             rollbackFor = Exception.class
 
     )
-    public int updateProcessStatus(Long orderId, String refundYn, String processStatus) {
+    public int updateProcessStatus(Long refundId, Long orderId, String refundYn, String processStatus) {
         // 철회 여부 확인
         String prodReturnVal = refundMapper.checkProdReturnStatus(orderId);
         if(prodReturnVal.equals("Y")) { // 철회 완료 시
@@ -64,17 +64,13 @@ public class RefundService {
         // 철회 완료 상품 정보 저장
         int refundData = refundMapper.searchRefundData(orderId);
         if(refundData == 0) {
-            List<RefundProductDto> productForRefund = refundMapper.findProductForRefund(orderId);
-            refundMapper.insertRefundProduct(productForRefund);
+            List<RefundProductDto> refundProductDtos = refundMapper.findProductForRefund(orderId);
+            for(RefundProductDto refundProductDto : refundProductDtos) {
+                refundProductDto.setRefundId(refundId);
+            }
+            refundMapper.insertRefundProduct(refundProductDtos);
         }
 
         return result;
-    }
-
-    /**
-     * 철회 완료 상품 정보 저장
-     */
-    public int insertRefundProduct(List<RefundProductDto> refundProductList) {
-        return refundMapper.insertRefundProduct(refundProductList);
     }
 }
