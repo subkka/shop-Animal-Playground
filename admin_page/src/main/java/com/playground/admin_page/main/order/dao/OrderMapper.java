@@ -41,4 +41,12 @@ public interface OrderMapper {
     List<String> getPetList();
 
     List<Integer> getCountByUserPet();
+
+    List<String> getKindStatus();
+
+    List<Integer> getCountStatus();
+
+    String getRefund();
+
+    List<SumByYearDto> sumByYear();
 }

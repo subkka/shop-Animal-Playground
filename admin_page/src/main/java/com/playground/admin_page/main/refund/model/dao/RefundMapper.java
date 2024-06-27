@@ -29,4 +29,6 @@ public interface RefundMapper {
 
     // 철회 여부 완료로 수정
     int updateProdReturnStatus(Long orderId);
+
+    int searchRefundData(Long orderId);
 }
