@@ -65,7 +65,7 @@ public class RefundService {
         // 철회 완료 상품 정보 저장
         List<RefundProductDto> productForRefund = refundMapper.findProductForRefund(orderId);
         int result = insertRefundProduct(productForRefund);
-        if(result <= 0) { // 철회 완료 상품 정보 저장 실패했을 때ㅋ
+        if(result <= 0) { // 철회 완료 상품 정보 저장 실패했을 때
             throw new RuntimeException("철회 상품 정보 저장 실패");
         }
         return result;
