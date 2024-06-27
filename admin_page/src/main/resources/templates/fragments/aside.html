@@ -33,12 +33,19 @@
                     <span>주문관리</span></a>
             </li>
 
+            <li class="nav-item" id="sideSales">
+                <a class="nav-link" th:href="@{/order/findComplete}">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>매출 및 판매현황 관리</span></a>
+            </li>
+
             <!-- Nav Item - 교환 -->
             <li class="nav-item" id="sideRefund">
                 <a class="nav-link" th:href="@{/refund/refundList}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>환불관리</span></a>
             </li>
+
 
             <!-- Nav Item - 회원관리 -->
             <li class="nav-item" id="sideUser">
