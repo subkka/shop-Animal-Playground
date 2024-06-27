@@ -19,7 +19,7 @@ public interface RefundMapper {
     int updateProcessStatus(@Param("orderId") Long orderId, @Param("refundYn") String refundYn, @Param("processStatus") String processStatus);
 
     // 철회 완료 상품 정보 저장
-    int insertRefundProduct(List<RefundProductDto> refundProductList);
+    int insertRefundProduct(List<RefundProductDto> refundProductDtos);
 
     // 철회된 상품 정보 조회
     List<RefundProductDto> findProductForRefund(Long orderId);

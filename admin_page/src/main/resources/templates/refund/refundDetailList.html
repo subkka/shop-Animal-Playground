@@ -20,7 +20,7 @@
                     <div class="card-body" th:object="${refundDetailList}">
                         <div class="row">
                             <div class="col-md-6">
-                                <p><strong>주문 번호:</strong> <span th:text="*{refundId}"></span></p>
+                                <p><strong>주문 번호:</strong> <span th:text="*{orderId}"></span></p>
                                 <p><strong>신청 일시:</strong> <span th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd HH:mm')}"></span></p>
                                 <p><strong>환불 여부:</strong>
                                     <span th:if="*{refundYn}" class="badge badge-success" th:text="*{refundYn}"></span>
