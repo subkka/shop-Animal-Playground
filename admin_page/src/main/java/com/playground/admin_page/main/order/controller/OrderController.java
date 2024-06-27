@@ -9,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @Slf4j
@@ -149,13 +148,21 @@ public class OrderController {
 
     @GetMapping("/totalChart")
     @ResponseBody
-    public List<SumByYearDto> sumByYear() {
+    public Map<String, List<Object>> sumByYear() {
         List<SumByYearDto> totalList = orderService.sumByYear();
 
+        List<Object> years = new ArrayList<>();
+        List<Object> prices = new ArrayList<>();
 
-        return totalList;
+        for (SumByYearDto dto : totalList) {
+            years.add(dto.getYear());
+            prices.add(dto.getTotalPrice());
+        }
 
+        Map<String, List<Object>> result = new HashMap<>();
+        result.put("year", years);
+        result.put("totalPrice", prices);
+
+        return result;
     }
-
-
 }
