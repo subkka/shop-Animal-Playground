@@ -6,6 +6,7 @@ import com.playground.admin_page.main.refund.model.dao.RefundMapper;
 import com.playground.admin_page.main.refund.model.dto.RefundDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +25,6 @@ public class OrderService {
         return orderMapper.findByStatus(status);
     }
 
-
     public OrderDetailDto productDetail(int orderId) {
         return orderMapper.productDetail(orderId);
     }
@@ -33,12 +33,14 @@ public class OrderService {
         return orderMapper.informationProductDetail(id);
     }
 
-    public int statusChange(int orderId) {
-        return orderMapper.statusChange(orderId);
+    @Transactional
+    public void statusChange(int orderId) {
+        orderMapper.statusChange(orderId);
     }
 
-    public int insertCancel(int orderId) {
-        return orderMapper.insertCancel(orderId);
+    @Transactional
+    public void insertCancel(int orderId) {
+        orderMapper.insertCancel(orderId);
     }
 
     public List<CancelDto> cancelInformation() {

@@ -131,6 +131,7 @@ public class OrderController {
     }
 
 
+
     @GetMapping("/chart")
     public String index(Model model) {
         List<String> categoryList = orderService.getCategoryList();
@@ -153,7 +154,6 @@ public class OrderController {
 
         List<Object> years = new ArrayList<>();
         List<Object> prices = new ArrayList<>();
-
         for (SumByYearDto dto : totalList) {
             years.add(dto.getYear());
             prices.add(dto.getTotalPrice());
@@ -162,7 +162,6 @@ public class OrderController {
         Map<String, List<Object>> result = new HashMap<>();
         result.put("year", years);
         result.put("totalPrice", prices);
-
         return result;
-    }
+     }
 }

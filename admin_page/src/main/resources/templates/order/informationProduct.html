@@ -97,7 +97,7 @@
                 </script>
             </td>
             <td>
-                <a th:href="@{/templates/order/findAllOrder.html}">
+                <a th:href="@{/order/findAllOrder}">
                     <button type="button">주문 확인</button>
                 </a>
             </td>
@@ -109,6 +109,11 @@
 
 </main>
 
+<script th:inline="javascript">
+    function showAlert() {
+        alert('취소처리를 완료했습니다.');
+    }
+</script>
 </body>
 </html>
 <!--/*<td>
