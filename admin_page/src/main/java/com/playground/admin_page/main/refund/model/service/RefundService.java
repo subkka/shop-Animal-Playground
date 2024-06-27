@@ -74,6 +74,12 @@ public class RefundService {
     /**
      * 철회 완료 상품 정보 저장
      */
+    @Transactional(
+            propagation = Propagation.REQUIRED,
+            isolation = Isolation.READ_COMMITTED,
+            rollbackFor = Exception.class
+
+    )
     public int insertRefundProduct(List<RefundProductDto> refundProductList) {
         return refundMapper.insertRefundProduct(refundProductList);
     }
