@@ -1,35 +1,54 @@
 <!doctype html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <title>Order</title>
-    </head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
 <body>
-<div>
     <main layout:fragment="main" class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>취소 번호</th>
-                <th>취소 사유</th>
-                <th>주문 번호</th>
-                <th>처리 상태</th>
-                <th>처리 날짜</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cancel : ${cancels}">
-                <td th:text="${cancel.cancelId}"></td>
-                <td th:text="${cancel.cancelReason}"></td>
-                <td th:text="${cancel.orderId}"></td>
-                <td th:text="${cancel.processStatus}"></td>
-                <td th:text="${cancel.cancelDate}"></td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <!--카드 헤더-->
+                <div class="card-header py-3">
+                    <!--카드 타이틀-->
+                    <h6 class="m-0 font-weight-bold text-primary">주문취소 정보</h6>
+                </div>
+                <!--카드 내용-->
+                <div class="card-body">
+                    <!--테이블 컨테이너-->
+                    <div class="table-responsive">
+                        <!--테이블-->
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>취소 번호</th>
+                                <th>취소 사유</th>
+                                <th>주문 번호</th>
+                                <th>처리 상태</th>
+                                <th>처리 날짜</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="cancel : ${cancels}">
+                                    <td th:text="${cancel.cancelId}"></td>
+                                    <td th:text="${cancel.cancelReason}"></td>
+                                    <td th:text="${cancel.orderId}"></td>
+                                    <td th:text="${cancel.processStatus}"></td>
+                                    <td th:text="${cancel.cancelDate}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
-</div>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideOrder").addClass("active");
+        });
+    </script>
 </body>
 </html>

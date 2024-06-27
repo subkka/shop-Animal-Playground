@@ -1,127 +1,74 @@
 <!doctype html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <meta charset="UTF-8">
     <title>Order Details</title>
 </head>
 <body>
+    <main layout:fragment="main" class="container">
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <!--카드 헤더-->
+                <div class="card-header py-3">
+                    <!--카드 타이틀-->
+                    <h6 class="m-0 font-weight-bold text-primary">주문상품 재고 확인</h6>
+                </div>
+                <!--카드 내용-->
+                <div class="card-body">
+                    <!--테이블 컨테이너-->
+                    <div class="table-responsive">
+                        <!--테이블-->
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>주문 번호</th>
+                                <th>고객 번호</th>
+                                <th>주문일</th>
+                                <th>주문 상태</th>
+                                <th>주문 가격</th>
+                                <th>상품 번호</th>
+                                <th>주문한 상품 개수</th>
+                                <th>상품 이름</th>
+                                <th>상품 가격</th>
+                                <th>상품 재고 수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!--orderitem에 개수에 맞게 실행 할 수 있도록 수정 해야됨-->
+                            <tr th:each="product : ${orderDetailDto.products}">
+                                <td th:text="${orderDetailDto.orderId}"></td>
+                                <td th:text="${orderDetailDto.userId}"></td>
+                                <td th:text="*{#temporals.format(orderDetailDto.orderDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${orderDetailDto.orderStatus}"></td>
+                                <td th:text="${#numbers.formatInteger(orderDetailDto.totalPrice, 3, 'COMMA')}"></td>
+                                <td th:text="${product.productId}"></td>
+                                <td th:text="${product.quantity}"></td>
+                                <td th:text="${product.productName}"></td>
+                                <td th:text="${product.productPrice}"></td>
+                                <td th:text="${product.amount}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn-group-custom">
+                        <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()" class="btn btn-primary">주문최소</a>
+                        <script th:inline="javascript">
+                            function showAlert() {
+                                alert('취소처리를 완료했습니다.');
+                            }
+                        </script>
+                        <a th:href="@{/order/findAllOrder}" class="btn btn-primary">주문 확인</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
-<form action="" method="get">
-    <input type="hidden" name="code" value="list">
-    <div class="tbl_frm01">
-        <table>
-            <colgroup>
-                <col class="w100">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">검색어</th>
-                <td>
-                    <select name="sfl">
-                        <option value="od_id">주문번호</option>
-                        <option value="mb_id">회원번호</option>
-                    </select>
-                    <input type="text" name="stx" value="" class="frm_input" size="30">
-                </td>
-            </tr>
-
-            <tr>
-                <th scope="row">주문상태</th>
-                <td>
-                    <label><input type="radio" name="od_status" value="" checked="checked"> 전체</label>
-                    <label><input type="radio" name="od_status" value="1"> 입금대기</label>
-                    <label><input type="radio" name="od_status" value="2"> 입금완료</label>
-                    <label><input type="radio" name="od_status" value="3"> 배송준비</label>
-                    <label><input type="radio" name="od_status" value="4"> 배송중</label>
-                    <label><input type="radio" name="od_status" value="5"> 배송완료</label>
-                    <label><input type="radio" name="od_status" value="6"> 주문취소</label>
-                    <label><input type="radio" name="od_status" value="9"> 환불</label>
-                </td>
-            </tr>
-
-            </tbody>
-        </table>
-    </div>
-    <div class="btn_confirm">
-        <input type="submit" value="검색" class="btn_medium">
-        <input type="button" value="초기화" id="frmRest" class="btn_medium grey">
-    </div>
-</form>
-<main layout:fragment="main" class="container">
-
-    <h1>주문상품 재고 확인</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>주문 번호</th>
-            <th>고객 번호</th>
-            <th>주문 일시</th>
-            <th>주문 상태</th>
-            <th>주문 가격</th>
-            <th>상품 번호</th>
-            <th>주문한 상품 개수</th>
-            <th>상품 이름</th>
-            <th>상품 가격</th>
-            <th>상품 재고 수</th>
-
-        </tr>
-        </thead>
-        <tbody>
-        <!--orderitem에 개수에 맞게 실행 할 수 있도록 수정 해야됨-->
-
-        <tr th:each="product : ${orderDetailDto.products}">
-            <td th:text="${orderDetailDto.orderId}"></td>
-            <td th:text="${orderDetailDto.userId}"></td>
-            <td th:text="${orderDetailDto.orderDate}"></td>
-            <td th:text="${orderDetailDto.orderStatus}"></td>
-            <td th:text="${#numbers.formatInteger(orderDetailDto.totalPrice, 3, 'COMMA')}"></td>
-            <td th:text="${product.productId}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td th:text="${product.productName}"></td>
-            <td th:text="${product.productPrice}"></td>
-            <td th:text="${product.amount}"></td>
-        </tr>
-        <tr th:object="${orderDetailDto}">
-            <td>
-                <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()">
-                    <button type="button">주문취소</button>
-                </a>
-
-                <script th:inline="javascript">
-                    function showAlert() {
-                        alert('취소처리를 완료했습니다.');
-                    }
-                </script>
-            </td>
-            <td>
-                <a th:href="@{/order/findAllOrder}">
-                    <button type="button">주문 확인</button>
-                </a>
-            </td>
-        </tr>
-
-
-        </tbody>
-    </table>
-
-</main>
-
-<script th:inline="javascript">
-    function showAlert() {
-        alert('취소처리를 완료했습니다.');
-    }
-</script>
+    </main>
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            $("#sideOrder").addClass("active");
+        });
+    </script>
 </body>
 </html>
-<!--/*<td>
-    <table>
-        <tr th:each="details : ${details}">
-        <tr th:each="item : ${details.orderItems} ">
-            <td th:text="${item.productId}"></td>
-            <td th:text="${item.quantity}"></td>
-        </tr>
-    </table>
-</td>*/-->
