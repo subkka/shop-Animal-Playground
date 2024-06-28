@@ -68,7 +68,7 @@ public class RefundController {
         if (refundYn != null && refundYn.isEmpty()) {
             refundYn = null;
         }
-        int updateResult = refundService.updateProcessStatus(orderId, refundYn, processStatus);
+        int updateResult = refundService.updateProcessStatus(refundId, orderId, refundYn, processStatus);
         redirectAttributes.addFlashAttribute("updateResult", updateResult > 0 ? "🐕수정되었습니다🐾" : "🐈수정을 실패하였습니다. 다시 시도해주세요🐾");
         return "redirect:/refund/refundDetailList/" + refundId;
     }

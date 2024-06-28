@@ -52,7 +52,7 @@
                         </table>
                     </div>
                     <div class="btn-group-custom">
-                        <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()" class="btn btn-primary">주문최소</a>
+                        <a th:href="@{|/order/orderCancel/${orderDetailDto.orderId}|}" onclick="showAlert()" class="btn btn-primary">주문취소</a>
                         <script th:inline="javascript">
                             function showAlert() {
                                 alert('취소처리를 완료했습니다.');
