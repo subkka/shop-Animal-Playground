@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playground.admin_page.main.product.dao.ProductMapper">
+    <resultMap id="productResultMap" type="com.playground.admin_page.main.product.dto.ProductDto">
+        <id property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="category" column="category"/>
+        <result property="productImage" column="product_image" jdbcType="VARCHAR"/>
+        <result property="productDesc" column="product_desc"/>
+        <result property="price" column="price"/>
+        <result property="amount" column="amount"/>
+        <result property="isDisplay" column="is_display"/>
+        <result property="productStatus" column="product_status"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+    <select id="findAll" resultMap = "productResultMap">
+        select
+            *
+        from
+            product
+    </select>
+    <select id="findByProductId" resultMap="productResultMap">
+        select
+            *
+        from
+            product
+        where
+            product_id = #{productId}
+    </select>
+    <insert id="createProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into
+            product (product_name, category, product_image, product_desc, price, amount, is_display, product_status, created_at)
+        values (
+            #{productName}, #{category}, #{productImage}, #{productDesc}, #{price}, #{amount}, #{isDisplay}, #{productStatus}, NOW()
+        )
+    </insert>
+    <update id="updateProduct">
+        update
+            product
+        set
+            product_name = #{productName}, category = #{category}, product_image = #{productImage}, product_desc = #{productDesc}, price = #{price}, amount = #{amount}, is_display = #{isDisplay}, product_status = #{productStatus}
+        where
+            product_id = #{productId}
+    </update>
+</mapper>

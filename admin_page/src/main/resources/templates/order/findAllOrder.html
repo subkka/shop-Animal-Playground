@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <title>FindAllOrder</title>
+    <link rel="stylesheet" th:href="@{/css/order/order.css}">
+</head>
+
+<body>
+    <main layout:fragment = "main">
+        <div class="container-fluid">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">주문 내역 검색</h6>
+                </div>
+                <div class="card-body">
+                    <form action="listByStatus" method="get" class="radio-frm">
+                            <span><strong>주문상태</strong></span>
+                            <span class="radio-btn-group">
+                                <label>전체 <input type="radio" name="status" value="" checked="checked"></label>
+                                <label>입금전 <input type="radio" name="status" value="입금전"></label>
+                                <label>입금후 <input type="radio" name="status" value="입금후"></label>
+                                <label>배송중 <input type="radio" name="status" value="배송중"></label>
+                                <label>배송완료 <input type="radio" name="status" value="배송완료"></label>
+                                <label>주문취소 <input type="radio" name="status" value="주문취소"></label>
+                                <label>환불 <input type="radio" name="status" value="환불"></label>
+                                <input type="submit" value="검색" class="btn btn-primary">
+                            </span>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                            <thead>
+                            <tr>
+                                <th>주문 번호</th>
+                                <th>고객 번호</th>
+                                <th>주문 일시</th>
+                                <th>주문 상태</th>
+                                <th>주문 가격</th>
+                                <th>상세정보 보기</th>
+                                <th>부가 기능</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.orderId}"></td>
+                                <td th:text="${order.userId}"></td>
+                                <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}"></td>
+                                <td th:text="${order.orderStatus.getStatus()}"></td>
+                                <td th:text="${#numbers.formatInteger(order.totalPrice, 3, 'COMMA')}"></td>
+                                <td>
+                                    <a th:href="@{|/order/detail/${order.orderId}|}" class="btn btn-primary">상세보기</a>
+                                </td>
+                                <td>
+                                    <a th:if="${order.orderStatus.getStatus() == '입금전'}"
+                                       th:href="@{|/order/informationProduct/${order.orderId}|}"
+                                       class="btn btn-primary">
+                                        재고확인
+                                    </a>
+                                    <a th:if="${order.orderStatus.getStatus() == '주문취소'}"
+                                       th:href="@{|/order/cancelInformation|}"
+                                       class="btn btn-primary">
+                                        취소정보
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideOrder").addClass("active");
+        });
+    </script>
+</body>
+
+</html>

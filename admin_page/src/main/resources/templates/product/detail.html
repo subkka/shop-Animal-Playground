@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <title>Refund</title>
+</head>
+
+<body id="page-top">
+    <main layout:fragment="main">
+            <div class="container-fluid">
+
+                <!-- Product Detail Card -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary" th:text="${product.productName}">상품명</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5 class="mb-3">기본 정보</h5>
+                                <p><strong>상품번호:</strong> <span th:text="${product.productId}"></span></p>
+                                <p><strong>카테고리:</strong> <span th:text="${product.category}"></span></p>
+                                <p><strong>가격:</strong> <span th:text="${#numbers.formatInteger(product.price, 3, 'COMMA')}"></span></p>
+                                <p><strong>수량:</strong> <span th:text="${product.amount}"></span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="mb-3">상세 정보</h5>
+                                <p><strong>진열 상태:</strong>
+                                    <span th:if="${product.isDisplay}" class="badge badge-success">진열 중</span>
+                                    <span th:unless="${product.isDisplay}" class="badge badge-secondary">진열 중지</span>
+                                </p>
+                                <p><strong>상품 상태:</strong>
+                                    <span th:text="${product.productStatus}" class="badge badge-info"></span>
+                                </p>
+                                <p><strong>등록일:</strong> <span th:text="${#temporals.format(product.createdAt, 'yyyy-MM-dd')}"></span></p>
+                            </div>
+                        </div>
+                        <!-- 현재 이미지가 있다면 표시 -->
+                        <div class="form-group" th:if="${product.productImage != null and !product.productImage.isEmpty()}">
+                            <label>상품 이미지:</label>
+                            <div class="card" style="width: 30%">
+                                <img class="card-img-top" th:src="@{'' + ${product.productImage}}" alt="Product Image">
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h5 class="mb-3">설명</h5>
+                                <p th:text="${product.productDesc}"></p>
+                            </div>
+                        </div>
+                        <!-- Action Buttons -->
+                        <div class="btn-group-custom">
+                            <a th:href="@{/product/edit/{id}(id=${product.productId})}" class="btn btn-primary">수정</a>
+                            <a href="/admin/product/list" class="btn btn-secondary">목록으로</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </main>
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideProduct").addClass("active");
+        });
+    </script>
+</body>
+
+</html>

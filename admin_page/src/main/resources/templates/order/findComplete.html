@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+
+<head>
+
+
+    <title>findComplete</title>
+
+
+    <style>
+        .info {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px; /* 테이블 간 간격 */
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .table th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #f2f2f2;
+        }
+        .inner-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px; /* 내부 테이블 위쪽 간격 */
+        }
+        .inner-table th, .inner-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .inner-table th {
+            background-color: #f9f9f9;
+        }
+        .info .orderCount {
+            font-size: 1.5em; /* 글씨 크기 조정 */
+        }
+        .info .orderCountResult {
+
+            color: red; /* 숫자 부분 굵게 */
+        }
+    </style>
+    <style>
+        /*body {*/
+        /*    display: flex;*/
+        /*    height: 100vh;*/
+        /*    margin: 0;*/
+        /*    font-family: Arial, sans-serif;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*}*/
+        .chart-container {
+            max-width: 400px;
+            width: 100%;
+            margin: 0 10px;
+            display: inline-block;
+
+        }
+        .pie-chart {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body id="page-top">
+<main layout:fragment = "main">
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">매출 조회</h6>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <span th:object="${salesDto}" class="info">
+                                    <p>
+                                        <span class="orderCount">총 주문 수:</span>
+                                        <span class="orderCountResult" th:text="${salesDto.count} + '건'"></span>
+                                    </p>
+                                </span>
+                                <span th:object="${salesDto}" class="info">
+                                    <p>
+                                        <span class="orderCount">총 매출:</span>
+                                        <span class="orderCountResult" th:text="${#numbers.formatInteger(salesDto.sales, 3, 'COMMA')} + '원'"></span>
+                                    </p>
+                                </span>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="pie-chart1" class="pie-chart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="pie-chart2" class="pie-chart"></canvas>
+                            </div>
+                            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+                            <script th:inline="javascript">
+                                /*<![CDATA[*/
+                                var labels1 = /*[[${categoryList}]]*/ [];
+                                var values1 = /*[[${getCount}]]*/ [];
+
+                                var labels2 = /*[[${categoryList2}]]*/ [];
+                                var values2 = /*[[${getCount2}]]*/ [];
+                                /*]]>*/
+
+
+                                new Chart(document.getElementById("pie-chart1"), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels1,
+                                        datasets: [{
+                                            label: "",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: values1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            datalabels: {
+                                                formatter: (value, context) => {
+                                                    let total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                                    let percentage = Math.round(value / total * 100);
+                                                    return percentage + '%';
+                                                },
+                                                color: '#fff',
+                                                font: {
+                                                    size: 12
+                                                },
+                                                anchor: 'end',
+                                                align: 'start'
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: '카테고리별 제품 판매수',
+                                                font: {
+                                                    size: 18
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(tooltipItem) {
+                                                        let value = tooltipItem.raw;
+                                                        let dataset = tooltipItem.chart.data.datasets[tooltipItem.datasetIndex];
+                                                        let total = dataset.data.reduce((acc, val) => acc + val, 0);
+                                                        let percentage = Math.round(value / total * 100);
+                                                        return tooltipItem.label + ': ' + value + ' 개 (' + percentage + '%)';
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        radius: '70%'
+                                    }
+                                });
+
+                                // 두 번째 차트 생성
+                                new Chart(document.getElementById("pie-chart2"), {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels2,
+                                        datasets: [{
+                                            label: "",
+                                            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                                            data: values2
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            datalabels: {
+                                                formatter: (value, context) => {
+                                                    let total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                                                    let percentage = Math.round(value / total * 100);
+                                                    return percentage + '%';
+                                                },
+                                                color: '#fff',
+                                                font: {
+                                                    size: 12
+                                                },
+                                                anchor: 'end',
+                                                align: 'start'
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: '동물별 제품 판매수',
+                                                font: {
+                                                    size: 18
+                                                }
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(tooltipItem) {
+                                                        let value = tooltipItem.raw;
+                                                        let dataset = tooltipItem.chart.data.datasets[tooltipItem.datasetIndex];
+                                                        let total = dataset.data.reduce((acc, val) => acc + val, 0);
+                                                        let percentage = Math.round(value / total * 100);
+                                                        return tooltipItem.label + ': ' + value + ' 개 (' + percentage + '%)';
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        radius: '70%'
+                                    }
+                                });
+
+                            </script>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th>주문 번호</th>
+                                        <th>고객 번호</th>
+                                        <th>주문 일시</th>
+                                        <th>주문 상태</th>
+                                        <th>주문 가격</th>
+                                        <th>상품 번호</th>
+                                        <th>주문한 상품 개수</th>
+                                        <th>상품 이름</th>
+                                        <th>상품 가격</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="orderDetail : ${orderDetailDtos}">
+                                        <td th:text="${orderDetail.orderId}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text="${orderDetail.userId}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd')}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text="${orderDetail.orderStatus}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text="${#numbers.formatInteger(orderDetail.totalPrice, 3, 'COMMA')}" rowspan="${#lists.size(orderDetail.products) + 1}"></td>
+                                        <td th:text =${orderDetail.products.productId}> </td>
+                                        <td th:text =${orderDetail.products.quantity}> </td>
+                                        <td th:text =${orderDetail.products.productName}> </td>
+                                        <td th:text =${orderDetail.products.productPrice}> </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+</main>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" th:href="@{login}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+<script layout:fragment="js">
+    $(document).ready(function(){
+        $("#sideSales").addClass("active");
+    });
+</script>
+</body>
+
+</html>

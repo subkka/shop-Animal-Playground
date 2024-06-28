@@ -2,7 +2,7 @@ spring:
   application:
     name: admin_page
   datasource:
-    url: ssg-java3.iptime.org:3306/playgrounddb
+    url: jdbc:mysql://ssg-java3.iptime.org:3306/playgrounddb
     username: playground
     password: db1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,19 +13,32 @@ spring:
       minimum-idle: 5
       idle-timeout: 30000
       auto-commit: false
+#    web:
+#      resources:
+#        static-locations:
+#          - classpath:/static/
+#          - file:uploads/
+#    mvc:
+#      static-path-pattern: /uploads/**
 
 server:
   servlet:
     context-path: /admin
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 logging:
   level:
     root: info
     com.playground.admin_page: debug
 
-#mybatis:
-#  configuration:
-#    map-underscore-to-camel-case: true
-#  type-aliases-package: com.playground
-#  mapper-locations: classpath*:mappers/**/*-mapper.xml
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+    default-enum-type-handler: org.apache.ibatis.type.EnumTypeHandler
+  type-aliases-package: com.playground
+  mapper-locations: classpath*:mappers/**/*-mapper.xml
 
