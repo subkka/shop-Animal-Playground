@@ -5,6 +5,7 @@ import com.playground.admin_page.main.order.dto.order.*;
 import com.playground.admin_page.main.refund.model.dao.RefundMapper;
 import com.playground.admin_page.main.refund.model.dto.RefundDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderMapper orderMapper;
@@ -36,12 +38,26 @@ public class OrderService {
 
     @Transactional
     public void statusChange(int orderId) {
-        orderMapper.statusChange(orderId);
+        try {
+            int transaction = orderMapper.statusChange(orderId);
+            if (transaction != 1) {
+                throw new RuntimeException("Transaction failed");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while changing product amount", e);
+        }
     }
 
     @Transactional
     public void insertCancel(int orderId) {
-        orderMapper.insertCancel(orderId);
+        try {
+            int transaction = orderMapper.insertCancel(orderId);
+            if (transaction != 1) {
+                throw new RuntimeException("Transaction failed");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while changing product amount", e);
+        }
     }
 
     public List<CancelDto> cancelInformation() {
@@ -95,6 +111,18 @@ public class OrderService {
 
     public List<SumByYearDto> sumByYear() {
         return orderMapper.sumByYear();
+    }
+
+    @Transactional
+    public void changeProductAmount(int orderId) {
+        try {
+            int transaction = orderMapper.changeProductAmount(orderId);
+            if (transaction == 0) {
+                throw new RuntimeException("Transaction failed");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Error occurred while changing product amount", e);
+        }
     }
 }
 

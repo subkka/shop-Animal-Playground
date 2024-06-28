@@ -62,6 +62,7 @@ public class OrderController {
     @GetMapping("/orderCancel/{orderId}")
     public String orderCancel(@PathVariable int orderId) {
         orderService.statusChange(orderId);
+        orderService.changeProductAmount(orderId);
         orderService.insertCancel(orderId);
         return "redirect:/order/findAllOrder";
     }
@@ -84,28 +85,6 @@ public class OrderController {
         return "/order/sales";
     }
 
-//    @GetMapping("/findComplete")
-//    public String findComplete(Model model) {
-//        int count = orderService.getOrderCount();
-//        int sales = orderService.getSales();
-//        SalesDto salesDto = new SalesDto(count, sales);
-//        model.addAttribute("salesDto", salesDto);
-//
-//        List<String> categoryList = orderService.getCategoryList();
-//        List<Integer> getCountCategory = orderService.getCountByCategory();
-//        List<String> petLIst = orderService.getPetList();
-//        List<Integer> getCountUserPet = orderService.getCountByUserPet();
-//
-//        model.addAttribute("categoryList", categoryList);
-//        model.addAttribute("getCount", getCountCategory);
-//        model.addAttribute("categoryList2", petLIst);
-//        model.addAttribute("getCount2", getCountUserPet);
-//
-//
-//        List<OrderDetailDto> orderDetailDtos = orderService.findComplete();
-//        model.addAttribute("orderDetailDtos", orderDetailDtos);
-//        return "/order/findComplete";
-//    }
 
     @GetMapping("/findComplete")
     public String findComplete(Model model) {

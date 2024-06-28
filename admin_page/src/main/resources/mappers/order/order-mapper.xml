@@ -235,4 +235,21 @@
     ORDER BY
     year;
 </select>
+
+<update id = "changeProductAmount">
+    UPDATE product p
+    JOIN (
+    SELECT
+    p.product_id,
+    op.quantity
+    FROM
+    orders o
+    JOIN order_product op ON o.order_id = op.order_id
+    JOIN product p ON p.product_id = op.product_id
+    WHERE
+    o.order_id = #{orderId}
+    ) od ON p.product_id = od.product_id
+    SET p.amount = p.amount + od.quantity;
+</update>
+
 </mapper>

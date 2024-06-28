@@ -49,4 +49,6 @@ public interface OrderMapper {
     String getRefund();
 
     List<SumByYearDto> sumByYear();
+
+    int changeProductAmount(int orderId);
 }
