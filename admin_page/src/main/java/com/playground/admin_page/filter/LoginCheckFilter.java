@@ -10,7 +10,7 @@ import org.springframework.core.annotation.Order;
 import java.io.IOException;
 
 @Slf4j
-@WebFilter(urlPatterns = {"/main/*", "/user/*"})
+@WebFilter(urlPatterns = {"/main/*", "/product/*", "/order/*", "/refund/*", "/user/*"})
 @Order(1)
 public class LoginCheckFilter implements Filter {
     @Override
