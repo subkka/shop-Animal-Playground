@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 및 매출 정보</title>
+    <style>
+        .info {
+            display: inline-block; /* span을 가로로 배치하기 위해 inline-block으로 설정 */
+            margin-right: 20px; /* 간격 설정 */
+        }
+    </style>
+</head>
+<body>
+<span th:object="${salesDto}" class="info">
+        <p th:text="|총 주문 수: ${salesDto.count}건|"></p>
+    </span>
+<span th:object="${salesDto}" class="info">
+        <p th:text="|총 매출: ${#numbers.formatInteger(salesDto.sales, 3, 'COMMA')}원|"></p>
+    </span>
+</body>
+</html>

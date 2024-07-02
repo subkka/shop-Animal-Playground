@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Animal Playground | Login</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+</head>
+
+<body class="bg-gradient-primary">
+
+    <div class="container" style="position: fixed; top: 50%; right: 50%; transform: translate(50%, -50%)">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image">
+                                <img src="/admin/img/GoodHedgehog.jpeg" style="width: 450px; height: 320px; margin: 20px; border-radius: 10px">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Animal Playground</h1>
+                                    </div>
+                                    <form class="user" id="login-form">
+                                        <div class="form-group">
+                                            <input type="text"
+                                                   class="form-control form-control-user"
+                                                   id="id"
+                                                   name="id"
+                                                   maxlength="16"
+                                                   minlength="4"
+                                                   placeholder="아이디 입력"
+                                                   required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password"
+                                                   class="form-control form-control-user"
+                                                   id="password"
+                                                   name="password"
+                                                   maxlength="16"
+                                                   minlength="8"
+                                                   placeholder="패스워드 입력"
+                                                   required>
+                                        </div>
+                                            <div id="error-message"
+                                                style="
+                                                    display: none;
+                                                    padding: 10px;
+                                                    border-radius: 10px;
+                                                    margin-bottom: 16px;
+                                                    background-color:#d8d8d8;
+                                                    font-size: 12px;
+                                                    color: #e74a3b;
+                                                ">
+                                                <p style="margin: 0">아이디 혹은 비밀번호가 일치하지 않습니다.</p>
+                                                <p style="margin: 0">입력한 내용을 다시 확인해주세요.</p>
+                                            </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" id="login-btn">로그인</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const $loginForm = document.querySelector('#login-form');
+        const $errorMessage = document.querySelector('#error-message');
+        const asynchronousSubmit = function () {
+            let id = document.getElementById('id').value;
+            let password = document.getElementById('password').value;
+
+            $.ajax({
+                url: '[[@{/login}]]',
+                method: 'post',
+                data: {
+                    id: id,
+                    password: password
+                },
+                success (response) {
+                    if (response === 'success') {
+                        window.location.href = '[[@{/main}]]';
+                    } else {
+                        $errorMessage.style.display = 'block';
+                    }
+                },
+                error(error) {
+                    console.log(error)
+                }
+            });
+        };
+        $loginForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            asynchronousSubmit();
+        });
+    </script>
+
+</body>
+
+</html>

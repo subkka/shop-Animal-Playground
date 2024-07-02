@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.playground.admin_page.main.user.model.dao.UserMapper">
+    <resultMap id="userDtoMap" type="UserDto">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_email" property="userEmail"/>
+        <result column="user_email_able" property="userEmailAble"/>
+        <result column="address" property="address"/>
+        <result column="join_date" property="joinDate"/>
+        <result column="last_connect" property="lastConnect"/>
+        <result column="user_pet" property="userPet"/>
+        <result column="dormant_user" property="dormantUser"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="userDtoMap">
+        SELECT
+            *
+        FROM
+            user
+        ORDER BY
+            user_id
+    </select>
+    <select id="findByUsername" resultMap="userDtoMap">
+        select *
+        from user
+        where user_name like CONCAT('%', #{username}, '%')
+    </select>
+    <select id="findByPet" resultMap="userDtoMap">
+        select
+            *
+        from
+            user
+        where
+            user_pet = #{userPet}
+    </select>
+    <select id="findByEmailAble" resultMap="userDtoMap">
+        select
+            *
+        from
+            user
+        where
+            dormant_user != 'O'
+            and
+            user_email_able = #{userEmailAble}
+    </select>
+</mapper>

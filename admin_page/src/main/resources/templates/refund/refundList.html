@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+    <title>Refund</title>
+</head>
+
+<body id="page-top">
+    <main layout:fragment="main">
+        <div class="container-fluid">
+            <!--테이블 카드-->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">환불 목록</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>주문번호</th>
+                                    <th>신청일</th>
+                                    <th>처리상태</th>
+                                    <th>상세</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="refund, stat : ${refundList}" th:object="${refund}">
+                                    <td th:text="*{refundId}">번호</td>
+                                    <td th:text="*{orderId}">주문번호</td>
+                                    <td th:text="*{#temporals.format(applicationDate, 'yyyy-MM-dd')}">신청일</td>
+                                    <td th:text="*{processStatus}">처리상태</td>
+                                    <td>
+                                        <a th:href="@{/refund/refundDetailList/{refundId}(refundId=*{refundId})}" class="btn btn-primary">상세보기</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script layout:fragment="js">
+        $(document).ready(function(){
+            $("#sideRefund").addClass("active");
+        });
+    </script>
+</body>
+</html>
