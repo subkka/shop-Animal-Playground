@@ -45,3 +45,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.named('jar') {
+    enabled = false; // /build/libs/xxx-plain.jar 생성하지 않는다.
+}
